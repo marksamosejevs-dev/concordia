@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink: #000000;
+  --color-paper: #ffffff;
+  --color-mist: #f4f4f4;
+  --color-cloud: #f7f7f7;
+  --color-line: rgba(0, 0, 0, 0.12);
+  --color-line-invert: rgba(255, 255, 255, 0.18);
+  --color-grey-500: #595959;
+  --color-grey-400: #737373;
+  --color-grey-300: #b4b4b4;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-paper: var(--color-paper);
+  --color-mist: var(--color-mist);
+  --color-cloud: var(--color-cloud);
+  --color-line: var(--color-line);
+  --color-line-invert: var(--color-line-invert);
+  --color-grey-500: var(--color-grey-500);
+  --color-grey-400: var(--color-grey-400);
+  --color-grey-300: var(--color-grey-300);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.dark-section :focus-visible {
+  outline-color: var(--color-paper);
+}
+
+/* Ticker */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  animation: ticker-scroll 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}
+
+/* Hairline utility */
+.hairline {
+  background-image: linear-gradient(to right, var(--color-line) 1px, transparent 1px);
+  background-size: 1px 100%;
+}
+
+/* Custom scrollbar - subtle */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+}
