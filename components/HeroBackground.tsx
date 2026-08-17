@@ -14,7 +14,7 @@ export default function HeroBackground() {
           fill
           priority
           sizes="(min-width: 1024px) 42vw, 100vw"
-          className="object-cover object-[50%_25%] grayscale-[50%] contrast-[1.05]"
+          className="object-cover object-[50%_25%] grayscale-[75%] contrast-[1.05]"
         />
       </div>
     );

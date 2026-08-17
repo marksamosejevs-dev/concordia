@@ -45,7 +45,7 @@ export default async function InstagramFeed() {
             alt={post.caption ? post.caption.slice(0, 160) : "Concordia Sports Agency on Instagram"}
             fill
             sizes="(min-width: 1024px) 16vw, (min-width: 640px) 33vw, 50vw"
-            className="object-cover grayscale-[50%] contrast-[1.05] transition-transform duration-500 ease-out group-hover:scale-105"
+            className="object-cover grayscale-[75%] contrast-[1.05] transition-transform duration-500 ease-out group-hover:scale-105"
           />
         ),
       }))
@@ -58,7 +58,7 @@ export default async function InstagramFeed() {
             alt={photo.alt}
             fill
             sizes="(min-width: 1024px) 16vw, (min-width: 640px) 33vw, 50vw"
-            className="object-cover object-top grayscale-[50%] contrast-[1.05] transition-transform duration-500 ease-out group-hover:scale-105"
+            className="object-cover object-top grayscale-[75%] contrast-[1.05] transition-transform duration-500 ease-out group-hover:scale-105"
           />
         ),
       }));

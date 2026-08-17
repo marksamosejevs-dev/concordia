@@ -26,7 +26,7 @@ export default function PlayerPhoto({
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover object-top grayscale-[50%] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className="object-cover object-top grayscale-[75%] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
         />
       </div>
     );
