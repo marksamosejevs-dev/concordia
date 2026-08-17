@@ -29,6 +29,8 @@ export default function PlayerPhoto({
           className="photo-illustrated object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
         />
         <div className="photo-illustrated-texture pointer-events-none absolute inset-0" />
+        <div className="photo-scan pointer-events-none absolute inset-0" />
+        <div className="photo-band pointer-events-none absolute inset-0" />
         <div className="photo-illustrated-vignette pointer-events-none absolute inset-0" />
       </div>
     );

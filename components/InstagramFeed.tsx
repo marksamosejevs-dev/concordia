@@ -78,6 +78,8 @@ export default async function InstagramFeed() {
         >
           {tile.node}
           <div className="photo-illustrated-texture pointer-events-none absolute inset-0" />
+          <div className="photo-scan pointer-events-none absolute inset-0" />
+          <div className="photo-band pointer-events-none absolute inset-0" />
           <div className="photo-illustrated-vignette pointer-events-none absolute inset-0" />
           <ViewOnInstagramIcon />
         </a>

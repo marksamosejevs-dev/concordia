@@ -110,16 +110,21 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <defs>
             <filter
               id="illustrated-photo"
-              x="-10%"
-              y="-10%"
-              width="120%"
-              height="120%"
+              x="-15%"
+              y="-15%"
+              width="130%"
+              height="130%"
               colorInterpolationFilters="sRGB"
             >
-              <feComponentTransfer result="contrasted">
-                <feFuncR type="linear" slope="1.25" intercept="-0.1" />
-                <feFuncG type="linear" slope="1.25" intercept="-0.1" />
-                <feFuncB type="linear" slope="1.25" intercept="-0.1" />
+              <feComponentTransfer result="gammaAdj">
+                <feFuncR type="gamma" amplitude="1" exponent="1.15" offset="0" />
+                <feFuncG type="gamma" amplitude="1" exponent="1.15" offset="0" />
+                <feFuncB type="gamma" amplitude="1" exponent="1.15" offset="0" />
+              </feComponentTransfer>
+              <feComponentTransfer in="gammaAdj" result="contrasted">
+                <feFuncR type="linear" slope="1.22" intercept="-0.09" />
+                <feFuncG type="linear" slope="1.22" intercept="-0.09" />
+                <feFuncB type="linear" slope="1.22" intercept="-0.09" />
               </feComponentTransfer>
               <feConvolveMatrix
                 order="3"
@@ -129,7 +134,75 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                 edgeMode="duplicate"
                 preserveAlpha="true"
                 in="contrasted"
+                result="sharpened"
               />
+              <feGaussianBlur in="sharpened" stdDeviation="0.3" result="soft" />
+              <feColorMatrix
+                in="soft"
+                type="matrix"
+                values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                result="rOnly"
+              />
+              <feOffset in="rOnly" dx="0.45" dy="0" result="rShift" />
+              <feColorMatrix
+                in="soft"
+                type="matrix"
+                values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                result="gOnly"
+              />
+              <feColorMatrix
+                in="soft"
+                type="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
+                result="bOnly"
+              />
+              <feOffset in="bOnly" dx="-0.45" dy="0" result="bShift" />
+              <feBlend in="rShift" in2="gOnly" mode="screen" result="rg" />
+              <feBlend in="rg" in2="bShift" mode="screen" result="chroma" />
+              <feComponentTransfer in="chroma" result="brightMask">
+                <feFuncR type="linear" slope="2.5" intercept="-1.85" />
+                <feFuncG type="linear" slope="2.5" intercept="-1.85" />
+                <feFuncB type="linear" slope="2.5" intercept="-1.85" />
+              </feComponentTransfer>
+              <feGaussianBlur in="brightMask" stdDeviation="1.8" result="bloom" />
+              <feBlend in="chroma" in2="bloom" mode="screen" />
+            </filter>
+            <filter
+              id="illustrated-photo-hero"
+              x="-15%"
+              y="-15%"
+              width="130%"
+              height="130%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feComponentTransfer result="gammaAdj">
+                <feFuncR type="gamma" amplitude="1" exponent="1.08" offset="0" />
+                <feFuncG type="gamma" amplitude="1" exponent="1.08" offset="0" />
+                <feFuncB type="gamma" amplitude="1" exponent="1.08" offset="0" />
+              </feComponentTransfer>
+              <feComponentTransfer in="gammaAdj" result="contrasted">
+                <feFuncR type="linear" slope="1.15" intercept="-0.06" />
+                <feFuncG type="linear" slope="1.15" intercept="-0.06" />
+                <feFuncB type="linear" slope="1.15" intercept="-0.06" />
+              </feComponentTransfer>
+              <feConvolveMatrix
+                order="3"
+                kernelMatrix="0 -1 0 -1 5 -1 0 -1 0"
+                divisor="1"
+                bias="0"
+                edgeMode="duplicate"
+                preserveAlpha="true"
+                in="contrasted"
+                result="sharpened"
+              />
+              <feGaussianBlur in="sharpened" stdDeviation="0.25" result="soft" />
+              <feComponentTransfer in="soft" result="brightMask">
+                <feFuncR type="linear" slope="2.2" intercept="-1.8" />
+                <feFuncG type="linear" slope="2.2" intercept="-1.8" />
+                <feFuncB type="linear" slope="2.2" intercept="-1.8" />
+              </feComponentTransfer>
+              <feGaussianBlur in="brightMask" stdDeviation="1.2" result="bloom" />
+              <feBlend in="soft" in2="bloom" mode="screen" />
             </filter>
           </defs>
         </svg>

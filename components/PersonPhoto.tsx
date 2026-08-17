@@ -34,6 +34,8 @@ export default function PersonPhoto({
           className="photo-illustrated object-cover object-top"
         />
         <div className="photo-illustrated-texture pointer-events-none absolute inset-0" />
+        <div className="photo-scan pointer-events-none absolute inset-0" />
+        <div className="photo-band pointer-events-none absolute inset-0" />
         <div className="photo-illustrated-vignette pointer-events-none absolute inset-0" />
       </div>
     );

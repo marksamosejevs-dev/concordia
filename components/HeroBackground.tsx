@@ -14,9 +14,10 @@ export default function HeroBackground() {
           fill
           priority
           sizes="(min-width: 1024px) 42vw, 100vw"
-          className="photo-illustrated object-cover object-[50%_25%]"
+          className="photo-illustrated-hero object-cover object-[50%_25%]"
         />
-        <div className="photo-illustrated-texture pointer-events-none absolute inset-0" />
+        <div className="photo-illustrated-texture-subtle pointer-events-none absolute inset-0" />
+        <div className="photo-scan-subtle pointer-events-none absolute inset-0" />
         <div className="photo-illustrated-vignette pointer-events-none absolute inset-0" />
       </div>
     );
