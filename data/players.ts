@@ -94,7 +94,7 @@ export const players: Player[] = [
     nationality: "Latvia",
     positionGroup: "Midfielder",
     positionLabel: "Attacking Midfield",
-    club: "MFK Vitkovice",
+    club: "FS Jelgava",
     height: "180 cm",
     preferredFoot: "Right",
     nationalTeam: "Latvia U21 National Team",
