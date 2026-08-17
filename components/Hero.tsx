@@ -21,9 +21,9 @@ export default function Hero({ background }: { background: ReactNode }) {
     <section
       id="top"
       ref={ref}
-      className="relative grid min-h-[100svh] grid-cols-1 overflow-hidden bg-paper pt-24 lg:grid-cols-12 lg:pt-0"
+      className="relative grid min-h-[100svh] grid-cols-12 overflow-hidden bg-paper pt-20 sm:pt-24 lg:pt-0"
     >
-      <div className="relative z-10 order-2 flex flex-col justify-center px-5 pb-14 sm:px-8 lg:order-1 lg:col-span-7 lg:px-14 lg:pb-0 xl:col-span-7">
+      <div className="relative z-10 col-span-7 flex flex-col justify-center px-4 py-10 sm:px-8 sm:py-14 lg:px-14 lg:py-0">
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,14 +82,14 @@ export default function Hero({ background }: { background: ReactNode }) {
         </motion.div>
       </div>
 
-      <div className="relative order-1 col-span-1 h-[46vh] min-h-[320px] overflow-hidden lg:order-2 lg:col-span-5 lg:h-auto xl:col-span-5">
+      <div className="relative col-span-5 overflow-hidden">
         <motion.div style={{ y }} className="absolute inset-0 -top-10 lg:-top-14">
           {background}
           <GrainOverlay opacity={0.06} />
         </motion.div>
         <motion.div
           style={{ opacity }}
-          className="absolute inset-0 bg-gradient-to-t from-paper/0 via-transparent to-paper/0 lg:bg-gradient-to-r lg:from-paper lg:via-transparent lg:to-transparent lg:opacity-100"
+          className="absolute inset-0 bg-gradient-to-r from-paper/0 via-transparent to-transparent lg:from-paper lg:opacity-100"
         />
       </div>
 

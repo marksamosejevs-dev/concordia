@@ -3,6 +3,7 @@ import Reveal from "./Reveal";
 import SectionLabel from "./SectionLabel";
 import PersonPhoto from "./PersonPhoto";
 import AnimatedArrow from "./AnimatedArrow";
+import InstagramFeed from "./InstagramFeed";
 import { publicAssetExists } from "@/lib/server-assets";
 import { team } from "@/data/team";
 
@@ -49,38 +50,40 @@ export default function Agency() {
             {team.map((member, i) => {
               const hasLicenseImage = member.licenseImage && publicAssetExists(member.licenseImage);
               return (
-                <div key={member.id} className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:items-center sm:gap-12">
-                  <Reveal delay={0.06 * i}>
-                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink">
-                      <PersonPhoto photo={member.photo} name={member.name} className="absolute inset-0" />
-                    </div>
-                    <div className="mt-6">
-                      <p className="text-2xl font-bold uppercase leading-tight tracking-tight sm:text-3xl">
-                        {member.name}
-                      </p>
-                      <p className="mt-1 font-mono text-xs uppercase tracking-[0.1em] text-grey-500">
-                        {member.title}
-                      </p>
-                      {member.credential && (
-                        <p className="mt-2 font-mono text-[0.65rem] uppercase tracking-[0.08em] text-grey-400">
-                          {member.credential}
-                        </p>
-                      )}
-                    </div>
-                  </Reveal>
-                  {hasLicenseImage && (
-                    <Reveal delay={0.06 * i + 0.1}>
-                      <div className="relative aspect-[1010/650] w-full overflow-hidden border border-line bg-white">
-                        <Image
-                          src={member.licenseImage!}
-                          alt={`${member.name} — FIFA Football Agent license`}
-                          fill
-                          sizes="(min-width: 640px) 45vw, 100vw"
-                          className="object-contain"
-                        />
+                <div key={member.id} className="space-y-6">
+                  <div className="flex flex-col items-start gap-6 sm:flex-row sm:gap-10">
+                    <Reveal delay={0.06 * i}>
+                      <div className="relative aspect-[4/5] h-64 w-auto shrink-0 overflow-hidden bg-ink sm:h-72 lg:h-80">
+                        <PersonPhoto photo={member.photo} name={member.name} className="absolute inset-0" />
                       </div>
                     </Reveal>
-                  )}
+                    {hasLicenseImage && (
+                      <Reveal delay={0.06 * i + 0.1} className="w-full sm:w-auto">
+                        <div className="relative aspect-[1010/650] h-auto w-full overflow-hidden border border-line bg-white sm:h-72 sm:w-auto lg:h-80">
+                          <Image
+                            src={member.licenseImage!}
+                            alt={`${member.name} — FIFA Football Agent license`}
+                            fill
+                            sizes="(min-width: 640px) 620px, 100vw"
+                            className="object-contain"
+                          />
+                        </div>
+                      </Reveal>
+                    )}
+                  </div>
+                  <Reveal delay={0.06 * i + 0.15}>
+                    <p className="text-2xl font-bold uppercase leading-tight tracking-tight sm:text-3xl">
+                      {member.name}
+                    </p>
+                    <p className="mt-1 font-mono text-xs uppercase tracking-[0.1em] text-grey-500">
+                      {member.title}
+                    </p>
+                    {member.credential && (
+                      <p className="mt-2 font-mono text-[0.65rem] uppercase tracking-[0.08em] text-grey-400">
+                        {member.credential}
+                      </p>
+                    )}
+                  </Reveal>
                 </div>
               );
             })}
@@ -105,6 +108,10 @@ export default function Agency() {
               @concordia.football
               <AnimatedArrow />
             </a>
+          </Reveal>
+
+          <Reveal delay={0.1} className="mt-10">
+            <InstagramFeed />
           </Reveal>
         </div>
       </div>

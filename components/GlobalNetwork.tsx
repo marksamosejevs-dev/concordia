@@ -78,17 +78,13 @@ export default function GlobalNetwork() {
 
           <div className="lg:col-span-8">
             <Reveal delay={0.15}>
-              <p className="mb-2 font-mono text-[0.65rem] uppercase tracking-[0.15em] text-grey-400 lg:hidden">
-                Scroll to explore →
-              </p>
-              <div className="overflow-x-auto">
-                <svg
-                  viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-                  className="h-auto w-full min-w-[720px] text-ink"
-                  role="img"
-                  aria-label="Geographic diagram of Concordia's football network reach from Riga to London, Tallinn, Vilnius, Warsaw, Sassuolo, Kyiv, Istanbul, Yaoundé, Toronto, Los Angeles, Miami and Buenos Aires"
-                >
-                <g opacity="0.08" stroke="currentColor" strokeWidth="1">
+              <svg
+                viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+                className="h-auto w-full text-ink"
+                role="img"
+                aria-label="Geographic diagram of Concordia's football network reach from Riga to London, Tallinn, Vilnius, Warsaw, Sassuolo, Kyiv, Istanbul, Yaoundé, Toronto, Los Angeles, Miami and Buenos Aires"
+              >
+                <g opacity="0.12" stroke="currentColor" strokeWidth="1">
                   {Array.from({ length: 15 }).map((_, i) => (
                     <line key={`v${i}`} x1={i * 100} y1="0" x2={i * 100} y2={VIEW_H} />
                   ))}
@@ -105,9 +101,9 @@ export default function GlobalNetwork() {
                     x2={node.x}
                     y2={node.y}
                     stroke="currentColor"
-                    strokeWidth="1"
+                    strokeWidth="1.25"
                     initial={{ pathLength: 0, opacity: 0 }}
-                    whileInView={{ pathLength: 1, opacity: 0.3 }}
+                    whileInView={{ pathLength: 1, opacity: 0.4 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{
                       duration: shouldReduceMotion ? 0.01 : 1.1,
@@ -197,8 +193,7 @@ export default function GlobalNetwork() {
                 >
                   {HUB.label}
                 </text>
-                </svg>
-              </div>
+              </svg>
             </Reveal>
           </div>
         </div>
