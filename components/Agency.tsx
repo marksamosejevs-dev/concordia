@@ -1,5 +1,7 @@
 import Reveal from "./Reveal";
 import SectionLabel from "./SectionLabel";
+import PersonPhoto from "./PersonPhoto";
+import { team } from "@/data/team";
 
 export default function Agency() {
   return (
@@ -33,6 +35,31 @@ export default function Agency() {
                 the career.
               </p>
             </Reveal>
+          </div>
+        </div>
+
+        <div className="mt-20 border-t border-line pt-12 sm:mt-24">
+          <Reveal>
+            <SectionLabel label="Founding Team" className="text-grey-500" />
+          </Reveal>
+          <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {team.map((member, i) => (
+              <Reveal key={member.id} delay={0.06 * i} className="flex items-center gap-5">
+                <PersonPhoto
+                  photo={member.photo}
+                  name={member.name}
+                  className="h-24 w-24 shrink-0 sm:h-28 sm:w-28"
+                />
+                <div>
+                  <p className="text-lg font-bold uppercase leading-tight tracking-tight">
+                    {member.name}
+                  </p>
+                  <p className="mt-1 font-mono text-xs uppercase tracking-[0.1em] text-grey-500">
+                    {member.title}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </div>

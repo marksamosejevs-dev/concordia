@@ -1,11 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { FloodlightMotif, GrainOverlay } from "./motifs";
+import { GrainOverlay } from "./motifs";
 import AnimatedArrow from "./AnimatedArrow";
 
-export default function Hero() {
+export default function Hero({ background }: { background: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -83,8 +83,8 @@ export default function Hero() {
       </div>
 
       <div className="relative order-1 col-span-1 h-[46vh] min-h-[320px] overflow-hidden lg:order-2 lg:col-span-5 lg:h-auto xl:col-span-5">
-        <motion.div style={{ y }} className="absolute inset-0 -top-16 lg:-top-24">
-          <FloodlightMotif className="h-full w-full" />
+        <motion.div style={{ y }} className="absolute inset-0 -top-10 lg:-top-14">
+          {background}
           <GrainOverlay opacity={0.06} />
         </motion.div>
         <motion.div

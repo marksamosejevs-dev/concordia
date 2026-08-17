@@ -12,6 +12,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import PlayerPhoto from "@/components/PlayerPhoto";
+import HeroBackground from "@/components/HeroBackground";
 import { players } from "@/data/players";
 
 export default function Home() {
@@ -31,7 +32,7 @@ export default function Home() {
     <>
       <Navigation logo={<Logo />} />
       <main>
-        <Hero />
+        <Hero background={<HeroBackground />} />
         <Ticker />
         <Manifesto />
         <PlayerRoster playerPhotos={playerPhotos} />

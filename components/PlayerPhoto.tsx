@@ -19,7 +19,7 @@ export default function PlayerPhoto({
 
   if (hasPhoto) {
     return (
-      <div className={cn("relative overflow-hidden bg-ink", className)}>
+      <div className={cn("overflow-hidden bg-ink", className ?? "absolute inset-0")}>
         <Image
           src={player.photo}
           alt={player.fullName}
@@ -35,8 +35,8 @@ export default function PlayerPhoto({
   return (
     <div
       className={cn(
-        "relative flex items-center justify-center overflow-hidden bg-ink text-paper",
-        className,
+        "flex items-center justify-center overflow-hidden bg-ink text-paper",
+        className ?? "absolute inset-0",
       )}
       role="img"
       aria-label={`${player.fullName} — photograph pending`}

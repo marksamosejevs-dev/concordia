@@ -2,7 +2,11 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { publicAssetExists } from "@/lib/server-assets";
 
-const LOGO_CANDIDATES = ["/brand/concordia-logo.svg", "/brand/concordia-logo.png"];
+const LOGO_CANDIDATES = [
+  "/brand/concordia-logo.svg",
+  "/brand/concordia-logo.png",
+  "/brand/concordia-logo.jpg",
+];
 
 export default function Logo({
   invert = false,
