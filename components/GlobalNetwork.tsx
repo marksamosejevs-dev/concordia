@@ -7,8 +7,8 @@ import SectionLabel from "./SectionLabel";
 // Equirectangular projection (plain lat/lon → x/y) over a bounding box that covers
 // every market. Real relative geography, not an artistic layout — Europe clusters
 // tightly together because it genuinely is tight next to the Atlantic/Americas span.
-const VIEW_W = 1500;
-const VIEW_H = 970;
+const BASE_VIEW_W = 1500;
+const BASE_VIEW_H = 970;
 const LON_MIN = -122;
 const LON_MAX = 45;
 const LAT_MIN = -40;
@@ -16,12 +16,6 @@ const LAT_MAX = 68;
 
 type Coords = [number, number];
 type Anchor = "start" | "middle" | "end";
-
-function project([lat, lon]: Coords) {
-  const x = ((lon - LON_MIN) / (LON_MAX - LON_MIN)) * VIEW_W;
-  const y = ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * VIEW_H;
-  return { x, y };
-}
 
 const HUB = { coords: [56.95, 24.11] as Coords, label: "Riga" };
 
@@ -50,9 +44,167 @@ const NODE_DEFS: NodeDef[] = [
   { coords: [-34.6, -58.38], label: "Buenos Aires", labelOffset: { dx: 0, dy: -26 }, anchor: "middle" },
 ];
 
-const NODES = NODE_DEFS.map((n) => ({ ...n, ...project(n.coords) }));
+/**
+ * Builds a full layout at a given zoom factor. Coordinates and label offsets
+ * scale with `zoom`, but stroke widths, dot radii and font sizes stay at their
+ * literal values — a smaller `zoom` (mobile) shrinks the geography while the
+ * type and lines stay just as thick/large, so they read bigger relative to
+ * the map instead of shrinking away to sub-pixel hairlines.
+ */
+function buildLayout(zoom: number) {
+  const viewW = BASE_VIEW_W * zoom;
+  const viewH = BASE_VIEW_H * zoom;
 
-const hubPos = project(HUB.coords);
+  function project([lat, lon]: Coords) {
+    const x = ((lon - LON_MIN) / (LON_MAX - LON_MIN)) * viewW;
+    const y = ((LAT_MAX - lat) / (LAT_MAX - LAT_MIN)) * viewH;
+    return { x, y };
+  }
+
+  const nodes = NODE_DEFS.map((n) => ({
+    ...n,
+    ...project(n.coords),
+    labelOffset: { dx: n.labelOffset.dx * zoom, dy: n.labelOffset.dy * zoom },
+  }));
+
+  return { zoom, viewW, viewH, hubPos: project(HUB.coords), nodes };
+}
+
+const DESKTOP_LAYOUT = buildLayout(1);
+const MOBILE_LAYOUT = buildLayout(0.6);
+
+function NetworkSvg({
+  layout,
+  className,
+  shouldReduceMotion,
+}: {
+  layout: ReturnType<typeof buildLayout>;
+  className?: string;
+  shouldReduceMotion: boolean;
+}) {
+  const { zoom, viewW, viewH, hubPos, nodes } = layout;
+
+  return (
+    <svg
+      viewBox={`0 0 ${viewW} ${viewH}`}
+      className={className}
+      role="img"
+      aria-label="Geographic diagram of Concordia's football network reach from Riga to London, Tallinn, Vilnius, Warsaw, Sassuolo, Kyiv, Istanbul, Yaoundé, Toronto, Los Angeles, Miami and Buenos Aires"
+    >
+      <g opacity="0.14" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <line key={`v${i}`} x1={(i * viewW) / 14} y1="0" x2={(i * viewW) / 14} y2={viewH} />
+        ))}
+        {Array.from({ length: 9 }).map((_, i) => (
+          <line key={`h${i}`} x1="0" y1={(i * viewH) / 8} x2={viewW} y2={(i * viewH) / 8} />
+        ))}
+      </g>
+
+      {nodes.map((node, i) => (
+        <motion.line
+          key={`link-${node.label}`}
+          x1={hubPos.x}
+          y1={hubPos.y}
+          x2={node.x}
+          y2={node.y}
+          stroke="currentColor"
+          strokeWidth="1.5"
+          vectorEffect="non-scaling-stroke"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 0.45 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{
+            duration: shouldReduceMotion ? 0.01 : 1.1,
+            delay: shouldReduceMotion ? 0 : 0.1 * i,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+        />
+      ))}
+
+      {nodes.map((node, i) => {
+        const labelX = node.x + node.labelOffset.dx;
+        const labelY = node.y + node.labelOffset.dy;
+        const hasLeader = Math.abs(node.labelOffset.dx) > 0 || Math.abs(node.labelOffset.dy) > 26 * zoom;
+        return (
+          <g key={`node-${node.label}`}>
+            {hasLeader && (
+              <motion.line
+                x1={node.x}
+                y1={node.y}
+                x2={labelX}
+                y2={labelY - 6}
+                stroke="currentColor"
+                strokeWidth="1"
+                vectorEffect="non-scaling-stroke"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.35 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.1 * i + 0.6 }}
+              />
+            )}
+            <motion.circle
+              cx={node.x}
+              cy={node.y}
+              r="10"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.25"
+              vectorEffect="non-scaling-stroke"
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 0.5, scale: [0.8, 1.3, 1] }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1, delay: 0.1 * i + 0.5 }}
+            />
+            <motion.circle
+              cx={node.x}
+              cy={node.y}
+              r="3.5"
+              fill="currentColor"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.1 * i + 0.5 }}
+            />
+            <text
+              x={labelX}
+              y={labelY}
+              textAnchor={node.anchor}
+              className="font-mono uppercase"
+              fontSize="14"
+              letterSpacing="1.5"
+              fill="currentColor"
+            >
+              {node.label}
+            </text>
+          </g>
+        );
+      })}
+
+      <circle cx={hubPos.x} cy={hubPos.y} r="6" fill="currentColor" />
+      <circle
+        cx={hubPos.x}
+        cy={hubPos.y}
+        r="20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        vectorEffect="non-scaling-stroke"
+        opacity="0.4"
+      />
+      <text
+        x={hubPos.x - 40}
+        y={hubPos.y + 6}
+        textAnchor="end"
+        className="font-mono font-bold uppercase"
+        fontSize="17"
+        letterSpacing="2"
+        fill="currentColor"
+      >
+        {HUB.label}
+      </text>
+    </svg>
+  );
+}
 
 export default function GlobalNetwork() {
   const shouldReduceMotion = useReducedMotion();
@@ -78,122 +230,16 @@ export default function GlobalNetwork() {
 
           <div className="lg:col-span-8">
             <Reveal delay={0.15}>
-              <svg
-                viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-                className="h-auto w-full text-ink"
-                role="img"
-                aria-label="Geographic diagram of Concordia's football network reach from Riga to London, Tallinn, Vilnius, Warsaw, Sassuolo, Kyiv, Istanbul, Yaoundé, Toronto, Los Angeles, Miami and Buenos Aires"
-              >
-                <g opacity="0.12" stroke="currentColor" strokeWidth="1">
-                  {Array.from({ length: 15 }).map((_, i) => (
-                    <line key={`v${i}`} x1={i * 100} y1="0" x2={i * 100} y2={VIEW_H} />
-                  ))}
-                  {Array.from({ length: 9 }).map((_, i) => (
-                    <line key={`h${i}`} x1="0" y1={i * 112} x2={VIEW_W} y2={i * 112} />
-                  ))}
-                </g>
-
-                {NODES.map((node, i) => (
-                  <motion.line
-                    key={`link-${node.label}`}
-                    x1={hubPos.x}
-                    y1={hubPos.y}
-                    x2={node.x}
-                    y2={node.y}
-                    stroke="currentColor"
-                    strokeWidth="1.25"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    whileInView={{ pathLength: 1, opacity: 0.4 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{
-                      duration: shouldReduceMotion ? 0.01 : 1.1,
-                      delay: shouldReduceMotion ? 0 : 0.1 * i,
-                      ease: [0.16, 1, 0.3, 1],
-                    }}
-                  />
-                ))}
-
-                {NODES.map((node, i) => {
-                  const labelX = node.x + node.labelOffset.dx;
-                  const labelY = node.y + node.labelOffset.dy;
-                  const hasLeader =
-                    Math.abs(node.labelOffset.dx) > 0 ||
-                    Math.abs(node.labelOffset.dy) > 26;
-                  return (
-                    <g key={`node-${node.label}`}>
-                      {hasLeader && (
-                        <motion.line
-                          x1={node.x}
-                          y1={node.y}
-                          x2={labelX}
-                          y2={labelY - 6}
-                          stroke="currentColor"
-                          strokeWidth="0.75"
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 0.3 }}
-                          viewport={{ once: true, amount: 0.3 }}
-                          transition={{ duration: 0.6, delay: 0.1 * i + 0.6 }}
-                        />
-                      )}
-                      <motion.circle
-                        cx={node.x}
-                        cy={node.y}
-                        r="10"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 0.5, scale: [0.8, 1.3, 1] }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 1, delay: 0.1 * i + 0.5 }}
-                      />
-                      <motion.circle
-                        cx={node.x}
-                        cy={node.y}
-                        r="3.5"
-                        fill="currentColor"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.5, delay: 0.1 * i + 0.5 }}
-                      />
-                      <text
-                        x={labelX}
-                        y={labelY}
-                        textAnchor={node.anchor}
-                        className="font-mono uppercase"
-                        fontSize="13"
-                        letterSpacing="1.5"
-                        fill="currentColor"
-                      >
-                        {node.label}
-                      </text>
-                    </g>
-                  );
-                })}
-
-                <circle cx={hubPos.x} cy={hubPos.y} r="6" fill="currentColor" />
-                <circle
-                  cx={hubPos.x}
-                  cy={hubPos.y}
-                  r="20"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                  opacity="0.4"
-                />
-                <text
-                  x={hubPos.x - 40}
-                  y={hubPos.y + 6}
-                  textAnchor="end"
-                  className="font-mono font-bold uppercase"
-                  fontSize="16"
-                  letterSpacing="2"
-                  fill="currentColor"
-                >
-                  {HUB.label}
-                </text>
-              </svg>
+              <NetworkSvg
+                layout={MOBILE_LAYOUT}
+                className="h-auto w-full text-ink lg:hidden"
+                shouldReduceMotion={!!shouldReduceMotion}
+              />
+              <NetworkSvg
+                layout={DESKTOP_LAYOUT}
+                className="hidden h-auto w-full text-ink lg:block"
+                shouldReduceMotion={!!shouldReduceMotion}
+              />
             </Reveal>
           </div>
         </div>
