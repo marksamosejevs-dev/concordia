@@ -1,12 +1,13 @@
 const ITEMS = [
-  "Player Representation",
-  "Transfers",
-  "Career Management",
   "Legal",
-  "FIFA",
   "Commercial",
-  "Global Football",
-  "Concordia",
+  "Contracts",
+  "Transfers",
+  "Negotiations",
+  "Career Management",
+  "Player Representation",
+  "Scouting",
+  "International Network",
 ];
 
 export default function Ticker() {

@@ -4,16 +4,21 @@ import { motion, useReducedMotion } from "framer-motion";
 import Reveal from "./Reveal";
 import SectionLabel from "./SectionLabel";
 
-const HUB = { x: 320, y: 300, label: "Riga" };
+const HUB = { x: 470, y: 300, label: "Riga" };
 
 const NODES = [
-  { x: 620, y: 120, label: "Tallinn" },
-  { x: 700, y: 260, label: "Vilnius" },
-  { x: 830, y: 190, label: "Warsaw" },
-  { x: 940, y: 340, label: "Kyiv" },
-  { x: 860, y: 470, label: "Istanbul" },
-  { x: 560, y: 460, label: "Central Europe" },
-  { x: 140, y: 130, label: "London" },
+  { x: 330, y: 70, label: "London" },
+  { x: 600, y: 70, label: "Tallinn" },
+  { x: 690, y: 190, label: "Vilnius" },
+  { x: 800, y: 90, label: "Warsaw" },
+  { x: 860, y: 210, label: "Sassuolo" },
+  { x: 940, y: 300, label: "Kyiv" },
+  { x: 840, y: 450, label: "Istanbul" },
+  { x: 520, y: 520, label: "Yaoundé" },
+  { x: 130, y: 80, label: "Toronto" },
+  { x: 60, y: 230, label: "Los Angeles" },
+  { x: 120, y: 380, label: "Miami" },
+  { x: 170, y: 510, label: "Buenos Aires" },
 ];
 
 export default function GlobalNetwork() {
@@ -44,7 +49,7 @@ export default function GlobalNetwork() {
                 viewBox="0 0 1000 560"
                 className="h-auto w-full text-ink"
                 role="img"
-                aria-label="Abstract diagram of Concordia's football network reach from Riga to Tallinn, Vilnius, Warsaw, Kyiv, Istanbul, Central Europe and London"
+                aria-label="Abstract diagram of Concordia's football network reach from Riga to London, Tallinn, Vilnius, Warsaw, Sassuolo, Kyiv, Istanbul, Yaoundé, Toronto, Los Angeles, Miami and Buenos Aires"
               >
                 <g opacity="0.08" stroke="currentColor" strokeWidth="1">
                   {Array.from({ length: 11 }).map((_, i) => (

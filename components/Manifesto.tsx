@@ -1,9 +1,10 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 
-export default function Manifesto() {
+export default function Manifesto({ photo }: { photo?: ReactNode }) {
   return (
     <section id="manifesto" className="dark-section bg-ink px-5 py-28 text-paper sm:px-8 sm:py-36 lg:py-48">
       <div className="mx-auto max-w-[1600px]">
@@ -35,7 +36,7 @@ export default function Manifesto() {
           </div>
 
           <div className="lg:col-span-4 lg:pt-4">
-            <Reveal delay={0.75} className="space-y-6 text-lg leading-relaxed text-paper/60">
+            <Reveal delay={0.68} className="space-y-6 text-lg leading-relaxed text-paper/60">
               <p>Professional football is more than the ninety minutes on the pitch.</p>
               <p>
                 Contracts, transfers, legal matters, commercial opportunities, finances and
@@ -43,6 +44,11 @@ export default function Manifesto() {
               </p>
               <p className="text-paper">Concordia brings these disciplines together under one strategy.</p>
             </Reveal>
+            {photo && (
+              <Reveal delay={0.8} className="mt-8">
+                {photo}
+              </Reveal>
+            )}
           </div>
         </div>
       </div>
