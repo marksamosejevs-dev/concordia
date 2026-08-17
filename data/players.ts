@@ -21,7 +21,6 @@ export interface Player {
   /** Path relative to /public, e.g. /players/slug.jpg — placeholder is shown until the real file exists at this path */
   photo: string;
   transfermarktUrl?: string;
-  featured?: boolean;
   active: boolean;
 }
 
@@ -47,7 +46,6 @@ export const players: Player[] = [
     preferredFoot: "Right",
     nationalTeam: "Latvia National Team",
     photo: "/players/renars-varslavans.jpg",
-    featured: true,
     active: true,
   },
   {
@@ -139,10 +137,6 @@ export function getAge(dateOfBirth?: string): number | undefined {
     age -= 1;
   }
   return age;
-}
-
-export function getFeaturedPlayer(): Player {
-  return players.find((p) => p.featured) ?? players[0];
 }
 
 export const positionFilters: { label: string; value: PositionGroup | "All" }[] = [

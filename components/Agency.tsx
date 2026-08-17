@@ -44,19 +44,19 @@ export default function Agency() {
           <Reveal>
             <SectionLabel label="Founding Team" className="text-grey-500" />
           </Reveal>
-          <div className="mt-8 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 space-y-14">
             {team.map((member, i) => {
               const hasLicenseImage = member.licenseImage && publicAssetExists(member.licenseImage);
               return (
                 <Reveal key={member.id} delay={0.06 * i}>
-                  <div className="flex items-center gap-5">
+                  <div className="flex flex-wrap items-center gap-8">
                     <PersonPhoto
                       photo={member.photo}
                       name={member.name}
-                      className="h-24 w-24 shrink-0 sm:h-28 sm:w-28"
+                      className="h-40 w-40 shrink-0 sm:h-48 sm:w-48"
                     />
                     <div>
-                      <p className="text-lg font-bold uppercase leading-tight tracking-tight">
+                      <p className="text-2xl font-bold uppercase leading-tight tracking-tight sm:text-3xl">
                         {member.name}
                       </p>
                       <p className="mt-1 font-mono text-xs uppercase tracking-[0.1em] text-grey-500">
@@ -68,18 +68,18 @@ export default function Agency() {
                         </p>
                       )}
                     </div>
+                    {hasLicenseImage && (
+                      <div className="relative aspect-[1010/650] w-full max-w-xs shrink-0 overflow-hidden border border-line sm:ml-auto sm:w-80">
+                        <Image
+                          src={member.licenseImage!}
+                          alt={`${member.name} — FIFA Football Agent license`}
+                          fill
+                          sizes="(min-width: 640px) 320px, 100vw"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
                   </div>
-                  {hasLicenseImage && (
-                    <div className="relative mt-5 aspect-[1010/650] w-full max-w-xs overflow-hidden border border-line">
-                      <Image
-                        src={member.licenseImage!}
-                        alt={`${member.name} — FIFA Football Agent license`}
-                        fill
-                        sizes="(min-width: 640px) 320px, 100vw"
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
                 </Reveal>
               );
             })}

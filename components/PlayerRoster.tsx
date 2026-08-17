@@ -1,9 +1,8 @@
 "use client";
 
 import { useMemo, useState, type ReactNode } from "react";
-import { players, positionFilters, getFeaturedPlayer, type PositionGroup } from "@/data/players";
+import { players, positionFilters, type PositionGroup } from "@/data/players";
 import PlayerCard from "./PlayerCard";
-import FeaturedPlayer from "./FeaturedPlayer";
 import PlayerProfile from "./PlayerProfile";
 import Reveal from "./Reveal";
 import SectionLabel from "./SectionLabel";
@@ -17,8 +16,7 @@ export default function PlayerRoster({
   const [filter, setFilter] = useState<PositionGroup | "All">("All");
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
-  const featured = getFeaturedPlayer();
-  const roster = players.filter((p) => p.active && p.id !== featured.id);
+  const roster = players.filter((p) => p.active);
   const filtered = useMemo(
     () => (filter === "All" ? roster : roster.filter((p) => p.positionGroup === filter)),
     [filter, roster],
@@ -59,11 +57,7 @@ export default function PlayerRoster({
           </Reveal>
         </div>
 
-        <Reveal delay={0.15} className="mt-14 sm:mt-16">
-          <FeaturedPlayer player={featured} photo={playerPhotos[featured.slug]} onOpen={setOpenSlug} />
-        </Reveal>
-
-        <div className="mt-10 grid grid-cols-1 gap-px bg-line sm:grid-cols-2 sm:gap-px lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-px bg-line sm:mt-16 sm:grid-cols-2 sm:gap-px lg:grid-cols-3">
           {filtered.map((player, i) => (
             <Reveal key={player.id} delay={Math.min(i * 0.06, 0.3)} className="bg-paper">
               <PlayerCard player={player} photo={playerPhotos[player.slug]} onOpen={setOpenSlug} />
