@@ -134,6 +134,20 @@ export const players: Player[] = [
     photo: "/players/emilija-ambaine.jpg",
     active: true,
   },
+  {
+    id: "algirdas-grazis",
+    slug: "algirdas-grazis",
+    firstName: "Aļģirdas",
+    lastName: "Gražis",
+    fullName: "Aļģirdas Gražis",
+    nationality: "Latvia",
+    positionGroup: "Unlisted",
+    positionLabel: "Position Pending",
+    club: "Riga Mariners",
+    photo: "/players/algirdas-grazis.jpg",
+    transfermarktUrl: "https://www.transfermarkt.world/algirdas-grazis/profil/spieler/874306",
+    active: true,
+  },
 ];
 
 export function getAge(dateOfBirth?: string): number | undefined {

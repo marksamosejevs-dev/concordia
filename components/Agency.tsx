@@ -65,7 +65,7 @@ export default function Agency() {
                             alt={`${member.name} — FIFA Football Agent license`}
                             fill
                             sizes="(min-width: 640px) 620px, 100vw"
-                            className="object-contain"
+                            className="object-contain grayscale"
                           />
                         </div>
                       </Reveal>
