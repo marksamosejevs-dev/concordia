@@ -46,6 +46,7 @@ export const players: Player[] = [
     preferredFoot: "Right",
     nationalTeam: "Latvia National Team",
     photo: "/players/renars-varslavans.jpg",
+    transfermarktUrl: "https://www.transfermarkt.com/renars-varslavans/profil/spieler/487756",
     active: true,
   },
   {
@@ -63,6 +64,7 @@ export const players: Player[] = [
     preferredFoot: "Right",
     nationalTeam: "Latvia National Team",
     photo: "/players/glebs-zaleiko.jpg",
+    transfermarktUrl: "https://www.transfermarkt.com/glebs-zaleiko/profil/spieler/806953",
     active: true,
   },
   {
@@ -80,6 +82,7 @@ export const players: Player[] = [
     preferredFoot: "Right",
     nationalTeam: "Latvia U21 National Team",
     photo: "/players/maksims-semesko.jpg",
+    transfermarktUrl: "https://www.transfermarkt.com/maksims-semesko/profil/spieler/895683",
     active: true,
   },
   {
@@ -97,6 +100,7 @@ export const players: Player[] = [
     preferredFoot: "Right",
     nationalTeam: "Former Latvia U21 National Team",
     photo: "/players/kristofers-rekis.jpg",
+    transfermarktUrl: "https://www.transfermarkt.com/kristofers-rekis/profil/spieler/682317",
     active: true,
   },
   {
