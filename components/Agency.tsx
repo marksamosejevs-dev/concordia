@@ -26,13 +26,15 @@ export default function Agency() {
           <div className="lg:col-span-6 lg:col-start-7">
             <Reveal delay={0.1} className="space-y-6 text-lg leading-relaxed text-grey-500">
               <p>
-                Concordia Sports Agency supports professional footballers across the
-                decisions that shape their careers.
+                Concordia Sports Agency is a FIFA-licensed football representation agency
+                built in Europe and connected globally, supporting professional and
+                emerging players across the decisions that shape their careers.
               </p>
               <p>
                 Our multidisciplinary approach combines football representation, legal
                 expertise, commercial strategy and personal support under one coordinated
-                structure.
+                structure — working with clubs, sporting directors and football
+                professionals across multiple international markets.
               </p>
               <p className="text-ink">
                 The player focuses on performance. Concordia manages the complexity around
@@ -65,7 +67,7 @@ export default function Agency() {
                             alt={`${member.name} — FIFA Football Agent license`}
                             fill
                             sizes="(min-width: 640px) 620px, 100vw"
-                            className="object-contain"
+                            className="object-contain grayscale"
                           />
                         </div>
                       </Reveal>

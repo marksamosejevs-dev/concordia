@@ -6,6 +6,9 @@ import Logo from "@/components/Logo";
 export const metadata: Metadata = {
   title: "Cookies",
   description: "Cookie Policy of Concordia Sports Agency SIA.",
+  alternates: {
+    canonical: "https://concordia.football/cookies",
+  },
 };
 
 export default function CookiesPolicy() {

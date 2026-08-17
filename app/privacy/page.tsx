@@ -7,6 +7,9 @@ import Logo from "@/components/Logo";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy Policy of Concordia Sports Agency SIA.",
+  alternates: {
+    canonical: "https://concordia.football/privacy",
+  },
 };
 
 function Section({

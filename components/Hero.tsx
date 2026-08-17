@@ -24,19 +24,19 @@ export default function Hero({ background }: { background: ReactNode }) {
       className="relative grid min-h-[100svh] grid-cols-1 overflow-hidden bg-paper pt-24 lg:grid-cols-12 lg:pt-0"
     >
       <div className="relative z-10 order-2 flex flex-col justify-center px-5 pb-14 sm:px-8 lg:order-1 lg:col-span-7 lg:px-14 lg:pb-0 xl:col-span-7">
-        <motion.p
+        <motion.h1
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="mb-6 font-mono text-xs uppercase tracking-[0.25em] text-grey-500 sm:mb-8"
+          className="mb-6 font-mono text-xs font-normal uppercase tracking-[0.25em] text-grey-500 sm:mb-8"
         >
           Concordia Sports Agency
           <br className="sm:hidden" />
           <span className="hidden sm:inline"> — </span>
           Riga / Europe / Global
-        </motion.p>
+        </motion.h1>
 
-        <h1 className="text-[clamp(3rem,10.5vw,9.5rem)] font-bold uppercase leading-[0.88] tracking-[-0.03em]">
+        <p className="text-[clamp(3rem,10.5vw,9.5rem)] font-bold uppercase leading-[0.88] tracking-[-0.03em]">
           <motion.span
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -53,7 +53,7 @@ export default function Hero({ background }: { background: ReactNode }) {
           >
             the Game.
           </motion.span>
-        </h1>
+        </p>
 
         <motion.p
           initial={{ opacity: 0, y: 16 }}

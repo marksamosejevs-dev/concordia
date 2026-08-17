@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +15,15 @@ const LINKS = [
 export default function Navigation({ logo }: { logo: ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const onHomePage = pathname === "/";
+
+  useEffect(() => {
+    if (!onHomePage || !window.location.hash) return;
+    const target = document.querySelector(window.location.hash);
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -29,9 +39,12 @@ export default function Navigation({ logo }: { logo: ReactNode }) {
     };
   }, [menuOpen]);
 
+  const resolveHref = (hash: string) => (onHomePage ? hash : `/${hash}`);
+
   const handleNavClick = (href: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
     setMenuOpen(false);
+    if (!onHomePage) return; // let the browser navigate to `/${href}` normally
+    e.preventDefault();
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -52,7 +65,7 @@ export default function Navigation({ logo }: { logo: ReactNode }) {
           )}
         >
           <a
-            href="#top"
+            href={onHomePage ? "#top" : "/"}
             onClick={handleNavClick("#top")}
             className="relative z-10 shrink-0"
             aria-label="Concordia Sports Agency — home"
@@ -64,7 +77,7 @@ export default function Navigation({ logo }: { logo: ReactNode }) {
             {LINKS.map((link) => (
               <a
                 key={link.href}
-                href={link.href}
+                href={resolveHref(link.href)}
                 onClick={handleNavClick(link.href)}
                 className="font-mono text-xs uppercase tracking-[0.18em] text-ink/70 transition-colors hover:text-ink"
               >
@@ -75,7 +88,7 @@ export default function Navigation({ logo }: { logo: ReactNode }) {
 
           <div className="hidden lg:block">
             <a
-              href="#contact"
+              href={resolveHref("#contact")}
               onClick={handleNavClick("#contact")}
               className="group inline-flex items-center gap-2 border border-ink px-5 py-2.5 font-mono text-xs uppercase tracking-[0.18em] transition-colors hover:bg-ink hover:text-paper"
             >
@@ -119,7 +132,7 @@ export default function Navigation({ logo }: { logo: ReactNode }) {
               {LINKS.map((link, i) => (
                 <motion.a
                   key={link.href}
-                  href={link.href}
+                  href={resolveHref(link.href)}
                   onClick={handleNavClick(link.href)}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -132,7 +145,7 @@ export default function Navigation({ logo }: { logo: ReactNode }) {
             </nav>
             <div className="flex flex-col gap-4">
               <a
-                href="#contact"
+                href={resolveHref("#contact")}
                 onClick={handleNavClick("#contact")}
                 className="inline-flex w-full items-center justify-center border border-paper px-5 py-4 font-mono text-xs uppercase tracking-[0.18em]"
               >

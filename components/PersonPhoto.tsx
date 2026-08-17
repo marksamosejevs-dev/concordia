@@ -31,7 +31,7 @@ export default function PersonPhoto({
           alt={name}
           fill
           sizes={sizes}
-          className="object-cover object-top grayscale contrast-[1.05]"
+          className="object-cover object-top grayscale-[50%] contrast-[1.05]"
         />
       </div>
     );
