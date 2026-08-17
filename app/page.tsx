@@ -13,7 +13,6 @@ import Footer from "@/components/Footer";
 import Logo from "@/components/Logo";
 import PlayerPhoto from "@/components/PlayerPhoto";
 import HeroBackground from "@/components/HeroBackground";
-import CareersPhoto from "@/components/CareersPhoto";
 import { players } from "@/data/players";
 
 export default function Home() {
@@ -35,7 +34,7 @@ export default function Home() {
       <main>
         <Hero background={<HeroBackground />} />
         <Ticker />
-        <Manifesto photo={<CareersPhoto />} />
+        <Manifesto />
         <PlayerRoster playerPhotos={playerPhotos} />
         <Ticker />
         <Expertise />

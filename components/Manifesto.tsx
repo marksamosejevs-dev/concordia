@@ -1,10 +1,9 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Reveal from "./Reveal";
 
-export default function Manifesto({ photo }: { photo?: ReactNode }) {
+export default function Manifesto() {
   return (
     <section id="manifesto" className="dark-section bg-ink px-5 py-28 text-paper sm:px-8 sm:py-36 lg:py-48">
       <div className="mx-auto max-w-[1600px]">
@@ -44,11 +43,6 @@ export default function Manifesto({ photo }: { photo?: ReactNode }) {
               </p>
               <p className="text-paper">Concordia brings these disciplines together under one strategy.</p>
             </Reveal>
-            {photo && (
-              <Reveal delay={0.8} className="mt-8">
-                {photo}
-              </Reveal>
-            )}
           </div>
         </div>
       </div>

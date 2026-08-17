@@ -2,6 +2,7 @@ import Image from "next/image";
 import Reveal from "./Reveal";
 import SectionLabel from "./SectionLabel";
 import PersonPhoto from "./PersonPhoto";
+import AnimatedArrow from "./AnimatedArrow";
 import { publicAssetExists } from "@/lib/server-assets";
 import { team } from "@/data/team";
 
@@ -44,18 +45,16 @@ export default function Agency() {
           <Reveal>
             <SectionLabel label="Founding Team" className="text-grey-500" />
           </Reveal>
-          <div className="mt-8 space-y-14">
+          <div className="mt-8 space-y-16">
             {team.map((member, i) => {
               const hasLicenseImage = member.licenseImage && publicAssetExists(member.licenseImage);
               return (
-                <Reveal key={member.id} delay={0.06 * i}>
-                  <div className="flex flex-wrap items-center gap-8">
-                    <PersonPhoto
-                      photo={member.photo}
-                      name={member.name}
-                      className="h-40 w-40 shrink-0 sm:h-48 sm:w-48"
-                    />
-                    <div>
+                <div key={member.id} className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:items-center sm:gap-12">
+                  <Reveal delay={0.06 * i}>
+                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink">
+                      <PersonPhoto photo={member.photo} name={member.name} className="absolute inset-0" />
+                    </div>
+                    <div className="mt-6">
                       <p className="text-2xl font-bold uppercase leading-tight tracking-tight sm:text-3xl">
                         {member.name}
                       </p>
@@ -68,22 +67,45 @@ export default function Agency() {
                         </p>
                       )}
                     </div>
-                    {hasLicenseImage && (
-                      <div className="relative aspect-[1010/650] w-full max-w-xs shrink-0 overflow-hidden border border-line sm:ml-auto sm:w-80">
+                  </Reveal>
+                  {hasLicenseImage && (
+                    <Reveal delay={0.06 * i + 0.1}>
+                      <div className="relative aspect-[1010/650] w-full overflow-hidden border border-line bg-white">
                         <Image
                           src={member.licenseImage!}
                           alt={`${member.name} — FIFA Football Agent license`}
                           fill
-                          sizes="(min-width: 640px) 320px, 100vw"
-                          className="object-cover"
+                          sizes="(min-width: 640px) 45vw, 100vw"
+                          className="object-contain"
                         />
                       </div>
-                    )}
-                  </div>
-                </Reveal>
+                    </Reveal>
+                  )}
+                </div>
               );
             })}
           </div>
+        </div>
+
+        <div className="mt-20 border-t border-line pt-12 sm:mt-24">
+          <Reveal className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+            <div>
+              <SectionLabel label="Connect" className="text-grey-500" />
+              <p className="mt-4 max-w-sm text-base leading-relaxed text-grey-500">
+                Follow Concordia Sports Agency for player updates, transfer news and
+                behind-the-scenes access.
+              </p>
+            </div>
+            <a
+              href="https://www.instagram.com/concordia.football/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex shrink-0 items-center gap-3 border-b border-ink pb-1.5 font-mono text-sm uppercase tracking-[0.15em] transition-opacity hover:opacity-60"
+            >
+              @concordia.football
+              <AnimatedArrow />
+            </a>
+          </Reveal>
         </div>
       </div>
     </section>
