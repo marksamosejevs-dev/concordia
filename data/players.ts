@@ -97,7 +97,7 @@ export const players: Player[] = [
     club: "FS Jelgava",
     height: "180 cm",
     preferredFoot: "Right",
-    nationalTeam: "Latvia U21 National Team",
+    nationalTeam: "Former Latvia U21 National Team",
     photo: "/players/kristofers-rekis.jpg",
     active: true,
   },
