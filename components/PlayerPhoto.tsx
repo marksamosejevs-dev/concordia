@@ -26,8 +26,10 @@ export default function PlayerPhoto({
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover object-top grayscale-[75%] contrast-[1.05] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className="photo-illustrated object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
         />
+        <div className="photo-illustrated-texture pointer-events-none absolute inset-0" />
+        <div className="photo-illustrated-vignette pointer-events-none absolute inset-0" />
       </div>
     );
   }

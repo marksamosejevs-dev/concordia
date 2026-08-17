@@ -31,8 +31,10 @@ export default function PersonPhoto({
           alt={name}
           fill
           sizes={sizes}
-          className="object-cover object-top grayscale-[75%] contrast-[1.05]"
+          className="photo-illustrated object-cover object-top"
         />
+        <div className="photo-illustrated-texture pointer-events-none absolute inset-0" />
+        <div className="photo-illustrated-vignette pointer-events-none absolute inset-0" />
       </div>
     );
   }

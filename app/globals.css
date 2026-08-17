@@ -95,6 +95,23 @@ body {
   background-size: 1px 100%;
 }
 
+/* Illustrated / editorial photo treatment */
+.photo-illustrated {
+  filter: url(#illustrated-photo);
+}
+
+.photo-illustrated-texture {
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.9) 0.55px, transparent 0.65px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+  opacity: 0.12;
+}
+
+.photo-illustrated-vignette {
+  background: radial-gradient(ellipse at 50% 40%, transparent 45%, rgba(0, 0, 0, 0.45) 100%);
+  mix-blend-mode: multiply;
+}
+
 /* Custom scrollbar - subtle */
 ::-webkit-scrollbar {
   width: 10px;

@@ -106,6 +106,45 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true" focusable="false">
+          <defs>
+            <filter
+              id="illustrated-photo"
+              x="-10%"
+              y="-10%"
+              width="120%"
+              height="120%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feColorMatrix type="saturate" values="0" result="gray" />
+              <feComponentTransfer in="gray" result="contrasted">
+                <feFuncR type="linear" slope="1.35" intercept="-0.16" />
+                <feFuncG type="linear" slope="1.35" intercept="-0.16" />
+                <feFuncB type="linear" slope="1.35" intercept="-0.16" />
+              </feComponentTransfer>
+              <feComponentTransfer in="contrasted" result="posterized">
+                <feFuncR type="discrete" tableValues="0 0.12 0.28 0.46 0.64 0.8 0.92 1" />
+                <feFuncG type="discrete" tableValues="0 0.12 0.28 0.46 0.64 0.8 0.92 1" />
+                <feFuncB type="discrete" tableValues="0 0.12 0.28 0.46 0.64 0.8 0.92 1" />
+              </feComponentTransfer>
+              <feConvolveMatrix
+                order="3"
+                kernelMatrix="0 -1 0 -1 5 -1 0 -1 0"
+                divisor="1"
+                bias="0"
+                edgeMode="duplicate"
+                preserveAlpha="true"
+                in="posterized"
+                result="sharpened"
+              />
+              <feComponentTransfer in="sharpened">
+                <feFuncR type="linear" slope="1.05" intercept="-0.02" />
+                <feFuncG type="linear" slope="1.05" intercept="-0.02" />
+                <feFuncB type="linear" slope="1.05" intercept="-0.02" />
+              </feComponentTransfer>
+            </filter>
+          </defs>
+        </svg>
         {children}
       </body>
     </html>
