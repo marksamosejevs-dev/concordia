@@ -64,6 +64,19 @@ function CompanyCard({ initial }: { initial: CompanySettings }) {
           <input className={input} value={form.legalName} onChange={(e) => set("legalName", e.target.value)} />
         </div>
         <div>
+          <label className={label}>Brand / trading name</label>
+          <input
+            className={input}
+            placeholder="e.g. AIDEX ENERGY GROUP"
+            value={form.brandName}
+            onChange={(e) => set("brandName", e.target.value)}
+          />
+          <p className="mt-1 text-xs text-slate-400">
+            Shown as the wordmark in the invoice header when there&apos;s no logo image. Leave blank to
+            just show the legal name.
+          </p>
+        </div>
+        <div>
           <label className={label}>Registration number</label>
           <input
             className={input}

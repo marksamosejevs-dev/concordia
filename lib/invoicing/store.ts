@@ -65,6 +65,7 @@ async function writeJson<T>(name: string, data: T): Promise<void> {
 export async function getCompany(): Promise<CompanySettings> {
   return readJson<CompanySettings>("company.json", {
     legalName: "",
+    brandName: "",
     registrationNumber: "",
     vatNumber: "",
     legalAddress: "",

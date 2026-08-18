@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
   partyLine: { fontSize: 8.7, color: TEXT, marginBottom: 1.5, lineHeight: 1.3 },
   partyLineLabel: { color: MUTED },
   metaGrid: { flexDirection: "row", flexWrap: "wrap", marginBottom: 12 },
-  metaItem: { width: "50%", flexDirection: "row", marginBottom: 3 },
-  metaLabel: { fontSize: 8.5, color: MUTED, width: 150 },
-  metaValue: { fontSize: 8.7, fontWeight: 700 },
+  metaItem: { width: "50%", flexDirection: "row", marginBottom: 3, paddingRight: 10 },
+  metaLabel: { fontSize: 8.5, color: MUTED, width: 110 },
+  metaValue: { fontSize: 8.7, fontWeight: 700, flex: 1 },
   table: { marginTop: 6, marginBottom: 4 },
   tableHeaderRow: {
     flexDirection: "row",
@@ -202,8 +202,8 @@ export function InvoiceDocument({ invoice, company }: Props) {
               <Image src={logoSrc} style={styles.logoImage} />
             ) : (
               <>
-                <Text style={styles.wordmark}>{company.legalName}</Text>
-                <Text style={styles.wordmarkSub}>GREEN ENERGY</Text>
+                <Text style={styles.wordmark}>{company.brandName || company.legalName}</Text>
+                {company.brandName ? <Text style={styles.wordmarkSub}>{company.legalName}</Text> : null}
               </>
             )}
           </View>

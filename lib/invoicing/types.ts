@@ -8,6 +8,8 @@ export type Currency = "EUR" | "GBP" | "USD" | (string & {});
 
 export interface CompanySettings {
   legalName: string;
+  /** Trading/brand name shown on the invoice header, if different from the legal name. */
+  brandName: string;
   registrationNumber: string;
   vatNumber: string;
   legalAddress: string;

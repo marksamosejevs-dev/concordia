@@ -7,11 +7,12 @@ and produces a print-ready A4 PDF that follows the layout of the original
 `Invoice_LT00107` reference invoice (dark green header/footer band, supplier/customer
 blocks, item table, VAT summary, bank details, amount in words).
 
-> **Note on the logo:** the reference `.docx` file had an image reading "AIDEX ENERGY
-> GROUP" in its header, even though the invoice text says "SIA GREEN ENERGY" — that
-> logo image doesn't belong to this business. The generated invoices use a plain
-> SIA GREEN ENERGY text wordmark in the same dark-green colour instead. Once you have
-> a real logo file, see point 12 below to drop it in.
+> **Brand vs. legal name:** the company trades as **AIDEX ENERGY GROUP** — that's the
+> logo shown in the invoice header (`public/branding/aidex-energy-group-logo.png`,
+> taken from the reference invoice). **SIA GREEN ENERGY** is the legal entity name,
+> registration number, and VAT number holder, so it's what appears in the Supplier
+> block and legal/tax fields. Both are configurable in Settings — see point 2 and
+> point 12 below.
 
 ## 1. How to open/start the invoice generator
 
@@ -28,11 +29,13 @@ navigation.
 ## 2. How to configure SIA Green Energy details
 
 Go to **Settings** (`/invoicing/settings`). The **Company details** card holds the
-legal name, registration number, VAT number, legal address, bank name, IBAN,
-SWIFT/BIC, email, phone, website, an optional logo, and a free-text field for any
-other legally required information. These fields are pre-filled from the reference
-invoice and appear automatically on every invoice you generate. Edit and click
-**Save** at any time — changes apply to invoices generated afterwards.
+legal name, brand/trading name, registration number, VAT number, legal address,
+bank name, IBAN, SWIFT/BIC, email, phone, website, an optional logo, and a
+free-text field for any other legally required information. These fields are
+pre-filled from the reference invoice — legal name "SIA GREEN ENERGY", brand name
+"AIDEX ENERGY GROUP" with its logo — and appear automatically on every invoice you
+generate. Edit and click **Save** at any time — changes apply to invoices
+generated afterwards.
 
 ## 3. How to add customers
 
@@ -141,9 +144,12 @@ and financial data into the repository's history.
 - **Layout/styling:** edit `lib/invoicing/pdf/InvoiceDocument.tsx` — it's a
   `@react-pdf/renderer` component with a `StyleSheet` at the top (colours, spacing,
   table columns) and the JSX layout below.
-- **Real logo:** put an image file in `public/branding/` (create the folder) and
-  set **Settings → Logo image path or URL** to e.g. `/branding/logo.png`. A full
-  `https://` URL also works. Leave it blank to keep the text wordmark.
+- **Logo:** the AIDEX ENERGY GROUP logo lives at
+  `public/branding/aidex-energy-group-logo.png`, referenced from **Settings → Logo
+  image path or URL**. Replace that file (keep the same filename, or update the
+  path in Settings) to swap in a different version. A full `https://` URL also
+  works. Clear the field to fall back to a plain text wordmark using the brand
+  name (or legal name, if no brand name is set).
 - **VAT notes and numbering format:** no code changes needed — both are editable
   from the Settings page.
 - **Currencies:** add more ISO codes to the list in `lib/invoicing/currencies.ts`.
