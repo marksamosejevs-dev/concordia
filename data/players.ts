@@ -149,6 +149,24 @@ export const players: Player[] = [
     transfermarktUrl: "https://www.transfermarkt.world/algirdas-grazis/profil/spieler/874306",
     active: true,
   },
+  {
+    id: "savelijs-boroviks",
+    slug: "savelijs-boroviks",
+    firstName: "Savēlijs",
+    lastName: "Boroviks",
+    fullName: "Savēlijs Boroviks",
+    dateOfBirth: "2008-04-10",
+    nationality: "Latvia",
+    positionGroup: "Defender",
+    positionLabel: "Right-Back",
+    club: "FC RFS",
+    height: "178 cm",
+    preferredFoot: "Right",
+    nationalTeam: "Latvia U19 National Team",
+    photo: "/players/savelijs-boroviks.jpg",
+    transfermarktUrl: "https://www.transfermarkt.com/savelijs-boroviks/profil/spieler/1260754",
+    active: true,
+  },
 ];
 
 export function getAge(dateOfBirth?: string): number | undefined {
