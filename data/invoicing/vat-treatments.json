@@ -1,0 +1,58 @@
+[
+  {
+    "key": "lv_standard",
+    "labelLv": "PVN 21% (Latvijas standarta likme)",
+    "labelEn": "VAT 21% (Latvian standard rate)",
+    "rate": 21,
+    "noteLv": "",
+    "noteEn": ""
+  },
+  {
+    "key": "lv_reduced",
+    "labelLv": "PVN 12% (samazinātā likme)",
+    "labelEn": "VAT 12% (reduced rate)",
+    "rate": 12,
+    "noteLv": "",
+    "noteEn": ""
+  },
+  {
+    "key": "zero_rate",
+    "labelLv": "PVN 0% (cits gadījums)",
+    "labelEn": "VAT 0% (other case)",
+    "rate": 0,
+    "noteLv": "Šim darījumam piemērota 0% PVN likme.",
+    "noteEn": "This transaction is subject to a 0% VAT rate."
+  },
+  {
+    "key": "reverse_charge",
+    "labelLv": "Nodokļa apgrieztā maksāšana (reverse charge)",
+    "labelEn": "Reverse charge",
+    "rate": 0,
+    "noteLv": "PVN 0% — nodokli maksā pakalpojuma vai preces saņēmējs atbilstoši Padomes Direktīvas 2006/112/EK 194.–199.b pantam (nodokļa apgrieztās maksāšanas kārtība).",
+    "noteEn": "VAT 0% — reverse charge applies. The customer is liable to account for VAT under Articles 194-199b of Council Directive 2006/112/EC."
+  },
+  {
+    "key": "intra_eu",
+    "labelLv": "ES iekšējā piegāde (0% PVN)",
+    "labelEn": "Intra-Community supply (0% VAT)",
+    "rate": 0,
+    "noteLv": "PVN 0% — preču piegāde Eiropas Savienības teritorijā uz citu dalībvalsti saskaņā ar Padomes Direktīvas 2006/112/EK 138. pantu. Nodokli maksā preču saņēmējs savā reģistrācijas dalībvalstī (nodokļa apgrieztā maksāšanas kārtība).",
+    "noteEn": "VAT 0% — intra-Community supply of goods pursuant to Article 138 of Council Directive 2006/112/EC. The customer is liable to account for VAT in its own Member State (reverse charge)."
+  },
+  {
+    "key": "export_non_eu",
+    "labelLv": "Eksports ārpus ES (0% PVN)",
+    "labelEn": "Export outside the EU (0% VAT)",
+    "rate": 0,
+    "noteLv": "PVN 0% — preču eksports ārpus Eiropas Savienības saskaņā ar Latvijas Pievienotās vērtības nodokļa likuma 43. pantu un Padomes Direktīvas 2006/112/EK 146. pantu.",
+    "noteEn": "VAT 0% — export of goods outside the European Union pursuant to Section 43 of the Latvian VAT Law and Article 146 of Council Directive 2006/112/EC."
+  },
+  {
+    "key": "custom",
+    "labelLv": "Cita / pielāgota PVN likme",
+    "labelEn": "Other / custom VAT rate",
+    "rate": null,
+    "noteLv": "",
+    "noteEn": ""
+  }
+]

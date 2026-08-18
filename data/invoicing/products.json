@@ -1,0 +1,12 @@
+[
+  {
+    "id": "sample-wood-pellets-a1",
+    "descriptionLv": "Koka granulas A1 6mm 15kg \"A-pellete\"",
+    "descriptionEn": "Wood Pellets A1 6mm 15kg \"A-pellet\"",
+    "defaultUnit": "t.",
+    "defaultUnitPrice": 355,
+    "defaultVatTreatment": "export_non_eu",
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "updatedAt": "2026-01-01T00:00:00.000Z"
+  }
+]

@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# invoicing app data — customer records and issued invoices are private
+# business data and stay local-only; back them up by copying this folder.
+/data/invoicing/customers.json
+/data/invoicing/invoices.json
+/data/invoicing/counters.json

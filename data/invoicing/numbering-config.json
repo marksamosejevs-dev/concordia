@@ -1,0 +1,6 @@
+{
+  "prefix": "GE",
+  "pattern": "{PREFIX}-{YEAR}-{SEQ}",
+  "sequenceDigits": 3,
+  "resetPerYear": true
+}
