@@ -99,6 +99,12 @@ Then move the row from *Pending* to the *Verification log*.
 | E19 | Re-check licence status and exact minors terminology on FIFA's public agent register before publication. | Minors credential line | Register check | PD | Open |
 | E20 | Elite seat cap (Phase 1 / business plan: max 10 seats year one) — real counter source. | "Limited capacity" label | Founder confirmation | — | Open |
 | E21 | Instalment plans (3 × $850, 6 × $750, 4 × $2,000) — still valid alongside locked prices? | Pricing cards | Founder confirmation | FS (business plan) | Open |
+| E22 | Basis of the public SAMPLE assessment: (A) an anonymised real football evaluation adapted with permission, or (B) a clearly disclosed demonstration player. Never presented as a past customer report. | Report preview (Home §06, Assessment page) | Founder decision + source material | — | Open |
+| E23 | Any third-party cost figure (e.g. trial-programme prices cited in the business plan) — source re-verified at publication. Currently none used in Phase 2B copy. | Any cost comparison | Source check | — | Open (dormant) |
+| E24 | Approved refund policy text (plan basis: assessment refundable until review begins; programmes 14-day refund minus assessment value, then pro-rata only for non-performance; injury pause up to 60 days). | Assessment, Programmes, Pricing, checkout | Founder / counsel approval | FS (business plan) | Open |
+| E25 | Legal entity details (name, registration no., address, VAT) for Concordia Soccer / European Pathway entity and Concordia Sports Agency. | Footer, receipts, Verify "Concordia Sports Agency" entry | Company registry details | — | Open |
+| E26 | Policy approval: no commissions from academies, trial operators or residencies. | Parents page "What we will never do" | Founder approval | FS (business plan recommendation) | Open |
+| E27 | "Talk to us first" contact channel (WhatsApp Business / form / call). | Parents page, final CTA | Founder decision | — | Open |
 
 ---
 
@@ -117,3 +123,14 @@ Record each resolved item here (newest first).
 | Date | Change |
 |---|---|
 | 2026-09-29 | Register created after Phase 2A pre-audit. Founder clarifications recorded as FS; licence card recorded as PD. |
+| 2026-09-29 | Phase 2B: added E22–E27. Standing decisions recorded below. |
+
+## Standing content decisions (founder-approved)
+
+| Date | Decision |
+|---|---|
+| 2026-09-29 | **No numerical representation rate or percentage** is published at launch ("fewer than 1 in 20" etc. removed). Permitted: separate · selective · cannot be purchased · a more expensive programme does not increase any right, entitlement or chance of representation. |
+| 2026-09-29 | Agency cases must carry the badge **CONCORDIA SPORTS AGENCY CASE — not a European Pathway result**. Pathway reasoning is shown only as **WORKED EXAMPLE — FICTIONAL PLAYER** until real Pathway outcomes exist. |
+| 2026-09-29 | The public term "Career Manager" is not used until E13 confirms the role. Copy never states that Marks personally performs every step of every assessment. |
+| 2026-09-29 | "Ambition without delusion" is internal only; public manifesto line is "Big ambition. Honest advice." (pending Phase 2B approval). |
+| 2026-09-29 | Pricing displays current prices only until E16 clears. |
