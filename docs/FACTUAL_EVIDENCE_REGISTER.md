@@ -1,0 +1,119 @@
+# Factual / Evidence Pending Register — Concordia Soccer · European Pathway
+
+**INTERNAL PROJECT DOCUMENT. NEVER PUBLISH.**
+This file lives in `/docs`, outside `/public`, so Next.js does not serve it. It must never be
+imported into a page, linked from the site, or copied into any public route, sitemap or CMS field.
+
+Purpose: nothing reaches public copy on the European Pathway website (or the Concordia Sports
+Agency website) until the relevant item here is **cleared for public use**.
+
+---
+
+## How to use this register
+
+### Evidence levels — never merge them
+
+| Level | Meaning | May appear publicly? |
+|---|---|---|
+| **FS — Founder-supplied** | Stated by Marks Amosejevs (chat, filename, brief). Trusted as the founder's account, **not** independently checked. | Only where the item says so, with the approved wording |
+| **PD — Primary document seen** | We have seen the original document or an image of it (certificate, licence card, contract). | Usually yes, after wording is approved |
+| **IV — Independently verified** | Confirmed against an independent/public source (FIFA agent register, bar register, federation site, official announcement). | Yes, once wording is approved |
+| **UNVERIFIED** | Nobody has supplied or checked it. | No |
+
+A founder-supplied fact does **not** become independently verified because it is repeated.
+Upgrade the level only when new evidence arrives, and log it.
+
+### When an item is resolved, record
+
+- **What was verified**
+- **Final approved wording** (exact public text)
+- **Source / evidence** (document, URL, file path; where it is stored)
+- **Evidence level** (FS / PD / IV)
+- **Date verified** (YYYY-MM-DD) and **by whom**
+- **Cleared for public use?** (Yes / No / Yes with conditions)
+
+Then move the row from *Pending* to the *Verification log*.
+
+### Standing rules
+
+- Filenames of uploaded assets are working metadata only. Spelling errors in them
+  ("Sowndowns", "Soath", "headquater", etc.) must never reach public copy.
+- A photograph proves presence at a context, nothing more. No partnership, endorsement,
+  client relationship or business relationship is inferred from a photo.
+- The word "partner" may only be used where a formal partnership is evidenced.
+- FIFA licence belongs to Marks Amosejevs personally. Concordia Sports Agency is never
+  described as a "FIFA-licensed agency".
+- Minors: guardian publication permission is required before any commercial use.
+- No reference/"regular" price is displayed as a former price without evidence (see E16).
+
+---
+
+## Founder-supplied facts (FS) — accepted for architecture, pending verification for publication
+
+| ID | Fact (as supplied) | Level | Public-use status |
+|---|---|---|---|
+| F1 | Marks Amosejevs is a **Co-Founder** (not sole founder) of Concordia Sports Agency. | FS | Usable as "Co-Founder". Other co-founder is not required in the Pathway narrative; no role invented for anyone. |
+| F2 | Marks is **Co-Founder and Chairman** of the Latvian Professional Footballers Association (LPFA), a player-support / player-rights initiative. | FS | Usable once E8 gives legal name + verify link. Do not call it a charity. |
+| F3 | Through LPFA, Marks has supported footballers with employment rights, contractual issues, club–player disputes, problematic agent/intermediary relationships and cases needing independent support. | FS | Usable as general framing (player rights, dispute support). No named or implied accusations against any club or agent. |
+| F4 | Marks is a lawyer. | FS | "Lawyer" held pending E6 (jurisdiction / register link). |
+| F5 | Marks holds an LL.M. / Master's degree in International and European Law. | FS | Held pending E7 (institution, exact degree wording). |
+| F6 | Marks takes part in continuing professional education for football agents / football professionals organised by FIFA. | FS | General statement usable; programme names held pending E3. |
+| F7 | Concordia has professional relationships/contacts across Spain, France, Italy, Belgium, Poland, Sweden, Switzerland, Czech Republic, Latvia, Lithuania, Ukraine, Uzbekistan, Kazakhstan, South Africa, United States. | FS | Usable only as "professional relationships across…". **Not** formal partnerships; never "partner clubs in 15 countries". |
+| F8 | Concordia works with professional footballers, including players with national-team experience, and with young players beginning/developing careers. | FS | Usable as general statement. Individual players only per E11. Never "Concordia created X's career" without a supporting case. |
+| F9 | Marks is the senior professional authority behind the Pathway assessment methodology. | FS | Usable. Do **not** promise Marks personally performs every part of every assessment until E13 is resolved. |
+| F10 | Approximately three further player video testimonials will follow Victor's. | FS | Planning only. |
+
+---
+
+## Primary documents seen (PD)
+
+| ID | Item | Evidence | Level | Public-use status |
+|---|---|---|---|---|
+| D1 | FIFA Football Agent licence: Marks AMOSEJEVS · status VALID · licence no. **202406-7079** · "Authorized to represent minors: as of 26/08/2024". | Licence card image, `public/team/marks-fifa-license.png` | PD (card seen); **IV pending** (E19) | Licence no. and "FIFA Licensed Football Agent" usable. Minors line held for E19. Connect ID display undecided (E5). |
+| D2 | Existing roster (8 players, clubs, positions, DOBs). | `data/players.ts`, supplied by the Agency | FS/PD (per file header) | Usable as "Players represented by Concordia Sports Agency", subject to consent (E11/E12). |
+
+---
+
+## Pending items
+
+| ID | Item | Blocks | Needed | Level now | Status |
+|---|---|---|---|---|---|
+| E1 | Full-resolution originals for photos 03, 04, 07, 13, 16 (current files are 1280px exports). | Full-bleed desktop use of those images | Original files | — | **Full-res original recommended before production.** Not blocking design. |
+| E2 | Photographer / usage rights: photo 16, photo 02, `public/football/hero-celebration.jpg`. | Publication of those images | Rights confirmation | UNVERIFIED | Open |
+| E3 | Exact FIFA programme name, edition, year, city and certificate wording (photo 16; confirm whether 01/03/04/05 are the same visit). | Credential Wall entry, captions | Certificate scan | UNVERIFIED | **Credential scan recommended before production.** |
+| E4 | Luís Villas-Boas Pires — confirm "former Head of Agents of FIFA" title and permission to name. | Photo 16 caption | Founder confirmation + public source | FS (filename) | Open — must be verified before publication |
+| E5 | Whether the FIFA Connect ID on the licence card is shown publicly. | Credential component | Founder decision | — | Component must support redaction |
+| E6 | Legal qualification: jurisdiction, admission, public register link. | "Lawyer" credential + verify link | Register entry | FS | Open |
+| E7 | LL.M.: institution, exact degree title, year. | Education credential | Diploma / institution | FS | Open |
+| E8 | LPFA: exact legal name, legal status, founding date, website, public source for Marks's titles. | LPFA credential + verify/visit link | Registry entry / website | FS | Open. No "charity" wording until status supports it. |
+| E9 | Sviridenko & Partners: whether/how it is the law practice for Football Law and legal credits. (Name visible in photo 13; role **not** inferred from the photo.) | Football Law section, legal-credit wording, footer | Founder confirmation | UNVERIFIED | Open |
+| E10 | Date / event / context / verified titles for industry photos: 02 (LFF event; filename references Gianni Infantino), 05 & 11 (filename: Tlhopane Motsepe, Mamelodi Sundowns), 06 (filename: Avazjon Karimov — which person?), 08 (England v Latvia at Wembley — date, reason attended), 09 (filename: Massimo Paganin, Paolo Nicolato; "TARGET" event), 12 (filename: Bakhodir Mirzayev, FC OKMK — reason for shirt presentation). | Captions (template until resolved: "Marks Amosejevs with [NAME], [VERIFIED TITLE], at [EVENT], [YEAR].") | Per-photo facts | FS (filenames) | Open. "2x CAF Champions League winners" claim **dropped**. Photo 02 is never captioned as a personal meeting. |
+| E11 | Player relationships + written publication consent: photo 07 (filename: Viktors Ohvovoriole — spelling, from-club, year, transfer type, Agency role), photos 13 (filename: Kristers Tobers), 14 (filename: Daniels Balodis), 15 (filename: captain of Latvia NT — name not assumed), `hero-celebration.jpg` (player identity). | Players layer, captions, cases | Founder confirmation + consent | FS (filenames) | **Hold for consent / factual confirmation.** Players in 13–15 **not** classified as Agency clients. |
+| E12 | Guardian publication permission for minors: photo 10 (filename: Nazar Mahina), roster player Emilija Ambaine (DOB 2010-01-15). | Any commercial use | Guardian permission | — | **Hold.** Photo 10 not planned for use. |
+| E13 | Final assessment operational workflow — who reviews what; exactly what Marks personally reviews/signs off. | Assessment page, Parents page, "who reviews" copy | Operational decision | — | Open |
+| E14 | Final 4–8 case studies: facts, acting entity (Agency / Pathway / Law practice), evidence, player (and guardian) approval. | Real Careers section and pages | Case fact sheets | — | Open. None public until confirmed. |
+| E15 | Victor Testimonial.mp4: transcript, speaker, relationship, date, language, permission. Plus ~3 further videos. **Is Victor the same person as in photo 07? — unconfirmed.** | Testimonials | Dedicated testimonial audit | — | Testimonial video — pending full metadata / transcript |
+| E16 | Reference ("regular") price effective date or evidence of prior genuine offering. | Any display of $349 / $2,000 / $2,900 / $4,900 / $10,000 / $250 | Genuine future date or evidence | — | Open. No "was $X", no strikethrough, no percentages until resolved. Locked current prices unaffected. |
+| E17 | Production vector logo (CONCORDIA + globe/route "O", "SOCCER · EUROPEAN PATHWAY" with European Pathway prioritised). | Implementation | SVG rebuild after approval | — | Open |
+| E18 | Live Agency-site wording "FIFA-licensed football representation agency" (`components/Agency.tsx`) is inaccurate — licence is personal. | Agency site correction | Change during implementation phase | — | Open — **do not edit yet** |
+| E19 | Re-check licence status and exact minors terminology on FIFA's public agent register before publication. | Minors credential line | Register check | PD | Open |
+| E20 | Elite seat cap (Phase 1 / business plan: max 10 seats year one) — real counter source. | "Limited capacity" label | Founder confirmation | — | Open |
+| E21 | Instalment plans (3 × $850, 6 × $750, 4 × $2,000) — still valid alongside locked prices? | Pricing cards | Founder confirmation | FS (business plan) | Open |
+
+---
+
+## Verification log
+
+Record each resolved item here (newest first).
+
+| Date verified | ID | What was verified | Final approved wording | Source / evidence | Level | Verified by | Cleared for public use? |
+|---|---|---|---|---|---|---|---|
+| — | — | — | — | — | — | — | — |
+
+---
+
+## Change history
+
+| Date | Change |
+|---|---|
+| 2026-09-29 | Register created after Phase 2A pre-audit. Founder clarifications recorded as FS; licence card recorded as PD. |
