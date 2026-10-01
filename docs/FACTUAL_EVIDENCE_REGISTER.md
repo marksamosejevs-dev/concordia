@@ -105,6 +105,8 @@ Then move the row from *Pending* to the *Verification log*.
 | E25 | Legal entity details (name, registration no., address, VAT) for Concordia Soccer / European Pathway entity and Concordia Sports Agency. | Footer, receipts, Verify "Concordia Sports Agency" entry | Company registry details | — | Open |
 | E26 | Policy approval: no commissions from academies, trial operators or residencies. | Parents page "What we will never do" | Founder approval | FS (business plan recommendation) | Open |
 | E27 | "Talk to us first" contact channel (WhatsApp Business / form / call). | Parents page, final CTA | Founder decision | — | Open |
+| E28 | Creator / affiliate partner policy: eligible products, compensation basis, disclosure wording, exclusions. Compensation may apply only to eligible European Pathway advisory products — never to representation, transfers, agent fees or club placement. | Any /partners pages, referral codes, partner payouts | Legal + commercial approval | — | Open |
+| E29 | Ongoing Pathway commercial architecture (fixed / monthly / hybrid) and any resulting prices. No new prices invented. | Programmes, Pricing, checkout | Founder decision | — | Open |
 
 ---
 
@@ -134,3 +136,7 @@ Record each resolved item here (newest first).
 | 2026-09-29 | The public term "Career Manager" is not used until E13 confirms the role. Copy never states that Marks personally performs every step of every assessment. |
 | 2026-09-29 | "Ambition without delusion" is internal only; public manifesto line is "Big ambition. Honest advice." (pending Phase 2B approval). |
 | 2026-09-29 | Pricing displays current prices only until E16 clears. |
+| 2026-10-01 | Hero CTA micro-line: "Apply free · Assessment $249 if accepted". |
+| 2026-10-01 | Sample report ships as SAMPLE ASSESSMENT — ILLUSTRATIVE EXAMPLE (E22 resolved to option B for launch; data model must allow later replacement with a permitted anonymised real assessment). |
+| 2026-10-01 | Elite copy: "More time. More depth. More frequent professional review." — no multi-person-team language until E13 confirms a team. |
+| 2026-10-01 | Contracts, checkout, receipts, privacy and refunds use the actual legal contracting entity (E25). No "Concordia Soccer" legal entity is invented. |
