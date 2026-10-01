@@ -1215,3 +1215,93 @@ Programmes: Hero → Before/after → Window Clock → Window → Two-Window →
 - Success, redefined (§07) now sits directly after the product — the argument for $249 includes the value of a "no".
 - Sample report is explicitly a **Sample** (fictional player or permitted adaptation), never a past customer report (E22).
 - Homepage reduced from 23 to 18 sections; mobile has no pinned sequences.
+
+---
+
+# ADDENDUM 1 — Team structure (2026-10-01) — SUPERSEDES conflicting text above
+
+Where anything earlier in this document says or implies that Marks personally performs the
+service ("his methodology and sign-off", "Marks leads the assessment methodology" as the only
+actor, "who is actually looking at your career?" answered with one person), this addendum wins.
+
+### Positioning
+
+**A PROFESSIONAL TEAM, LED BY A FIFA LICENSED FOOTBALL AGENT, WORKING INSIDE EUROPEAN FOOTBALL.**
+
+Trust hierarchy: Concordia Sports Agency → Concordia Soccer · European Pathway → the team →
+Marks Amosejevs (Co-Founder & CEO, senior football authority) → specialists / analysts / advisers.
+
+Marks's role: **built, leads and provides senior professional oversight of the service** — not
+"performs every step". Never: "FIFA Licensed Team", "FIFA Licensed Agency". Do not overstate team size.
+
+### Approved public territory (until E13 sign-off wording is approved)
+
+- [PUBLIC COPY] Led by FIFA Licensed Football Agent Marks Amosejevs.
+- [PUBLIC COPY] Professional football career guidance from a team working inside European football.
+- [PUBLIC COPY] Every assessment follows Concordia's professional assessment framework and receives senior review.
+- [FACT PENDING — E13] Any statement of who analyses the match, who signs off, who takes the call.
+
+### Replacements
+
+| Location | Replace | With |
+|---|---|---|
+| Hero credential line (H1 etc.) | "Assessment methodology led by FIFA Licensed Football Agent Marks Amosejevs · Licence 202406-7079 · [VERIFY]" | "Led by FIFA Licensed Football Agent Marks Amosejevs · Licence 202406-7079 · [VERIFY]" |
+| Home §04 headline | "WHO IS ACTUALLY LOOKING AT YOUR CAREER?" | **BUILT INSIDE FOOTBALL. LED BY PEOPLE WHO WORK IN IT.** |
+| Home §04 body | single-person paragraph | Short team intro (below) + Marks as lead + verify rail |
+| Assessment "What you receive", last bullet | "Sign-off under the methodology of … Marks Amosejevs [E13]" | "Senior professional review under Concordia's assessment framework [FACT PENDING — E13: exact sign-off wording]" |
+| Assessment step 03 | "A full match is watched … [E13: who]" | "A full match is analysed — at least 60 minutes — plus your highlights." (no named analyst) |
+| Parents "Who reviews your child" | Marks-only paragraph | "Your child is assessed by a professional team working inside European football, led by FIFA Licensed Football Agent Marks Amosejevs, who is authorised to represent minors [E19]. Every assessment follows our professional framework and receives senior review [E13]." + [Meet the team] [Verify] |
+| I-C parent narrative opening | "Marks Amosejevs leads the assessment methodology." | "Our team is led by Marks Amosejevs." (three "so what" points unchanged) |
+| Elite headline (already revised) | — | **MORE TIME. MORE DEPTH. MORE FREQUENT PROFESSIONAL REVIEW.** No named team member promised (E34). |
+| FAQ "Who reviews my match?" | [E13] | "A qualified member of our team analyses your full match, and every assessment receives senior review under Concordia's framework." [E13: final wording] |
+
+### Home §04 (revised) [PUBLIC COPY]
+
+**BUILT INSIDE FOOTBALL. LED BY PEOPLE WHO WORK IN IT.**
+European Pathway is run by a professional team working inside European football, led by
+FIFA Licensed Football Agent Marks Amosejevs — Co-Founder & CEO, lawyer [FACT PENDING — E6], and
+Co-Founder & Chairman of the Latvian Professional Footballers Association [FACT PENDING — E8].
+Team row: Marks Amosejevs — Co-Founder & CEO · Filipp Sviridenko — Co-Founder [secondary role: FACT PENDING — E30] · Valerija Sevcenko — [FACT PENDING — E32].
+[Meet the team] [Read Marks's story] · Verify rail (unchanged).
+
+[INTERNAL NOTE] Concise: three portraits in the same crop, name + confirmed role only. Marks's card is visually first (displayOrder) but the same size — the team reads as a team.
+
+### About Concordia Soccer → The Team
+
+Route: **/about** (About Concordia Soccer · European Pathway) containing **The Team**; Marks keeps **/about/marks-amosejevs**. No deep individual pages for others until content justifies it (a `profilePage` flag enables one later).
+
+/about structure: What European Pathway is (and isn't) → relationship to Concordia Sports Agency → how we work (framework + senior review, no allocation published) → The Team → Verify → CTA.
+Heading [PUBLIC COPY]: **THE PEOPLE BEHIND THE ASSESSMENT.** Sub: A professional team, led by a FIFA Licensed Football Agent, working inside European football. (No "meet our amazing team".)
+
+### Team data model (TeamMember)
+
+| Field | Type | Notes |
+|---|---|---|
+| id, slug | string | |
+| name | string | |
+| role | string | Confirmed public role only |
+| secondaryRole | string? | e.g. "FIFA Licensed Football Agent"; Filipp: pending E30 |
+| shortBio | string? | Card text; renders only if `evidenceState` allows |
+| longBio | rich text? | About / profile page |
+| photo | { desktopPortrait, mobilePortrait, gridCrop, aboutCrop, avatar } | Each crop separately; production placeholder until E33 |
+| credentials | ref[] → VerifyEntry | Reuses the Verify system; each with its own state |
+| specialisms | string[]? | |
+| languages | string[]? | |
+| verificationLinks | { label, url }[] | |
+| linkedin | url? | |
+| displayOrder | number | |
+| featured | boolean | Homepage team row |
+| profilePage | boolean | Enables /about/[slug]; true only for Marks at launch |
+| evidenceState | per-field map: confirmed / pending | **Pending fields never render publicly**; build guard fails on a published pending field |
+| assessmentRoles | enum[] (internal, not rendered) | intake, footagePrep, matchAnalysis, careerMarketAssessment, reportPrep, seniorReview, clientCall, escalation — assigned later (E13) |
+
+Initial records: Marks (role "Co-Founder & CEO", secondaryRole "FIFA Licensed Football Agent", profilePage true) · Filipp (role "Co-Founder", secondaryRole pending E30) · Valerija (role pending E32 — card held or name-only per founder choice).
+
+### Team photography placeholders
+
+Deliberate production placeholders (not stock, not existing repo photos): a neutral Night Ink
+field in each exact crop ratio with the person's initials in Druk at low contrast and a thin
+Route Yellow corner rule — so the layout, crops and rhythm are final before the shoot lands (E33).
+Crop set: desktop portrait 4:5 · mobile portrait 4:5 (tighter) · grid 3:4 · About 3:2 environmental · avatar 1:1.
+Art direction for the shoot: one environment, one lighting set-up, one crop logic, coordinated
+dark wardrobe; premium, European, football-industry, modern — not corporate stock, not academy.
