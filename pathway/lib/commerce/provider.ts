@@ -1,0 +1,28 @@
+/**
+ * Payment provider abstraction. Business logic talks to PaymentProvider only;
+ * a Stripe (or other) adapter is added later without touching pages or products.
+ * Merchant of record: Concordia Sports Agency SIA (see content/site.ts).
+ */
+import type { Order } from "./types";
+import { FEATURES } from "../site-mode";
+
+export interface CheckoutSession { redirectUrl?: string; status: "redirect" | "preview" | "error"; message?: string }
+
+export interface PaymentProvider {
+  readonly name: string;
+  createCheckout(order: Order): Promise<CheckoutSession>;
+}
+
+/** Used until live payments are approved: never charges, returns a preview result. */
+export const previewProvider: PaymentProvider = {
+  name: "preview",
+  async createCheckout() {
+    return { status: "preview", message: "Payments are not active in this build. No card has been charged." };
+  },
+};
+
+export function getPaymentProvider(): PaymentProvider {
+  // if (FEATURES.paymentsLive) return stripeProvider;  ← wired in once approved
+  void FEATURES;
+  return previewProvider;
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="96 -14 128 128" role="img" aria-label="Concordia Soccer"><rect x="96" y="-14" width="128" height="128" rx="18" fill="#0D1B36"/>
+  <defs><clipPath id="g"><circle cx="160" cy="50" r="33.5"/></clipPath></defs>
+  <g fill="none" stroke-linecap="butt">
+    <path d="M199 35.8A41.5 41.5 0 1 1 177.5 12.4" stroke="#FFFFFF" stroke-width="17"/>
+    <g clip-path="url(#g)" stroke="#FFFFFF" stroke-width="4">
+      <ellipse cx="160" cy="50" rx="14" ry="34"/>
+      <path d="M160 14V86"/>
+      <path d="M124 36Q160 46 196 36M122 62Q160 72 198 62"/>
+    </g>
+    <path d="M129 83C151 73 174 52 191 21" stroke="#0D1B3600" stroke-width="0"/>
+    <path d="M129 83C151 73 174 52 191 21" stroke="#FFD23F" stroke-width="7"/>
+    <path d="M200 5L185 17.5L198.5 25Z" fill="#FFD23F" stroke="none"/>
+  </g></svg>

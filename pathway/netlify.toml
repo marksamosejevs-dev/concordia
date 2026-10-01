@@ -1,0 +1,21 @@
+# Concordia Soccer · European Pathway — Netlify project #2 ONLY.
+# This file is read only when the Netlify project's Base directory is "pathway".
+# The Concordia Sports Agency project (base directory = repository root) never reads it.
+[build]
+  command = "npm run build:export"
+  publish = "out"
+  # Skip builds when nothing inside pathway/ changed.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ."
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_PUBLIC_SITE_MODE = "review"
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Review deployment: keep it out of search engines until launch.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

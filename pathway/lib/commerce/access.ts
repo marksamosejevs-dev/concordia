@@ -1,0 +1,8 @@
+import type { AccessRule } from "./types";
+
+export const accessCopy: Record<AccessRule, { label: string; explain: string }> = {
+  public: { label: "Available", explain: "" },
+  application_required: { label: "After a free application", explain: "Apply free. If you're accepted for an assessment, you can pay online." },
+  assessment_required: { label: "Assessment first", explain: "Programmes are offered after your assessment, when they make sense for you." },
+  invitation_only: { label: "By invitation", explain: "Offered by our team when it fits your situation." },
+};

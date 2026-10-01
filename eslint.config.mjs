@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Concordia Soccer · European Pathway is a separate app with its own config.
+    "pathway/**",
   ]),
 ]);
 

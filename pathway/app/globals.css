@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+/* ── Concordia Soccer · European Pathway — design tokens (Phase 1 §3) ───────────── */
+@theme {
+  --color-ink: #0d1b36;          /* Night Ink — primary dark field */
+  --color-ink-deep: #081127;     /* deeper ink for contrast bands */
+  --color-ink-soft: #15264a;     /* raised surfaces on ink */
+  --color-blue: #1e3c9c;         /* Continental Blue — map fills, secondary fields */
+  --color-paper: #f3f5f7;        /* Paper — light sections */
+  --color-slate: #7d8797;        /* Slate — secondary text, hairlines */
+  --color-slate-light: #aeb6c4;
+  --color-route: #ffd23f;        /* Route Yellow — route line, markers, prices. Never gradients/backgrounds */
+  --color-route-deep: #b98a00;   /* Route on Paper (contrast-safe) */
+  --color-alert: #d6452f;        /* Alert Red — red flags, form errors only */
+
+  --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --ease-route: cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+:root {
+  --gutter: clamp(1rem, 5vw, 4.5rem);
+  --header-h: 64px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+::selection { background: var(--color-route); color: var(--color-ink); }
+
+/* Layout */
+.wrap { width: 100%; max-width: 1360px; margin-inline: auto; padding-inline: var(--gutter); }
+.wrap-narrow { width: 100%; max-width: 880px; margin-inline: auto; padding-inline: var(--gutter); }
+
+/* Type */
+.display { font-family: var(--font-display); text-transform: uppercase; line-height: 0.92; letter-spacing: 0.005em; font-weight: 400; }
+.d-hero  { font-size: clamp(2.9rem, 6.4vw, 6.9rem); }
+.d-xl    { font-size: clamp(2.35rem, 5.4vw, 5.5rem); }
+.d-lg    { font-size: clamp(2rem, 4.4vw, 4.4rem); }
+.d-md    { font-size: clamp(1.7rem, 3.4vw, 3.1rem); line-height: 0.98; }
+.d-sm    { font-size: clamp(1.35rem, 2.2vw, 1.9rem); line-height: 1.04; }
+.mono    { font-family: var(--font-mono); letter-spacing: 0.04em; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+.lede    { font-size: clamp(1.05rem, 1.5vw, 1.3rem); line-height: 1.55; }
+.body    { font-size: 1rem; line-height: 1.7; }
+.measure { max-width: 64ch; }
+
+/* Surfaces */
+.on-paper { background: var(--color-paper); color: var(--color-ink); }
+.on-ink { background: var(--color-ink); color: #fff; }
+.on-deep { background: var(--color-ink-deep); color: #fff; }
+.hairline { border-color: rgb(125 135 151 / 0.28); }
+.on-paper .hairline { border-color: rgb(13 27 54 / 0.14); }
+
+/* Focus */
+:focus-visible { outline: 2px solid var(--color-route); outline-offset: 3px; border-radius: 2px; }
+.on-paper :focus-visible { outline-color: var(--color-ink); }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; min-height: 52px; padding: 0 1.5rem; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.01em; transition: background 0.25s var(--ease-route), color 0.25s var(--ease-route), border-color 0.25s var(--ease-route), transform 0.25s var(--ease-route); }
+.btn-route { background: var(--color-route); color: var(--color-ink); }
+.btn-route:hover { background: #fff; }
+.btn-ghost { border: 1.5px solid rgb(255 255 255 / 0.35); color: #fff; }
+.btn-ghost:hover { border-color: #fff; }
+.on-paper .btn-ghost { border-color: rgb(13 27 54 / 0.3); color: var(--color-ink); }
+.on-paper .btn-ghost:hover { border-color: var(--color-ink); }
+.btn-ink { background: var(--color-ink); color: #fff; }
+.btn-ink:hover { background: var(--color-blue); }
+.btn .arrow { transition: transform 0.25s var(--ease-route); }
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s var(--ease-route), transform 0.8s var(--ease-route); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Route line drawing */
+.route-draw { stroke-dasharray: var(--len, 2000); stroke-dashoffset: var(--len, 2000); animation: route-draw 1.6s var(--ease-route) 0.3s forwards; }
+@keyframes route-draw { to { stroke-dashoffset: 0; } }
+.pulse { animation: pulse 2.4s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(1.6); } }
+
+/* Review-mode gating */
+.gated { position: relative; outline: 1.5px dashed rgb(255 210 63 / 0.75); outline-offset: 4px; }
+.on-paper .gated { outline-color: rgb(185 138 0 / 0.9); }
+.gate-tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--color-route); color: var(--color-ink); padding: 2px 6px; font-weight: 600; white-space: normal; overflow-wrap: anywhere; max-width: 100%; }
+.pending-inline { border-bottom: 1.5px dashed var(--color-route); }
+.on-paper .pending-inline { border-bottom-color: var(--color-route-deep); }
+
+/* Sample watermark */
+.sample-mark { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; font-family: var(--font-display); font-size: clamp(2.5rem, 9vw, 5.5rem); color: rgb(13 27 54 / 0.06); transform: rotate(-24deg); letter-spacing: 0.08em; }
+
+/* Scrollbars on rails */
+.rail { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.rail::-webkit-scrollbar { display: none; }
+
+/* Photo treatment: real photography, slight editorial grade */
+.photo-grade { filter: saturate(0.9) contrast(1.04); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+  .route-draw { stroke-dashoffset: 0; }
+}
+
+/* Grid items may shrink below their content width (prevents rails/tables widening columns on mobile). */
+[class*="grid-cols"] > * { min-width: 0; }
