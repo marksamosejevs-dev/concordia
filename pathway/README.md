@@ -27,3 +27,5 @@ Evidence references (E#) map to `../docs/FACTUAL_EVIDENCE_REGISTER.md`.
 ## Netlify (project #2 only)
 Base directory `pathway` · build `npm run build:export` · publish `out` · Node 22 — all set in `pathway/netlify.toml`,
 which Netlify reads only when the base directory is `pathway`. The Agency project (base directory = repository root) is unaffected.
+
+Review deployments: branch `claude/dreamy-meitner-xavjbk` → https://claude-dreamy-meitner-xavjbk--concordia-soccer.netlify.app (noindex).
