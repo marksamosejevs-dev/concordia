@@ -1,0 +1,54 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Gate } from "@/components/ui/Gate";
+import { sortedTeam } from "@/content/team";
+import { TEAM_PORTRAITS, type PortraitAsset } from "@/content/people-assets";
+
+/** One crop system for every portrait: same ratio, framing (focus + zoom) and treatment. */
+export function PortraitFrame({ a, name, sizes, className = "" }: { a?: PortraitAsset; name: string; sizes: string; className?: string }) {
+  const initials = name.split(" ").map((p) => p[0]).join("");
+  return (
+    <div className={`relative aspect-[4/5] overflow-hidden rounded-[14px] bg-ink ${className}`}>
+      {a?.src ? (
+        <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.03]" style={{ transformOrigin: a.focus }}>
+          <div className="absolute inset-0" style={{ transform: `scale(${a.zoom})`, transformOrigin: a.focus }}>
+            <Image src={a.src} alt={a.alt} fill sizes={sizes} className="object-cover grayscale-[0.25] contrast-[1.05] transition-[filter] duration-700 group-hover:grayscale-0" style={{ objectPosition: a.focus }} />
+          </div>
+        </div>
+      ) : (
+        <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(120%_80%_at_30%_10%,#1E3C9C55,transparent_60%)]" aria-label={`${name} — portrait to follow`} role="img">
+          <span className="display text-[clamp(3.5rem,8vw,5.5rem)] leading-none text-white/15">{initials}</span>
+        </div>
+      )}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/45 to-transparent" aria-hidden />
+    </div>
+  );
+}
+
+/** TEAM — three people, one organisation. Marks first; equal card system. */
+export function TeamSection() {
+  const team = sortedTeam();
+  return (
+    <section id="team" className="on-paper relative overflow-hidden py-[clamp(4.5rem,10vw,7.5rem)]" aria-labelledby="team-title">
+      <div className="wrap">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <h2 id="team-title" className="display max-w-[14ch] text-[clamp(2.6rem,5.4vw,5.2rem)] leading-[0.9]">The people in your corner.</h2>
+          <Link href="/about" className="inline-flex items-center gap-2 font-semibold underline decoration-ink/30 underline-offset-[6px] hover:decoration-ink">About Concordia <span aria-hidden>→</span></Link>
+        </div>
+        <ul className="mt-10 grid gap-x-6 gap-y-7 sm:mt-12 sm:grid-cols-3 sm:gap-y-10">
+          {team.map((m) => (
+            <li key={m.id} className="group grid grid-cols-[minmax(96px,32%)_1fr] items-start gap-4 sm:block">
+              <PortraitFrame a={TEAM_PORTRAITS[m.id]} name={m.name} sizes="(min-width:1360px) 400px, (min-width:640px) 31vw, 32vw" />
+              <div>
+              <h3 className="display text-[clamp(1.6rem,2.6vw,2.4rem)] leading-none sm:mt-5">{m.name}</h3>
+              <p className="mt-1.5 font-semibold text-ink/70">{m.role.value}</p>
+              <p className="mt-2 max-w-[36ch] text-[0.9rem] leading-relaxed text-ink/75 sm:mt-3 sm:text-[0.95rem]">{(m.teamLine ?? m.shortBio)?.value}</p>
+              {m.extendedBio && <Gate evidence={m.extendedBio.evidence} label="bio" className="mt-3"><p className="text-[0.85rem] text-ink/55">{m.extendedBio.value}</p></Gate>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}

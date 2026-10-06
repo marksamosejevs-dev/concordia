@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
 import { Section } from "@/components/ui/Section";
 import { VerifyLedger } from "@/components/verify/VerifyLedger";
@@ -17,7 +18,7 @@ export default function VerifyPage() {
             <span className="flex items-center gap-2"><span className="inline-block h-3 w-3 rounded-full border-2 border-route" />Document viewable</span>
           </div>
           <VerifyLedger mode="full" />
-          <p className="mt-10 max-w-3xl text-[0.9rem] text-slate-light">Credentials belong to the individual named. The FIFA Football Agent licence is held personally by Marks Amosejevs; Concordia Sports Agency and Concordia Soccer are not “FIFA-licensed”. No endorsement by FIFA, UEFA, any federation or any club is stated or implied.</p>
+          <p className="mt-10 max-w-3xl text-[0.9rem] text-slate-light">Credentials belong to the individual named. <Link href="/legal/terms#notices" className="underline underline-offset-2">Key notices</Link></p>
         </div>
       </Section>
       <FinalCta />

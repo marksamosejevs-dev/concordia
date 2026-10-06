@@ -15,7 +15,7 @@ import type { ReactNode } from "react";
  * Hero — layered composition: pointer-reactive dot-matrix Europe, oversized drifting "EUROPE",
  * a masked editorial photo, and a floating player-profile UI whose market cycles in sync with the map route.
  */
-export function HeroV3({ pricePair }: { pricePair: ReactNode }) {
+export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; secondary?: { src: string; alt: string; position: string; caption: string[] } }) {
   const reduced = usePrefersReducedMotion();
   const [i, setI] = useState(0);
   useEffect(() => {
@@ -92,6 +92,18 @@ export function HeroV3({ pricePair }: { pricePair: ReactNode }) {
           </div>
         </div>
       </div>
+      {secondary && (
+        /* Secondary editorial image — lower and smaller than the primary frame, leading the eye into the page. */
+        <div className="wrap relative -mt-4 flex justify-end pb-14 lg:-mt-28 lg:pb-20">
+          <figure className="relative w-[82%] max-w-[520px] sm:w-[60%] lg:mr-[2%] lg:w-[32%]" style={{ transform: "translate3d(calc(var(--px) * 8px), calc(var(--sp) * -30px), 0)" }}>
+            <span className="absolute -left-6 top-1/2 hidden h-[2px] w-6 bg-route lg:block" aria-hidden />
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.85)] ring-1 ring-white/10">
+              <Image src={secondary.src} alt={secondary.alt} fill sizes="(min-width:1024px) 34vw, 82vw" className="photo-grade object-cover" style={{ objectPosition: secondary.position }} />
+            </div>
+            <figcaption className="mt-2.5 text-right text-[0.78rem] leading-tight"><span className="font-bold text-white">{secondary.caption[0]}</span> <span className="text-white/60">· {secondary.caption[1]}</span></figcaption>
+          </figure>
+        </div>
+      )}
     </Parallax>
   );
 }

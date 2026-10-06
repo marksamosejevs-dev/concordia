@@ -69,7 +69,7 @@ function DocViewer({ e, onClose }: { e: VerifyEntry; onClose: () => void }) {
         )}
         {e.redact && IS_REVIEW && <button className="mono mt-3 text-[0.68rem] uppercase tracking-[0.1em] text-slate-light underline" onClick={() => setRevealed((v) => !v)}>Review only: {revealed ? "re-apply" : "show"} redaction (E5)</button>}
         {e.howToCheck && <p className="mt-6 text-[0.95rem] text-white/85"><span className="mono mr-2 text-[0.62rem] uppercase tracking-[0.12em] text-slate">How to check</span>{e.howToCheck}</p>}
-        <p className="mt-4 text-[0.82rem] text-slate-light">Credentials belong to the individual named. No endorsement by FIFA or any other body is stated or implied.</p>
+        <p className="mt-4 text-[0.82rem] text-slate-light">Credentials belong to the individual named.</p>
       </div>
     </div>
   );

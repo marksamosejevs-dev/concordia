@@ -15,6 +15,8 @@ export interface TeamMember {
   longBio?: Field<string[]>;
   /** Short pending line shown only in review until the founder supplies it. */
   extendedBio?: Field;
+  /** Team-card line (2–3 short lines). Falls back to shortBio. */
+  teamLine?: Field;
   photo: { desktopPortrait?: string; mobilePortrait?: string; gridCrop?: string; aboutCrop?: string; avatar?: string; evidence: Evidence };
   credentialIds: string[];      // → content/credentials.ts (Verify system)
   specialisms?: Field<string[]>;
@@ -42,6 +44,8 @@ export const team: TeamMember[] = [
       value: "FIFA Licensed Football Agent working with professional and emerging players across European football. Co-Founder of the Latvian Professional Footballers Association and a sports lawyer with experience across player representation, contracts and football regulation.",
       evidence: { state: "confirmed", ref: "FS-R3", note: "Founder-supplied team description, Round 3" },
     },
+    // Team card (approved earlier wording, condensed). The full founder description is used in the credential section.
+    teamLine: { value: "FIFA Licensed Football Agent. Leads European Pathway and oversees its football assessment framework.", evidence: confirmed },
     photo: { evidence: photoPending },
     credentialIds: ["fifa-licence", "minors", "lawyer", "llm", "players-association", "fifa-education", "agency"],
     displayOrder: 1,
