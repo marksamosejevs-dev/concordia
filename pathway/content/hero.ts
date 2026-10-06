@@ -1,5 +1,5 @@
 import { photos } from "./photos";
-import { HERO_SECONDARY, HERO_SUPPORTING } from "./people-assets";
+import { HERO_SECONDARY, HERO_SUPPORTING, HERO_SUPPORTING_2 } from "./people-assets";
 
 /**
  * Hero art direction — swap the image here after founder review (any id from content/photos.ts).
@@ -14,6 +14,8 @@ export const HERO = {
   secondary: HERO_SECONDARY,
   /** Supporting opening image (smallest): Filipp Sviridenko at MetLife Stadium, left of Emīlija on desktop. */
   supporting: HERO_SUPPORTING,
+  /** Second supporting image (smallest, no caption), left of Filipp on desktop only. */
+  supporting2: HERO_SUPPORTING_2,
   /** Other plausible hero images, in order of preference. */
   alternates: [photos.cwcStand, photos.okmk, photos.chairmanShirt],
 };

@@ -4,7 +4,7 @@ import { ParentsPlayers } from "./ParentsPlayers";
 import { VideoTestimonials } from "./VideoTestimonials";
 import { FlowLine } from "@/components/funnel/FlowLine";
 import { ACCEPTED_MEANING } from "@/content/assessment";
-import { photos } from "@/content/photos";
+import { PARENTS_SECTION_PHOTO } from "@/content/people-assets";
 import { testimonials } from "@/content/testimonials";
 import { activeSample } from "@/content/sample-report";
 import { product } from "@/content/products";
@@ -105,7 +105,8 @@ export function StartHere() {
 
 /** Parents / players — questions floating around a photograph (Wembley deliberately not used on the homepage). */
 export function ParentsSection() {
-  return <ParentsPlayers photo={<Image src={photos.stadium.src} alt={photos.stadium.alt} fill sizes="(min-width:1024px) 45vw, 100vw" className="photo-grade object-cover" style={{ objectPosition: "50% 40%" }} />} />;
+  const p = PARENTS_SECTION_PHOTO;
+  return <ParentsPlayers photo={<Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 45vw, 100vw" className="photo-grade object-cover" style={{ objectPosition: p.position }} />} />;
 }
 
 /** Video testimonials — human poster frames, drag carousel. */

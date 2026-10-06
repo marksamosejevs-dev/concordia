@@ -33,6 +33,18 @@ export const HERO_SECONDARY = { src: "/assets/pathway/photos/players/emilija-amb
  */
 export const HERO_SUPPORTING = { src: photos.cwcStand.src, w: photos.cwcStand.w, h: photos.cwcStand.h, alt: "Filipp Sviridenko in the stand at MetLife Stadium", position: "30% 50%", caption: ["Filipp Sviridenko", "MetLife Stadium"] as const };
 
+/**
+ * Hero supporting image — the founder-supplied photo "With Nazar Mahina from Leicester youth" (original, unchanged).
+ * E12 guardian publication permission confirmed by the founder (6 Oct 2026). No public identity/club caption:
+ * the filename is metadata, not an approved public claim. Shown at its own 3:4 ratio (no crop).
+ */
+export const HERO_SUPPORTING_2 = { src: "/assets/pathway/photos/players/stand-latvia-shirts.jpg", w: 960, h: 1280, alt: "Two people in Latvia shirts in a stadium stand before an international match", position: "50% 40%" };
+
+/** Section photo for "You don’t have to figure out your football career alone." — the founder-supplied
+ *  "With the Latvian National Team and Aberdeen (Scotland) player Kristers Tobers" photo (identical file,
+ *  library copy players/office-meeting.jpg). No caption claims. */
+export const PARENTS_SECTION_PHOTO = { src: photos.office.src, alt: photos.office.alt, position: "50% 62%" };
+
 /** Credential section — a DIFFERENT Marks photograph from the team portrait. */
 export const CREDENTIAL_PHOTO: PortraitAsset = { src: photos.boardroom.src, alt: "Marks Amosejevs at FIFA headquarters, Zurich", focus: "72% 48%", zoom: 1.15, temporary: true, note: "FIFA HQ boardroom photo — founder to confirm or replace" };
 

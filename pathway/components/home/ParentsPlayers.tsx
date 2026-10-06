@@ -25,7 +25,7 @@ export function ParentsPlayers({ photo }: { photo: React.ReactNode }) {
       <div className="wrap grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         {/* Stage: photo + floating questions */}
         <div className="relative">
-          <div className="relative aspect-[4/5] w-full max-w-[560px] overflow-hidden sm:aspect-[5/4] lg:aspect-[4/5]">{photo}<div className="absolute inset-0 bg-ink/35" aria-hidden /></div>
+          <div className="relative aspect-[4/5] w-full max-w-[560px] overflow-hidden sm:aspect-[5/4] lg:aspect-[4/5]">{photo}<div className="absolute inset-0 bg-gradient-to-t from-ink/35 via-transparent to-transparent" aria-hidden /></div>
           <ul className="absolute inset-0 hidden lg:block" aria-hidden>
             {qs.map((q, n) => (
               <li key={q} className="float-q absolute" style={{ left: `${spots[n][0]}%`, top: `${spots[n][1]}%`, animationDelay: `${n * 0.6}s` }}>
