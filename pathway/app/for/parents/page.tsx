@@ -4,7 +4,6 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Section, Kicker } from "@/components/ui/Section";
 import { ApplyCta } from "@/components/ui/Cta";
 import { Pending, Gate } from "@/components/ui/Gate";
-import { VerifyLedger } from "@/components/verify/VerifyLedger";
 import { TeamGrid } from "@/components/team/TeamGrid";
 import { WorkedExampleCard } from "@/components/cards/CaseCards";
 import { decisions } from "@/content/decisions";
@@ -89,7 +88,6 @@ export default function ParentsPage() {
           <h2 className="display d-lg max-w-[18ch]">A professional team, led by a FIFA Licensed Football Agent.</h2>
           <p className="lede mt-6 max-w-3xl text-ink/80">Your child is assessed by a professional team working inside European football, led by FIFA Licensed Football Agent Marks Amosejevs, who is <Pending evidence={pending("E19")}>authorised to represent minors</Pending>. Every assessment follows our professional framework and receives senior review. <Pending evidence={pending("E13", "Who performs which step")}>[Final workflow wording]</Pending></p>
           <div className="mt-12 max-w-5xl"><TeamGrid tone="paper" /></div>
-          <div className="on-ink mt-14 p-6 sm:p-8"><p className="display d-sm mb-6">Don’t just trust us. Verify us.</p><VerifyLedger mode="full" audience="parent" /></div>
         </div>
       </Section>
 

@@ -1,10 +1,8 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import { useRef, useState } from "react";
 import { team } from "@/content/team";
 import { CREDENTIAL_PHOTO, CREDENTIAL_DOCS, type CredentialDoc } from "@/content/people-assets";
-import { LICENCE } from "@/content/site";
 import { IS_REVIEW } from "@/lib/site-mode";
 
 /**
@@ -59,7 +57,6 @@ export function CredentialSection() {
               </li>
             ))}
           </ul>
-          <Link href="/verify" className="mt-7 inline-flex items-center gap-2 font-semibold text-route underline decoration-route/40 underline-offset-[6px] hover:decoration-route">How to verify licence {LICENCE.number} <span aria-hidden>→</span></Link>
         </div>
       </div>
 

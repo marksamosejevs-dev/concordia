@@ -32,7 +32,7 @@ export function Footer() {
           </div>
           <div>
             <p className="font-semibold text-white">Led by FIFA Licensed Football Agent {LICENCE.holder}</p>
-            <p>Licence No. {LICENCE.number} · <Link href="/verify" className="underline">Verify</Link></p>
+            <p>Licence No. {LICENCE.number}</p>
             <p className="mt-2"><Link href="/legal/terms#notices" className="underline">Legal notices</Link></p>
           </div>
         </div>

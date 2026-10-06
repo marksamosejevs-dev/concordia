@@ -49,7 +49,7 @@ export function Header() {
       <div id="mobile-menu" hidden={!open} className="xl:hidden h-[calc(100dvh-var(--header-h))] overflow-y-auto bg-ink">
         <div className="wrap flex flex-col gap-1 py-8">
           <Link href="/apply" className="btn btn-route mb-6 w-full">{CTA.apply} <span aria-hidden>→</span></Link>
-          {[...NAV, { href: "/how-it-works", label: "How it works" }, { href: "/markets", label: "Markets" }, { href: "/verify", label: "Verify us" }, { href: "/faq", label: "Questions" }].map((n) => (
+          {[...NAV, { href: "/how-it-works", label: "How it works" }, { href: "/markets", label: "Markets" }, { href: "/faq", label: "Questions" }].map((n) => (
             <Link key={n.href} href={n.href} className="display border-b border-white/10 py-4 text-[2rem] leading-none">{n.label}</Link>
           ))}
           <p className="mono mt-8 text-[0.7rem] text-slate-light">{CTA.micro}</p>

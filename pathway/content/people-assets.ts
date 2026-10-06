@@ -20,12 +20,11 @@ export const TEAM_PORTRAITS: Record<string, PortraitAsset> = {
 };
 
 /**
- * Hero secondary image — Emīlija Ambaine at U.S. Sassuolo (E12 guardian permission cleared).
- * The founder's Sassuolo photograph was shared in chat but has not been received as a file, so the slot is
- * PREPARED BUT EMPTY: commit the real file at `src` (then set w/h to its real size) and it renders automatically.
- * Never substitute the roster photo or any other image here. Caption = roster facts (name, club), never DOB.
+ * Hero secondary image — Emīlija Ambaine, U.S. Sassuolo (E12 guardian permission cleared).
+ * The founder-supplied original, saved unchanged (1280×960). The frame uses the photo's own 4:3 ratio, so nothing
+ * is cropped away. Never substitute the roster photo or any other image. Caption = name + club only, never DOB.
  */
-export const HERO_SECONDARY = { src: "/assets/pathway/photos/players/emilija-ambaine-sassuolo.jpg", w: 4, h: 3, alt: "Emīlija Ambaine, U.S. Sassuolo", position: "50% 35%", caption: ["Emīlija Ambaine", "U.S. Sassuolo"] as const, note: "WAITING FOR ORIGINAL SASSUOLO PHOTO FILE" };
+export const HERO_SECONDARY = { src: "/assets/pathway/photos/players/emilija-ambaine-sassuolo.jpg", w: 1280, h: 960, alt: "Emīlija Ambaine holding a U.S. Sassuolo shirt", position: "45% 40%", caption: ["Emīlija Ambaine", "U.S. Sassuolo"] as const, note: "Founder-supplied original" };
 
 /** Credential section — a DIFFERENT Marks photograph from the team portrait. */
 export const CREDENTIAL_PHOTO: PortraitAsset = { src: photos.boardroom.src, alt: "Marks Amosejevs at FIFA headquarters, Zurich", focus: "72% 48%", zoom: 1.15, temporary: true, note: "FIFA HQ boardroom photo — founder to confirm or replace" };

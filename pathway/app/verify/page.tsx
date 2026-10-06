@@ -5,7 +5,8 @@ import { Section } from "@/components/ui/Section";
 import { VerifyLedger } from "@/components/verify/VerifyLedger";
 import { FinalCta } from "@/components/sections/HomeSections";
 
-export const metadata: Metadata = { alternates: { canonical: "/verify/" }, title: "Verify us", description: "Every claim, with a way to check it." };
+// Not part of the customer journey (no marketing-site links); kept technically, excluded from indexing and the sitemap.
+export const metadata: Metadata = { robots: { index: false, follow: false }, alternates: { canonical: "/verify/" }, title: "Verify us", description: "Every claim, with a way to check it." };
 
 export default function VerifyPage() {
   return (

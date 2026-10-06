@@ -3,7 +3,6 @@ import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
 import { Section, Kicker } from "@/components/ui/Section";
 import { TeamGrid } from "@/components/team/TeamGrid";
-import { VerifyLedger } from "@/components/verify/VerifyLedger";
 import { InsideFootballStrip, FinalCta } from "@/components/sections/HomeSections";
 import { LEGAL_ENTITY } from "@/content/site";
 
@@ -43,9 +42,6 @@ export default function AboutPage() {
           <InsideFootballStrip />
           <p className="mt-6 max-w-2xl text-[0.85rem] text-slate-light">Photographs document presence in the professional football environment. They do not imply partnership, endorsement or a client relationship with anyone pictured.</p>
         </div>
-      </Section>
-      <Section tone="deep" label="Verify">
-        <div className="wrap"><h2 className="display d-lg mb-8">Don’t just trust us. Verify us.</h2><VerifyLedger mode="full" exclude={["lawyer", "llm"]} /></div>
       </Section>
       <Section tone="paper" label="Company" className="!py-14">
         <div className="wrap text-ink/80"><p className="font-semibold text-ink">{LEGAL_ENTITY.name}</p><p>Reg. No. {LEGAL_ENTITY.registrationNo} · VAT {LEGAL_ENTITY.vatNo} · {LEGAL_ENTITY.address.join(", ")}</p><p className="mt-2">{LEGAL_ENTITY.note}</p></div>

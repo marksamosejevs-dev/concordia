@@ -109,7 +109,7 @@ export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; seconda
                 </div>
               )}
             </div>
-            <figcaption className="mt-2.5 text-right text-[0.78rem] leading-tight"><span className="font-bold text-white">{secondary.caption[0]}</span> <span className="text-white/60">· {secondary.caption[1]}</span></figcaption>
+            <figcaption className="mt-2.5 text-right text-[0.74rem] uppercase leading-tight tracking-[0.08em]"><span className="block font-bold text-white">{secondary.caption[0]}</span><span className="block text-white/60">{secondary.caption[1]}</span></figcaption>
           </figure>
         </div>
       )}

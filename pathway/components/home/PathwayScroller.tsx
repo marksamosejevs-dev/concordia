@@ -1,72 +1,32 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import Link from "next/link";
 import { MONTH_STATES, PILLARS, PATHWAY_TERMS } from "@/content/pathway";
 import { CTA } from "@/content/site";
 import { usd } from "@/lib/format";
-import { usePrefersReducedMotion } from "@/lib/hooks";
 
 const pillar = (k: string) => PILLARS.find((p) => p.key === k)!.name;
 
 /**
  * SIGNATURE — "Your career, month by month".
- * Desktop: a pinned stage; scrolling moves through six months while the player board fills in
- * (profile completeness, level, market shortlist, team focus) and the payment strip shows one month at a time.
- * Mobile / reduced motion: the same board driven by a month stepper (auto-advances while on screen).
+ * Month 1–6 are OPTIONAL tabs (Month 1 selected by default): the visitor can inspect any month directly or
+ * simply scroll past. No pinning, no scroll-driven or automatic month changes — page scrolling is never affected.
  */
 export function PathwayScroller({ price }: { price: number }) {
-  const outer = useRef<HTMLDivElement>(null);
   const [m, setM] = useState(0);
-  const [pinned, setPinned] = useState(false);
-  const [auto, setAuto] = useState(true);
-  const reduced = usePrefersReducedMotion();
-
-  // Desktop: scroll position → month.
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    let raf = 0;
-    const on = () => {
-      raf = 0;
-      const el = outer.current; if (!el) return;
-      const usePin = mq.matches && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      setPinned(usePin);
-      if (!usePin) return;
-      const r = el.getBoundingClientRect(); const total = el.offsetHeight - window.innerHeight;
-      const p = Math.min(0.9999, Math.max(0, -r.top / total));
-      setM(Math.floor(p * MONTH_STATES.length));
-    };
-    const req = () => { if (!raf) raf = requestAnimationFrame(on); };
-    on(); window.addEventListener("scroll", req, { passive: true }); window.addEventListener("resize", req); mq.addEventListener("change", req);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("scroll", req); window.removeEventListener("resize", req); mq.removeEventListener("change", req); };
-  }, []);
-
-  // Mobile: auto-advance while visible, until the visitor taps.
-  useEffect(() => {
-    if (pinned || !auto || reduced) return;
-    const el = outer.current; if (!el) return;
-    let id: ReturnType<typeof setInterval> | undefined;
-    const io = new IntersectionObserver(([e]) => {
-      clearInterval(id);
-      if (e.isIntersecting) id = setInterval(() => setM((x) => (x + 1) % MONTH_STATES.length), 2600);
-    }, { threshold: 0.4 });
-    io.observe(el);
-    return () => { io.disconnect(); clearInterval(id); };
-  }, [pinned, auto, reduced]);
-
-  const go = (n: number) => {
-    setAuto(false);
-    const el = outer.current;
-    if (pinned && el) {
-      const total = el.offsetHeight - window.innerHeight;
-      window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top + ((n + 0.5) / MONTH_STATES.length) * total, behavior: "smooth" });
-    } else setM(n);
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const onKey = (e: KeyboardEvent, n: number) => {
+    const last = MONTH_STATES.length - 1;
+    const to = e.key === "ArrowRight" ? (n === last ? 0 : n + 1) : e.key === "ArrowLeft" ? (n === 0 ? last : n - 1) : e.key === "Home" ? 0 : e.key === "End" ? last : -1;
+    if (to < 0) return;
+    e.preventDefault(); setM(to); tabs.current[to]?.focus();
   };
   const s = MONTH_STATES[m];
 
   return (
     <section className="on-route relative" aria-labelledby="pathway-title" data-hide-sticky>
-      <div ref={outer} className={pinned ? "h-[240vh]" : ""}>
-        <div className={pinned ? "sticky top-0 flex h-screen items-center" : "py-[clamp(4rem,9vw,6rem)]"}>
+      <div>
+        <div className="py-[clamp(4rem,9vw,6rem)]">
           <div className="wrap grid w-full items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
             {/* Offer */}
             <div>
@@ -81,11 +41,12 @@ export function PathwayScroller({ price }: { price: number }) {
               </ul>
               {/* Pay-as-you-go strip */}
               <div className="mt-6" aria-label="Payment, one month at a time">
-                <div className="grid grid-cols-6 gap-1">
+                <div role="tablist" aria-label="Pathway months" className="-mx-1 flex snap-x gap-1 overflow-x-auto px-1 pb-1 pt-1.5 [scrollbar-width:none] sm:grid sm:grid-cols-6 sm:overflow-visible">
                   {MONTH_STATES.map((x, n) => (
-                    <button key={x.m} onClick={() => go(n)} aria-label={`Month ${x.m}: ${x.t}`} aria-current={n === m ? "step" : undefined}
-                      className={`group rounded-[6px] px-1.5 py-2 text-left transition-all duration-500 ${n === m ? "-translate-y-1 bg-ink text-white shadow-lg" : n < m ? "bg-ink/80 text-white/80" : "bg-white/45 text-ink/60 hover:bg-white/70"}`}>
-                      <span className="block text-[0.62rem] font-semibold">{n === 0 ? "Today" : `Month ${x.m}`}</span>
+                    <button key={x.m} ref={(el) => { tabs.current[n] = el; }} type="button" role="tab" id={`pathway-tab-${n}`} aria-controls="pathway-panel" aria-selected={n === m} tabIndex={n === m ? 0 : -1}
+                      onClick={() => setM(n)} onKeyDown={(e) => onKey(e, n)}
+                      className={`min-w-[4.6rem] shrink-0 snap-start rounded-[6px] px-1.5 py-2 text-left transition-[background-color,color,transform,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink sm:min-w-0 ${n === m ? "-translate-y-1 bg-ink text-white shadow-lg" : "bg-white/45 text-ink/70 hover:-translate-y-0.5 hover:bg-white/80 hover:text-ink"}`}>
+                      <span className="block text-[0.62rem] font-semibold">Month {x.m}</span>
                       <span className="display block text-[1.05rem] leading-none">{usd(price)}</span>
                     </button>
                   ))}
@@ -99,7 +60,7 @@ export function PathwayScroller({ price }: { price: number }) {
             </div>
 
             {/* Player board */}
-            <div className="on-ink relative overflow-hidden rounded-[16px] border border-ink/20 shadow-[0_50px_100px_-30px_rgba(8,17,39,0.6)]" aria-live="polite">
+            <div className="on-ink relative overflow-hidden rounded-[16px] border border-ink/20 shadow-[0_50px_100px_-30px_rgba(8,17,39,0.6)]" role="tabpanel" id="pathway-panel" aria-labelledby={`pathway-tab-${m}`}>
               <div className="flex items-center justify-between border-b border-white/10 bg-ink-deep px-5 py-3">
                 <p className="text-[0.8rem] text-white/60">Your pathway · sample player</p>
                 <p className="text-[0.8rem] font-semibold">Month <span className="text-route">{s.m}</span> of 6</p>
