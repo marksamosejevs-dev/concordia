@@ -7,15 +7,15 @@ import { Gate } from "@/components/ui/Gate";
 import { products, programmeFor, ELITE_CAPACITY, ASSESSMENT_CREDIT } from "@/content/products";
 import { accessCopy } from "@/lib/commerce/access";
 import { usd } from "@/lib/format";
-import { NotRepresentation, FinalCta } from "@/components/sections/HomeSections";
+import { FinalCta } from "@/components/sections/HomeSections";
 
-const list = () => products.filter((p) => p.id !== "assessment");
+const list = () => products.filter((p) => p.catalogue === "legacy");
 export function generateStaticParams() { return list().map((p) => ({ slug: p.slug })); }
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params; const p = list().find((x) => x.slug === slug);
-  return { title: p ? `${p.name} — ${p.term}` : "Programme" };
+  return { title: p ? `${p.name} — ${p.term}` : "Programme", robots: { index: false, follow: true } };
 }
 
 export default async function ProgrammePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -25,6 +25,7 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
   const access = accessCopy[p.access];
   return (
     <>
+      <div className="on-route mt-[var(--header-h)] py-3"><p className="wrap text-[0.9rem] font-semibold">This programme structure has been replaced by <Link href="/european-pathway" className="underline underline-offset-4">European Pathway — $399/month</Link>. Kept for internal reference only.</p></div>
       <PageHero eyebrow={`${p.name} · ${p.term}`} title={c.concept} lede={<><p>Best for: {c.bestFor}</p></>}>
         <div className="flex flex-wrap items-end gap-8">
           <p className="display text-[clamp(3.5rem,7vw,5.5rem)] leading-none text-route">{usd(p.price)}{p.billingType === "recurring" && <span className="text-[0.35em] text-white/70">/month</span>}</p>
@@ -67,7 +68,6 @@ export default async function ProgrammePage({ params }: { params: Promise<{ slug
           <Gate evidence={{ state: "pending", ref: "E24" }} label="refund text"><p><span className="display block text-[1.4rem] text-white">Refunds</span>14-day refund minus assessment value; thereafter pro-rata only for our non-performance; injury pause up to 60 days.</p></Gate>
         </div>
       </Section>
-      <NotRepresentation />
       <FinalCta />
     </>
   );

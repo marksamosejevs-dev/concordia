@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FinalOffer } from "@/components/home/HomeV2";
 import { Section, Eyebrow, Kicker } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { ApplyCta, GhostLink, TextLink } from "@/components/ui/Cta";
@@ -115,7 +116,7 @@ export function AssessmentProduct() {
         </div>
         <div className="mt-14 flex flex-col gap-4 sm:flex-row sm:items-center">
           <ApplyCta />
-          <p className="mono text-[0.72rem] text-slate-light sm:ml-6">Report within 7 business days · ${ASSESSMENT_CREDIT.amount} credited toward a programme booked within {ASSESSMENT_CREDIT.days} days</p>
+          <p className="mono text-[0.72rem] text-slate-light sm:ml-6">Report within 7 business days · ${ASSESSMENT_CREDIT.amount} credited toward European Pathway if you continue within {ASSESSMENT_CREDIT.days} days</p>
         </div>
       </div>
     </Section>
@@ -309,7 +310,7 @@ export function PricingSection() {
             <p className="eyebrow text-route">Start here</p>
             <p className="display d-md mt-2">{a.name}</p>
             <p className="mt-2 text-white/75">Written report · full-match review · level band · three market directions · 90-day plan · review call</p>
-            <p className="mono mt-3 text-[0.72rem] text-slate-light">${ASSESSMENT_CREDIT.amount} credited toward any programme booked within {ASSESSMENT_CREDIT.days} days</p>
+            <p className="mono mt-3 text-[0.72rem] text-slate-light">${ASSESSMENT_CREDIT.amount} credited toward European Pathway if you continue within {ASSESSMENT_CREDIT.days} days</p>
           </div>
           <div className="flex flex-col items-start gap-4 lg:items-end">
             <p className="display text-[4.5rem] leading-none text-route">{usd(a.price)}</p>
@@ -364,7 +365,7 @@ export function NotRepresentation() {
             </div>
           </div>
         </div>
-        <p className="mt-10 max-w-3xl text-[0.95rem] text-ink/70">If a player ever enters formal representation, their Pathway programme ends and unused prepaid time is refunded or credited. <Link href="/representation" className="underline underline-offset-4">How representation works</Link>.</p>
+        <p className="mt-10 max-w-3xl text-[0.95rem] text-ink/70">If a player ever enters formal representation, European Pathway ends and unused prepaid time is refunded or credited. <Link href="/representation" className="underline underline-offset-4">How representation works</Link>.</p>
       </div>
     </Section>
   );
@@ -412,25 +413,9 @@ export function FaqSection({ all = false }: { all?: boolean }) {
   );
 }
 
-/* 18 — Final CTA: the Route completes */
+/* Final CTA — every supporting page ends on the two-step offer */
 export function FinalCta() {
-  return (
-    <section className="on-deep relative overflow-hidden py-[clamp(6rem,14vw,11rem)]" aria-label="Apply">
-      <svg viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full" aria-hidden>
-        <path d="M-40 600 C 340 560, 700 470, 1000 380 S 1300 300, 1380 300" fill="none" stroke="#FFD23F" strokeOpacity="0.85" strokeWidth="3" />
-        <circle cx="1380" cy="300" r="10" fill="#FFD23F" className="pulse" />
-        <text x="1410" y="316" fill="#FFD23F" style={{ font: "400 54px var(--font-display)" }}>YOU</text>
-      </svg>
-      <div className="wrap relative">
-        <p className="display d-hero max-w-[11ch]">{BRAND.signature}</p>
-        <p className="lede mt-8 max-w-xl text-white/85">Before the next trial, the next flight or the next contract — find out where you actually stand.</p>
-        <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-start">
-          <ApplyCta />
-          <ForAudience player={<GhostLink href="/find-your-path">Find your path first</GhostLink>} parent={<GhostLink href="/for/parents">Read the parents’ guide</GhostLink>} />
-        </div>
-      </div>
-    </section>
-  );
+  return <FinalOffer />;
 }
 
 /* Inside European football — compact documentary strip (About pages) */

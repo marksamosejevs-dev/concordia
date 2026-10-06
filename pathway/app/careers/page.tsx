@@ -5,7 +5,7 @@ import { WorkedExampleCard, AgencyCaseCard } from "@/components/cards/CaseCards"
 import { workedExamples, agencyCases } from "@/content/cases";
 import { TestimonialsSection, FinalCta } from "@/components/sections/HomeSections";
 
-export const metadata: Metadata = { title: "Real careers. Real decisions.", description: "Concordia Sports Agency cases, clearly labelled — and worked examples showing how a European Pathway assessment reasons." };
+export const metadata: Metadata = { alternates: { canonical: "/careers/" }, title: "Real careers. Real decisions.", description: "Concordia Sports Agency cases, clearly labelled — and worked examples showing how a European Pathway assessment reasons." };
 
 export default function CareersPage() {
   return (

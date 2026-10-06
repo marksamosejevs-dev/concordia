@@ -5,7 +5,7 @@ import { PlayerCard } from "@/components/cards/PlayerCard";
 import { agencyPlayers } from "@/content/agency-players";
 import { FinalCta } from "@/components/sections/HomeSections";
 
-export const metadata: Metadata = { title: "Players represented by Concordia Sports Agency" };
+export const metadata: Metadata = { alternates: { canonical: "/players/" }, description: "Professional players represented by Concordia Sports Agency — internationals and young players at clubs across Latvia and Europe.", title: "Players represented by Concordia Sports Agency" };
 
 export default function PlayersRoster() {
   return (

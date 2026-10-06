@@ -25,6 +25,8 @@ export interface Product {
   affiliateEligible: boolean;     // policy E28
   access: AccessRule;
   label?: "Most popular" | "Best value" | "Limited capacity";
+  /** "core" = sold on the site; "legacy" = kept in the model, not marketed (Round 1). */
+  catalogue?: "core" | "legacy";
 }
 
 export interface Customer { id?: string; name: string; email: string; country: string; providerCustomerId?: string }

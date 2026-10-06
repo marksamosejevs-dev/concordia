@@ -4,7 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { VerifyLedger } from "@/components/verify/VerifyLedger";
 import { FinalCta } from "@/components/sections/HomeSections";
 
-export const metadata: Metadata = { title: "Verify us", description: "Every claim, with a way to check it." };
+export const metadata: Metadata = { alternates: { canonical: "/verify/" }, title: "Verify us", description: "Every claim, with a way to check it." };
 
 export default function VerifyPage() {
   return (

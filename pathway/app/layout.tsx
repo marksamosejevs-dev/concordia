@@ -13,13 +13,15 @@ import { StickyCta } from "@/components/layout/StickyCta";
 import { ReviewBar } from "@/components/layout/ReviewBar";
 import { AudienceProvider } from "@/components/layout/Audience";
 import { AttributionCapture } from "@/components/layout/AttributionCapture";
-import { IS_REVIEW } from "@/lib/site-mode";
+import { SITE_URL, INDEXABLE } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: { default: "Concordia Soccer · European Pathway — Professional football career assessment", template: "%s · Concordia Soccer · European Pathway" },
-  description: "Before you choose Europe, find out where you actually stand. Professional football career assessment and advisory from a team working inside European football, led by FIFA Licensed Football Agent Marks Amosejevs.",
-  robots: IS_REVIEW ? { index: false, follow: false } : undefined,
-  openGraph: { siteName: "Concordia Soccer · European Pathway", type: "website" },
+  metadataBase: new URL(SITE_URL),
+  title: { default: "Concordia Soccer · European Pathway — Play football in Europe", template: "%s · Concordia Soccer" },
+  description: "Player assessment ($249) and monthly European football career management ($399/month) for US players — led by FIFA Licensed Football Agent Marks Amosejevs.",
+  robots: INDEXABLE ? undefined : { index: false, follow: false },
+  openGraph: { siteName: "Concordia Soccer · European Pathway", type: "website", locale: "en_US" },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = { themeColor: "#0D1B36", width: "device-width", initialScale: 1 };

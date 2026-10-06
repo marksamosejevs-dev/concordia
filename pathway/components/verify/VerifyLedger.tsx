@@ -15,9 +15,9 @@ function StateBadge({ e }: { e: VerifyEntry }) {
   return <span className="gate-tag">Pending · {e.evidence.ref}</span>;
 }
 
-export function VerifyLedger({ mode = "compact", audience = "player" }: { mode?: "compact" | "full"; audience?: "player" | "parent" }) {
+export function VerifyLedger({ mode = "compact", audience = "player", exclude = [] }: { mode?: "compact" | "full"; audience?: "player" | "parent"; exclude?: string[] }) {
   const [doc, setDoc] = useState<VerifyEntry | null>(null);
-  const entries = verifyEntries.filter((e) => (mode === "full" || e.compact) && visible(e));
+  const entries = verifyEntries.filter((e) => (mode === "full" || e.compact) && visible(e) && !exclude.includes(e.id));
   const act = (e: VerifyEntry) => {
     track("credential_open", { id: e.id });
     if (e.documentImage || !e.href) setDoc(e);

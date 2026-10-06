@@ -23,24 +23,24 @@ export const LEGAL_ENTITY = {
 export const LICENCE = { holder: "Marks Amosejevs", number: "202406-7079", registerUrl: undefined as string | undefined /* exact FIFA register URL confirmed at E19 */ };
 
 export const CTA = {
-  apply: "Apply for your assessment",
-  micro: "Apply free · Assessment $249 if accepted",
+  apply: "Start your assessment",
+  micro: "Free 2-minute application · $249 if accepted",
+  pathway: "Explore European Pathway",
 };
 
 export const NAV = [
   { href: "/assessment", label: "Assessment" },
-  { href: "/programmes", label: "Programmes" },
-  { href: "/for/parents", label: "For Parents" },
-  { href: "/for/players", label: "For Players" },
-  { href: "/markets", label: "Markets" },
+  { href: "/european-pathway", label: "European Pathway" },
+  { href: "/for/parents", label: "Parents" },
+  { href: "/for/players", label: "Players" },
   { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },
 ];
 
 export const FOOTER_GROUPS = [
-  { title: "European Pathway", links: [["/assessment", "Player Pathway Assessment"], ["/programmes", "Programmes"], ["/pricing", "Pricing"], ["/how-it-works", "How it works"], ["/find-your-path", "Find your path"], ["/markets", "European markets"]] },
+  { title: "European Pathway", links: [["/assessment", "Player Pathway Assessment · $249"], ["/european-pathway", "European Pathway · $399/mo"], ["/pricing", "Pricing"], ["/how-it-works", "How it works"], ["/find-your-path", "Find your path"], ["/markets", "European markets"]] },
   { title: "Who it’s for", links: [["/for/players", "Players"], ["/for/parents", "Parents & guardians"], ["/careers", "Real careers"], ["/faq", "Questions"]] },
-  { title: "Concordia", links: [["/about", "About Concordia Soccer"], ["/about/marks-amosejevs", "Marks Amosejevs"], ["/verify", "Verify us"], ["/agency", "Concordia Sports Agency"], ["/players", "Agency players"], ["/representation", "Pathway is not representation"], ["/football-law", "Football law"]] },
+  { title: "Concordia", links: [["/about", "About Concordia Soccer"], ["/about/marks-amosejevs", "Marks Amosejevs"], ["/verify", "Verify us"], ["/agency", "Concordia Sports Agency"], ["/players", "Agency players"], ["/representation", "Representation"], ["/football-law", "Football law"]] },
   { title: "Legal", links: [["/legal/terms", "Terms"], ["/legal/privacy", "Privacy"], ["/legal/refunds", "Refunds & cancellations"], ["/legal/cookies", "Cookies"], ["/legal/safeguarding", "Safeguarding"], ["/legal/complaints", "Complaints"], ["/legal/company", "Company information"]] },
 ] as const;
 

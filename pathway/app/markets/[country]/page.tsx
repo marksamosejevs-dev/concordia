@@ -13,7 +13,7 @@ export function generateStaticParams() { return pages().map((c) => ({ country: c
 export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
   const { country } = await params; const c = countries.find((x) => x.iso.toLowerCase() === country);
-  return { title: c ? `${c.name} — market guide` : "Market guide" };
+  return { title: c ? `${c.name} — market guide` : "Market guide", description: c ? `Playing football in ${c.name}: league levels, calendar, transfer windows and what matters for US players.` : undefined, alternates: { canonical: `/markets/${country}/` } };
 }
 
 export default async function CountryPage({ params }: { params: Promise<{ country: string }> }) {

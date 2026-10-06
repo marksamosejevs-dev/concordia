@@ -10,10 +10,10 @@ import { WorkedExampleCard } from "@/components/cards/CaseCards";
 import { decisions } from "@/content/decisions";
 import { workedExamples } from "@/content/cases";
 import { RECEIVE } from "@/content/assessment";
-import { NotRepresentation, FinalCta } from "@/components/sections/HomeSections";
+import { FinalCta } from "@/components/sections/HomeSections";
 import { pending } from "@/lib/evidence";
 
-export const metadata: Metadata = { title: "For parents & guardians", description: "Your child doesn’t need another promise. They need an honest plan." };
+export const metadata: Metadata = { alternates: { canonical: "/for/parents/" }, title: "For parents & guardians", description: "Your child doesn’t need another promise. They need an honest plan." };
 
 const QUESTIONS = ["Is my child really at this level?", "Are we losing time?", "Should they stay in college — or leave?", "Which country?", "Is this trial worth the flight?", "Is this academy selling us a dream?", "Is this contract fair?", "What happens if the move doesn’t work out?"];
 const QUIET = ["Are we pushing too hard?", "Are we not doing enough?"];
@@ -22,7 +22,7 @@ const EXPLAINERS = [
   { n: "02", t: "A highlight reel can’t answer a career question.", b: "Highlights show the best moments. A career decision needs the rest: positioning, decisions without the ball, consistency over 90 minutes. That’s why the assessment requires a full match." },
   { n: "03", t: "Age, timing and the transfer window.", b: "Clubs register players in transfer windows. Arriving at the wrong moment can waste months. And for under-18s, international moves are tightly restricted by FIFA’s rules — an honest adviser explains that before anything else.", legal: true },
   { n: "04", t: "Passports change the map.", b: "An EU passport can open doors that are closed to non-EU players, and the rules differ by country and division. We assess what your child’s passport(s) actually mean — and where ancestry-based eligibility might be worth checking with a citizenship lawyer." },
-  { n: "05", t: "Trials, academies and agents: check before you pay.", b: "Some opportunities are excellent. Some aren’t what they appear. Programme members get opportunity, trial, academy and agent vetting; the assessment itself tells you what to look for." },
+  { n: "05", t: "Trials, academies and agents: check before you pay.", b: "Some opportunities are excellent. Some aren’t what they appear. European Pathway members get opportunity, trial, academy and agent vetting; the assessment itself tells you what to look for." },
   { n: "06", t: "A contract is a commitment.", b: "An offer is exciting. It’s also a legal document, with obligations, termination terms and consequences. Formal legal review is a separate service, engaged and billed separately.", e9: true },
 ];
 
@@ -111,10 +111,9 @@ export default function ParentsPage() {
       <Section tone="deep" label="If the answer is not yet">
         <div className="wrap grid gap-12 lg:grid-cols-2">
           <div><h2 className="display d-lg">If the answer is “not yet.”</h2><p className="lede mt-6 text-white/80">Then you’ll know why, what needs to change, and what a realistic path looks like — before you spend on the wrong thing. For many families, that clarity is the most valuable part.</p></div>
-          <ol className="space-y-6">{[["You read the report and join the call.", ""], ["If a programme makes sense, we explain which one and why.", "And if none does, we tell you that."], ["$150 of the assessment is credited toward a programme booked within 14 days.", ""]].map(([t, b], i) => <li key={t} className="grid grid-cols-[2.5rem_1fr]"><span className="mono text-route">0{i + 1}</span><div><p className="text-[1.1rem] font-semibold">{t}</p>{b && <p className="text-white/70">{b}</p>}</div></li>)}</ol>
+          <ol className="space-y-6">{[["You read the report and join the call.", ""], ["If European Pathway makes sense, we explain why.", "And if it doesn’t, we tell you that."], ["$399 per month, paid monthly — never six months upfront.", "Designed as a 6-month pathway. Cancellation options available — final subscription terms apply."]].map(([t, b], i) => <li key={t} className="grid grid-cols-[2.5rem_1fr]"><span className="mono text-route">0{i + 1}</span><div><p className="text-[1.1rem] font-semibold">{t}</p>{b && <p className="text-white/70">{b}</p>}</div></li>)}</ol>
         </div>
       </Section>
-      <NotRepresentation />
       <FinalCta />
     </>
   );

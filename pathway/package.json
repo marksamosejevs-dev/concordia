@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3100",
-    "build": "npm run check:content && next build",
+    "dev": "npm run build:images && next dev --port 3100",
+    "build": "npm run check:content && npm run build:images && next build",
     "start": "next start --port 3100",
     "lint": "eslint",
     "check:content": "node --experimental-strip-types scripts/check-content.mts",
     "build:logo": "node scripts/build-logo.mjs",
     "build:map": "node scripts/build-map.mjs",
-    "build:export": "npm run check:content && PREVIEW_EXPORT=1 next build"
+    "build:export": "npm run check:content && npm run build:images && PREVIEW_EXPORT=1 next build",
+    "build:images": "node scripts/build-images.mjs"
   },
   "dependencies": {
     "@fontsource/anton": "^5.3.0",
@@ -31,6 +32,7 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.1",
     "opentype.js": "^2.0.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "topojson-client": "^3.1.0",
     "typescript": "^6.0.3",

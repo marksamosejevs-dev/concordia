@@ -4,10 +4,10 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Section, Kicker } from "@/components/ui/Section";
 import { TeamGrid } from "@/components/team/TeamGrid";
 import { VerifyLedger } from "@/components/verify/VerifyLedger";
-import { InsideFootballStrip, NotRepresentation, FinalCta } from "@/components/sections/HomeSections";
+import { InsideFootballStrip, FinalCta } from "@/components/sections/HomeSections";
 import { LEGAL_ENTITY } from "@/content/site";
 
-export const metadata: Metadata = { title: "About Concordia Soccer", description: "A professional team, led by a FIFA Licensed Football Agent, working inside European football." };
+export const metadata: Metadata = { alternates: { canonical: "/about/" }, title: "About Concordia Soccer", description: "A professional team, led by a FIFA Licensed Football Agent, working inside European football." };
 
 export default function AboutPage() {
   return (
@@ -45,12 +45,11 @@ export default function AboutPage() {
         </div>
       </Section>
       <Section tone="deep" label="Verify">
-        <div className="wrap"><h2 className="display d-lg mb-8">Don’t just trust us. Verify us.</h2><VerifyLedger mode="full" /></div>
+        <div className="wrap"><h2 className="display d-lg mb-8">Don’t just trust us. Verify us.</h2><VerifyLedger mode="full" exclude={["lawyer", "llm"]} /></div>
       </Section>
       <Section tone="paper" label="Company" className="!py-14">
         <div className="wrap text-ink/80"><p className="font-semibold text-ink">{LEGAL_ENTITY.name}</p><p>Reg. No. {LEGAL_ENTITY.registrationNo} · VAT {LEGAL_ENTITY.vatNo} · {LEGAL_ENTITY.address.join(", ")}</p><p className="mt-2">{LEGAL_ENTITY.note}</p></div>
       </Section>
-      <NotRepresentation />
       <FinalCta />
     </>
   );

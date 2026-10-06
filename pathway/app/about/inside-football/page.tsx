@@ -5,7 +5,7 @@ import { DocFigure } from "@/components/cards/DocFigure";
 import { photos, insideFootballStrip, archive } from "@/content/photos";
 import { FinalCta } from "@/components/sections/HomeSections";
 
-export const metadata: Metadata = { title: "Inside European football — archive" };
+export const metadata: Metadata = { alternates: { canonical: "/about/inside-football/" }, description: "Documentary photographs from inside European football — the federations, clubs, stadiums and professional education behind Concordia Soccer.", title: "Inside European football — archive" };
 
 export default function InsideFootball() {
   return (

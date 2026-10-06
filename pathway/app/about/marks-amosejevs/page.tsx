@@ -10,7 +10,7 @@ import { photos } from "@/content/photos";
 import { LICENCE } from "@/content/site";
 import { pending } from "@/lib/evidence";
 
-export const metadata: Metadata = { title: "Marks Amosejevs — Co-Founder & CEO", description: "The professional behind the assessment framework: FIFA Licensed Football Agent, Co-Founder & CEO of Concordia Soccer." };
+export const metadata: Metadata = { alternates: { canonical: "/about/marks-amosejevs/" }, title: "Marks Amosejevs — Co-Founder & CEO", description: "The professional behind the assessment framework: FIFA Licensed Football Agent, Co-Founder & CEO of Concordia Soccer." };
 
 type Ch = { n: string; t: string; body: React.ReactNode; so: string; photo?: keyof typeof photos };
 const CHAPTERS: Ch[] = [
@@ -53,7 +53,7 @@ export default function MarksPage() {
         </Section>
       ))}
       <Section tone="paper" label="Verify">
-        <div className="wrap"><div className="on-ink p-6 sm:p-8"><h2 className="display d-md mb-6">Don’t just trust us. Verify us.</h2><VerifyLedger mode="full" /></div></div>
+        <div className="wrap"><div className="on-ink p-6 sm:p-8"><h2 className="display d-md mb-6">Don’t just trust us. Verify us.</h2><VerifyLedger mode="full" exclude={["lawyer", "llm"]} /></div></div>
       </Section>
       <Section tone="ink" label="Documentary"><div className="wrap"><h2 className="display d-lg mb-10">Inside European football.</h2><InsideFootballStrip /></div></Section>
       <FinalCta />

@@ -1,32 +1,30 @@
-import { Hero } from "@/components/sections/Hero";
+import type { Metadata } from "next";
 import { DecisionSet } from "@/components/sections/DecisionSet";
 import {
-  Silence, BuiltInsideFootball, AssessmentProduct, ReportPreview, SuccessRedefined, MarketsTeaser, FindPathTeaser,
-  ProgrammesSection, CasesSection, AgencyPlayersRail, KnowWhatYouGetInto, PricingSection, NotRepresentation,
-  TestimonialsSection, FaqSection, FinalCta,
-} from "@/components/sections/HomeSections";
+  HomeHero, ServicesTicker, ProofSection, StartHere, BuildPathway, CareerTeamSection,
+  RealFootball, ParentsSection, TestimonialsCarousel, HowItWorksStrip, FinalOffer,
+} from "@/components/home/HomeV2";
+import { StructuredData } from "@/components/seo/StructuredData";
 
+export const metadata: Metadata = { alternates: { canonical: "/" } };
+
+/** Homepage — Round 1 architecture: 11 sections + footer. Detail lives on the supporting pages. */
 export default function Home() {
   return (
     <>
-      <Hero />                 {/* 01 */}
-      <Silence />              {/* 02 */}
-      <DecisionSet />          {/* 03 */}
-      <BuiltInsideFootball />  {/* 04 team + verify */}
-      <AssessmentProduct />    {/* 05 */}
-      <ReportPreview />        {/* 06 */}
-      <SuccessRedefined />     {/* 07 */}
-      <MarketsTeaser />        {/* 08 */}
-      <FindPathTeaser />       {/* 09 */}
-      <ProgrammesSection />    {/* 10 */}
-      <CasesSection />         {/* 11 */}
-      <AgencyPlayersRail />    {/* 12 */}
-      <KnowWhatYouGetInto />   {/* 13 */}
-      <PricingSection />       {/* 14 */}
-      <NotRepresentation />    {/* 15 */}
-      <TestimonialsSection />  {/* 16 — conditional */}
-      <FaqSection />           {/* 17 */}
-      <FinalCta />             {/* 18 */}
+      <StructuredData />
+      <HomeHero />             {/* 01 hero · FIFA-agent-led trust · price pair */}
+      <ServicesTicker />       {/*    kinetic band: what we do */}
+      <ProofSection />         {/* 02 fast proof: Agency players + credential */}
+      <DecisionSet />          {/* 03 problem → decision (compact) */}
+      <StartHere />            {/* 04 $249 assessment */}
+      <BuildPathway />         {/* 05 $399/month European Pathway + dashboard */}
+      <CareerTeamSection />    {/* 06 what your career team does */}
+      <RealFootball />         {/* 07 photography + founders */}
+      <ParentsSection />       {/* 08 parents / players */}
+      <TestimonialsCarousel /> {/* 09 video testimonials */}
+      <HowItWorksStrip />      {/* 10 apply → assess → build → next move */}
+      <FinalOffer />           {/* 11 final pricing / CTA */}
     </>
   );
 }

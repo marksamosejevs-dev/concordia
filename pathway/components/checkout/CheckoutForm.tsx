@@ -107,7 +107,7 @@ function CheckoutInner() {
           <li>— Written report, 6–8 pages</li><li>— Full-match review + highlights</li><li>— Level band, strengths &amp; gaps</li><li>— Three market directions · passport analysis</li><li>— 90-day action plan · 30-minute review call</li>
         </ul>
         <div className="mt-6 flex items-end justify-between border-t border-white/10 pt-5"><span className="font-semibold">Total</span><span className="display text-[2.8rem] leading-none text-route">{usd(p.price)}</span></div>
-        <p className="mono mt-4 text-[0.68rem] text-slate-light">$150 credited toward any programme booked within 14 days.</p>
+        <p className="mono mt-4 text-[0.68rem] text-slate-light">$150 credited toward European Pathway if you continue within 14 days.</p>
         <p className="mt-6 border-t border-white/10 pt-5 text-[0.78rem] leading-relaxed text-slate-light">Seller: {LEGAL_ENTITY.name} · Reg. No. {LEGAL_ENTITY.registrationNo} · VAT {LEGAL_ENTITY.vatNo} · {LEGAL_ENTITY.address.join(", ")}</p>
       </aside>
     </div>

@@ -3,16 +3,16 @@ import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
 import { Section, Kicker } from "@/components/ui/Section";
 import { ApplyCta } from "@/components/ui/Cta";
-import { NotRepresentation, FaqSection, FinalCta } from "@/components/sections/HomeSections";
+import { FaqSection, FinalCta } from "@/components/sections/HomeSections";
 
-export const metadata: Metadata = { title: "How it works", description: "Four steps. No guesswork. Representation is separate." };
+export const metadata: Metadata = { alternates: { canonical: "/how-it-works/" }, title: "How it works", description: "Four steps. No guesswork. Representation is separate." };
 
 const STEPS = [
   { n: "01", t: "Apply free.", b: "Your profile, a full match and your goals. We review every application before accepting payment." },
   { n: "02", t: "Get assessed.", b: "Full-match review, written report and a strategy call. Every assessment follows Concordia’s professional assessment framework and receives senior review." },
   { n: "03", t: "Decide.", b: "Your report ends with a decision: go, wait, stay, move, play more, change market, improve first, say no — or read it again.", link: { href: "/#decision-title", label: "The Decision Set" } },
-  { n: "04", t: "Build the plan.", b: "If it fits, join a programme built around the transfer windows. If it doesn’t, we’ll tell you." },
-  { n: "05", t: "Representation is separate.", b: "Concordia Sports Agency reviews programme members each window. Being reviewed is not being selected, and nothing you buy changes that. Formal representation needs its own agreement." },
+  { n: "04", t: "Build the plan.", b: "If it fits, continue with European Pathway — $399/month, built around the transfer windows. If it doesn’t, we’ll tell you." },
+  { n: "05", t: "Representation is separate.", b: "Concordia Sports Agency reviews Pathway members each window. Being reviewed is not being selected, and nothing you buy changes that. Formal representation needs its own agreement." },
 ];
 const NEVER = ["Promise a trial, a club or a contract", "Contact clubs about you as part of European Pathway", "Sell representation", "Charge for “priority” consideration by the Agency", "Tell everyone to go to Europe"];
 
@@ -44,7 +44,6 @@ export default function HowItWorks() {
           <ul className="divide-y divide-ink/10 border-y border-ink/10">{NEVER.map((n) => <li key={n} className="flex gap-4 py-4 text-[1.1rem] font-semibold"><span className="text-alert">×</span>{n}</li>)}</ul>
         </div>
       </Section>
-      <NotRepresentation />
       <FaqSection />
       <FinalCta />
     </>

@@ -4,7 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { MarketsExplorer } from "@/components/markets/MarketsExplorer";
 import { FinalCta } from "@/components/sections/HomeSections";
 
-export const metadata: Metadata = { title: "European markets", description: "Europe is not one football market. Explore market guides — every fact sourced and dated." };
+export const metadata: Metadata = { alternates: { canonical: "/markets/" }, title: "European markets", description: "Europe is not one football market. Explore market guides — every fact sourced and dated." };
 
 export default function MarketsPage() {
   return (

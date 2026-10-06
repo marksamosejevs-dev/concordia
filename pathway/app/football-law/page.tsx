@@ -5,7 +5,7 @@ import { Gate } from "@/components/ui/Gate";
 import { KnowWhatYouGetInto, FinalCta } from "@/components/sections/HomeSections";
 import { pending } from "@/lib/evidence";
 
-export const metadata: Metadata = { title: "Football law", description: "Football is a sport. Your career is also a contract." };
+export const metadata: Metadata = { alternates: { canonical: "/football-law/" }, title: "Football law", description: "Football is a sport. Your career is also a contract." };
 
 export default function FootballLaw() {
   return (

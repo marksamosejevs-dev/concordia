@@ -11,14 +11,19 @@ export interface ProgrammeContent {
   pending?: Record<string, Evidence>;
 }
 
-/** Locked prices (current). Regular/reference prices are NOT displayed until E16 clears. */
+/**
+ * Locked prices (current). Regular/reference prices are NOT displayed until E16 clears.
+ * Core offer (Round 1): Assessment $249 one time → European Pathway $399/month.
+ * The fixed-term programmes below remain in the data model ("legacy") but are no longer sold on the site.
+ */
 export const products: Product[] = [
-  { id: "assessment", slug: "assessment", name: "Player Pathway Assessment", term: "One-off", billingType: "one_time", price: 249, assessmentCreditEligible: false, affiliateEligible: true, access: "application_required", cancellationPolicyRef: "refunds" },
-  { id: "cohort", slug: "cohort", name: "Pathway Cohort", term: "6 months", billingType: "fixed_term", price: 1500, termMonths: 6, assessmentCreditEligible: true, renewalBehaviour: "manual", affiliateEligible: true, access: "assessment_required", cancellationPolicyRef: "refunds" },
-  { id: "window", slug: "window", name: "Window Programme", term: "6 months", billingType: "fixed_term", price: 2400, termMonths: 6, instalmentOptions: [{ count: 3, amount: 850 }], assessmentCreditEligible: true, renewalBehaviour: "manual", affiliateEligible: true, access: "assessment_required", label: "Most popular", cancellationPolicyRef: "refunds" },
-  { id: "two-window", slug: "two-window", name: "Two-Window Programme", term: "12 months", billingType: "fixed_term", price: 4200, termMonths: 12, instalmentOptions: [{ count: 6, amount: 750 }], assessmentCreditEligible: true, renewalBehaviour: "manual", affiliateEligible: true, access: "assessment_required", label: "Best value", cancellationPolicyRef: "refunds" },
-  { id: "elite", slug: "elite", name: "Elite European Pathway", term: "12 months", billingType: "fixed_term", price: 7500, termMonths: 12, instalmentOptions: [{ count: 4, amount: 2000 }], assessmentCreditEligible: true, renewalBehaviour: "manual", affiliateEligible: true, access: "assessment_required", label: "Limited capacity", cancellationPolicyRef: "refunds" },
-  { id: "club", slug: "pathway-club", name: "Pathway Club", term: "Monthly · alumni only", billingType: "recurring", price: 149, billingInterval: "month", minimumTermMonths: 1, assessmentCreditEligible: false, renewalBehaviour: "auto_renew", affiliateEligible: false, access: "invitation_only", cancellationPolicyRef: "refunds" },
+  { id: "assessment", slug: "assessment", name: "Player Pathway Assessment", term: "One time", billingType: "one_time", price: 249, assessmentCreditEligible: false, affiliateEligible: true, access: "application_required", cancellationPolicyRef: "refunds", catalogue: "core" },
+  { id: "pathway", slug: "european-pathway", name: "European Pathway", term: "Monthly · designed as a 6-month pathway", billingType: "recurring", price: 399, billingInterval: "month", termMonths: 6, assessmentCreditEligible: true, renewalBehaviour: "auto_renew", affiliateEligible: true, access: "assessment_required", cancellationPolicyRef: "refunds", catalogue: "core" },
+  { id: "cohort", slug: "cohort", name: "Pathway Cohort", term: "6 months", billingType: "fixed_term", price: 1500, termMonths: 6, assessmentCreditEligible: true, renewalBehaviour: "manual", affiliateEligible: true, access: "assessment_required", cancellationPolicyRef: "refunds", catalogue: "legacy" },
+  { id: "window", slug: "window", name: "Window Programme", term: "6 months", billingType: "fixed_term", price: 2400, termMonths: 6, instalmentOptions: [{ count: 3, amount: 850 }], assessmentCreditEligible: true, renewalBehaviour: "manual", affiliateEligible: true, access: "assessment_required", label: "Most popular", cancellationPolicyRef: "refunds", catalogue: "legacy" },
+  { id: "two-window", slug: "two-window", name: "Two-Window Programme", term: "12 months", billingType: "fixed_term", price: 4200, termMonths: 12, instalmentOptions: [{ count: 6, amount: 750 }], assessmentCreditEligible: true, renewalBehaviour: "manual", affiliateEligible: true, access: "assessment_required", label: "Best value", cancellationPolicyRef: "refunds", catalogue: "legacy" },
+  { id: "elite", slug: "elite", name: "Elite European Pathway", term: "12 months", billingType: "fixed_term", price: 7500, termMonths: 12, instalmentOptions: [{ count: 4, amount: 2000 }], assessmentCreditEligible: true, renewalBehaviour: "manual", affiliateEligible: true, access: "assessment_required", label: "Limited capacity", cancellationPolicyRef: "refunds", catalogue: "legacy" },
+  { id: "club", slug: "pathway-club", name: "Pathway Club", term: "Monthly · alumni only", billingType: "recurring", price: 149, billingInterval: "month", minimumTermMonths: 1, assessmentCreditEligible: false, renewalBehaviour: "auto_renew", affiliateEligible: false, access: "invitation_only", cancellationPolicyRef: "refunds", catalogue: "legacy" },
 ];
 
 export const product = (id: string) => products.find((p) => p.id === id)!;

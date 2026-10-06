@@ -1,65 +1,73 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/sections/PageHero";
-import { Section, Kicker } from "@/components/ui/Section";
+import Link from "next/link";
 import { ApplyCta } from "@/components/ui/Cta";
-import { PriceCard } from "@/components/cards/PriceCard";
 import { Gate } from "@/components/ui/Gate";
-import { product, programmeFor, ASSESSMENT_CREDIT } from "@/content/products";
+import { product, ASSESSMENT_CREDIT } from "@/content/products";
+import { PATHWAY_TERMS, ASSESSMENT_POINTS, PILLARS } from "@/content/pathway";
+import { LEGAL_ENTITY, CTA } from "@/content/site";
 import { usd } from "@/lib/format";
-import { NotRepresentation, FinalCta } from "@/components/sections/HomeSections";
-import { LEGAL_ENTITY } from "@/content/site";
+import { pending } from "@/lib/evidence";
+import { IS_REVIEW } from "@/lib/site-mode";
 
-export const metadata: Metadata = { title: "Pricing", description: "Transparent pricing. No hidden fees. No guaranteed outcomes." };
-
-const ROWS: [string, (id: string) => string][] = [
-  ["Term", (id) => product(id).term],
-  ["Full-match analyses", (id) => ({ cohort: "1 per quarter", window: "2 per window cycle", "two-window": "4", elite: "6", club: "—" } as Record<string, string>)[id]],
-  ["Individual calls", (id) => ({ cohort: "1 per quarter", window: "Monthly, 45 min", "two-window": "Monthly, 45 min", elite: "Fortnightly + monthly with a FIFA Licensed Football Agent", club: "Monthly group call" } as Record<string, string>)[id]],
-  ["Opportunity vetting", (id) => ({ cohort: "Included", window: "Unlimited · 48h", "two-window": "Unlimited · 48h", elite: "Unlimited · 24h", club: "Included" } as Record<string, string>)[id]],
-  ["Market briefings", (id) => ({ cohort: "European market briefings", window: "Per target country", "two-window": "Per target country", elite: "Bespoke report, 2 countries", club: "Monthly update" } as Record<string, string>)[id]],
-  ["Parent / family calls", (id) => ({ cohort: "—", window: "Quarterly", "two-window": "Quarterly", elite: "Quarterly family call", club: "—" } as Record<string, string>)[id]],
-  ["Re-assessment", (id) => ({ cohort: "—", window: "—", "two-window": "End of year", elite: "End of year", club: "Quarterly profile review" } as Record<string, string>)[id]],
-  ["Legal credits", (id) => (id === "elite" ? "2 prepaid, provided separately" : "—")],
-];
-const IDS = ["cohort", "window", "two-window", "elite", "club"];
+export const metadata: Metadata = { alternates: { canonical: "/pricing/" }, title: "Pricing — $249 assessment, then $399/month",
+  description: "Two steps, clear prices. Player Pathway Assessment $249 one time. European Pathway career management $399 per month, designed as a 6-month pathway.",
+};
 
 export default function PricingPage() {
-  const a = product("assessment");
+  const a = product("assessment"); const p = product("pathway");
   return (
     <>
-      <PageHero eyebrow="Pricing" title={<>Transparent pricing. <span className="text-route">No hidden fees. No guaranteed outcomes.</span></>} lede="Current prices in USD. Every programme starts with an assessment." />
-      <Section tone="ink" label="Assessment" className="!pt-6">
-        <div className="wrap" data-hide-sticky>
-          <div className="flex flex-col justify-between gap-6 border border-route/70 bg-ink-deep p-7 sm:p-10 lg:flex-row lg:items-center">
-            <div><p className="eyebrow text-route">Start here</p><p className="display d-md mt-2">{a.name}</p><p className="mt-2 max-w-xl text-white/75">Written report · full-match review · level band · three market directions · passport analysis · 90-day plan · 30-minute review call</p><p className="mono mt-3 text-[0.72rem] text-slate-light">${ASSESSMENT_CREDIT.amount} credited toward any programme booked within {ASSESSMENT_CREDIT.days} days</p></div>
-            <div className="flex flex-col items-start gap-4 lg:items-end"><p className="display text-[5rem] leading-none text-route">{usd(a.price)}</p><ApplyCta /></div>
-          </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">{["cohort", "window", "two-window", "elite"].map((id) => <PriceCard key={id} p={product(id)} c={programmeFor(id)} featured={id === "window"} limit={5} />)}</div>
-          <div className="mt-6 flex flex-col justify-between gap-3 border border-white/12 p-6 sm:flex-row sm:items-center"><p className="display text-[1.6rem] leading-none">Pathway Club · <span className="text-route">{usd(product("club").price)}/month</span></p><p className="text-white/70">Alumni only · {programmeFor("club").concept}</p></div>
-        </div>
-      </Section>
-      <Section tone="deep" label="Compare everything">
+      <section className="on-ink pb-14 pt-[calc(var(--header-h)+3rem)]" aria-label="Pricing">
         <div className="wrap">
-          <Kicker>Compare everything</Kicker>
-          <div className="rail -mx-[var(--gutter)] overflow-x-auto px-[var(--gutter)]">
-            <table className="w-full min-w-[820px] border-collapse text-left text-[0.9rem]">
-              <thead><tr className="border-b-2 border-white/30"><th className="sticky left-0 bg-ink-deep py-4 pr-4 font-normal text-slate-light">&nbsp;</th>{IDS.map((id) => <th key={id} scope="col" className="py-4 pr-4 align-bottom"><span className="display block text-[1.25rem] leading-none">{product(id).name}</span><span className="display text-[1.4rem] text-route">{usd(product(id).price)}{id === "club" ? "/mo" : ""}</span></th>)}</tr></thead>
-              <tbody>{ROWS.map(([label, fn]) => <tr key={label} className="border-b border-white/10"><th scope="row" className="sticky left-0 bg-ink-deep py-4 pr-4 font-semibold">{label}</th>{IDS.map((id) => <td key={id} className="py-4 pr-4 text-white/80">{fn(id)}</td>)}</tr>)}</tbody>
-            </table>
-          </div>
-          <p className="mono mt-4 text-[0.68rem] text-slate-light lg:hidden">Swipe the table sideways →</p>
+          <p className="mono mb-5 text-[0.72rem] uppercase tracking-[0.14em] text-route">Pricing</p>
+          <h1 className="display d-hero max-w-[14ch]">Two steps. <span className="text-route">Clear prices.</span></h1>
+          <p className="lede mt-6 max-w-xl text-white/80">Apply free. If you’re accepted, start with the assessment. Continue with the pathway when it makes sense for you.</p>
         </div>
-      </Section>
-      <Section tone="paper" label="Refunds and terms">
+      </section>
+
+      <section className="on-paper py-[clamp(3.5rem,8vw,6rem)]" aria-label="Products" data-hide-sticky>
+        <div className="wrap grid items-stretch gap-4 lg:grid-cols-[1fr_auto_1fr]">
+          <article className="flex flex-col border-2 border-ink bg-white p-7 sm:p-9">
+            <p className="mono text-[0.68rem] uppercase tracking-[0.14em] text-ink/55">Step 1 · Start</p>
+            <h2 className="display mt-2 text-[clamp(2rem,3.4vw,2.8rem)] leading-none">{a.name}</h2>
+            <p className="display mt-7 text-[clamp(4rem,8vw,6rem)] leading-[0.82]">{usd(a.price)}</p>
+            <p className="mono mt-2 text-[0.72rem] uppercase tracking-[0.12em] text-ink/60">One time · report in 7 business days</p>
+            <ul className="mt-7 space-y-2.5">{ASSESSMENT_POINTS.map((x) => <li key={x} className="flex gap-3"><span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 bg-ink" aria-hidden />{x}</li>)}</ul>
+            <div className="mt-auto pt-9"><ApplyCta tone="ink" /></div>
+          </article>
+          <span className="display grid place-items-center text-[2.5rem]" aria-hidden><span className="rotate-90 lg:rotate-0">→</span></span>
+          <article className="on-route flex flex-col p-7 sm:p-9">
+            <p className="mono text-[0.68rem] uppercase tracking-[0.14em] text-ink/65">Step 2 · Continue</p>
+            <h2 className="display mt-2 text-[clamp(2rem,3.4vw,2.8rem)] leading-none">{p.name}</h2>
+            <p className="display mt-7 text-[clamp(4rem,8vw,6rem)] leading-[0.82]">{usd(p.price)}<span className="text-[0.32em]"> / month</span></p>
+            <p className="mono mt-2 text-[0.72rem] uppercase tracking-[0.12em] text-ink/70">{PATHWAY_TERMS.short}</p>
+            <ul className="mt-7 space-y-2.5">{PILLARS.map((x) => <li key={x.key} className="flex gap-3"><span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 bg-ink" aria-hidden />{x.name}</li>)}</ul>
+            <div className="mt-auto pt-9"><Link href="/european-pathway" className="btn btn-ink">{CTA.pathway} <span className="arrow" aria-hidden>→</span></Link></div>
+          </article>
+        </div>
+      </section>
+
+      <section className="on-white py-[clamp(3.5rem,8vw,6rem)]" aria-label="How billing works">
         <div className="wrap grid gap-10 lg:grid-cols-3">
-          <div><p className="display d-md">Refunds</p><Gate evidence={{ state: "pending", ref: "E24" }} label="approved refund text"><p className="mt-4 text-ink/80">Assessment: full refund until the review of your match begins. Programmes: 14-day refund minus assessment value; thereafter pro-rata only for our non-performance. Injury pause up to 60 days.</p></Gate></div>
-          <div><p className="display d-md">Instalments</p><Gate evidence={{ state: "pending", ref: "E21" }} label="instalment approval"><p className="mt-4 text-ink/80">Window 3 × $850 · Two-Window 6 × $750 · Elite 4 × $2,000</p></Gate><p className="mt-4 text-ink/60 text-[0.9rem]">Instalment options will appear here once confirmed.</p></div>
-          <div><p className="display d-md">Who you contract with</p><p className="mt-4 text-ink/80">{LEGAL_ENTITY.name} · Reg. No. {LEGAL_ENTITY.registrationNo} · VAT {LEGAL_ENTITY.vatNo}. Prices exclude any applicable taxes, shown at payment.</p></div>
+          <div>
+            <h2 className="display d-md">How billing works</h2>
+            <p className="mt-4 text-ink/80">{PATHWAY_TERMS.horizon}</p>
+            <p className="mt-2 text-ink/80">{PATHWAY_TERMS.cancellation}{IS_REVIEW && <sup className="mono ml-1 text-[0.65em] text-route-deep">{PATHWAY_TERMS.evidence.ref}</sup>}</p>
+            <p className="mt-2 text-ink/60 text-[0.9rem]">You never pay the six months upfront.</p>
+          </div>
+          <div>
+            <h2 className="display d-md">Assessment credit</h2>
+            <Gate evidence={pending("Founder Q3", "Credit toward the first Pathway month(s)?")} label="credit decision"><p className="mt-4 text-ink/80">${ASSESSMENT_CREDIT.amount} of your assessment credited toward European Pathway if you start within {ASSESSMENT_CREDIT.days} days.</p></Gate>
+            <h2 className="display d-md mt-8">Refunds</h2>
+            <Gate evidence={pending("E24")} label="approved refund text"><p className="mt-4 text-ink/80">Assessment: full refund until the review of your match begins. European Pathway: terms set out in the Refund &amp; Cancellation Policy.</p></Gate>
+          </div>
+          <div>
+            <h2 className="display d-md">Who you contract with</h2>
+            <p className="mt-4 text-ink/80">{LEGAL_ENTITY.name} · Reg. No. {LEGAL_ENTITY.registrationNo} · VAT {LEGAL_ENTITY.vatNo}. Prices in USD; any applicable taxes are shown at payment.</p>
+            <p className="mt-4 text-[0.9rem] text-ink/60"><Link href="/legal/terms#notices" className="underline underline-offset-4">Terms &amp; key notices</Link> · <Link href="/legal/refunds" className="underline underline-offset-4">Refunds &amp; cancellations</Link></p>
+          </div>
         </div>
-        <p className="wrap mono mt-10 text-[0.7rem] text-ink/60">No former prices, discounts or countdowns are shown. Formal representation is never for sale.</p>
-      </Section>
-      <NotRepresentation />
-      <FinalCta />
+      </section>
     </>
   );
 }

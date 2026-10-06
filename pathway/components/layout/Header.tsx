@@ -36,7 +36,7 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-3">
           <Link href="/apply" className="btn btn-route !min-h-[42px] !px-4 text-[0.85rem]" aria-label={`${CTA.apply} — ${CTA.micro}`}>
-            <span className="hidden sm:inline">Apply free</span><span className="sm:hidden">Apply</span>
+            <span className="hidden sm:inline">Start your assessment</span><span className="sm:hidden">Start</span>
           </Link>
           <button className="xl:hidden flex h-[42px] w-[42px] items-center justify-center border border-white/20" aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen((o) => !o)}>
             <span className="relative block h-3 w-5">
@@ -49,10 +49,10 @@ export function Header() {
       <div id="mobile-menu" hidden={!open} className="xl:hidden h-[calc(100dvh-var(--header-h))] overflow-y-auto bg-ink">
         <div className="wrap flex flex-col gap-1 py-8">
           <Link href="/apply" className="btn btn-route mb-6 w-full">{CTA.apply} <span aria-hidden>→</span></Link>
-          {[...NAV, { href: "/how-it-works", label: "How it works" }, { href: "/verify", label: "Verify us" }, { href: "/faq", label: "Questions" }].map((n) => (
+          {[...NAV, { href: "/how-it-works", label: "How it works" }, { href: "/markets", label: "Markets" }, { href: "/verify", label: "Verify us" }, { href: "/faq", label: "Questions" }].map((n) => (
             <Link key={n.href} href={n.href} className="display border-b border-white/10 py-4 text-[2rem] leading-none">{n.label}</Link>
           ))}
-          <p className="mono mt-8 text-[0.7rem] text-slate-light">European Pathway is career advisory. Not representation.</p>
+          <p className="mono mt-8 text-[0.7rem] text-slate-light">{CTA.micro}</p>
         </div>
       </div>
     </header>

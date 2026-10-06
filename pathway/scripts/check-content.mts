@@ -24,12 +24,12 @@ const all = sources.map((f) => ({ f: path.relative(root, f), s: fs.readFileSync(
 
 // 1. Locked prices.
 const products = fs.readFileSync(path.join(root, "content/products.ts"), "utf8");
-for (const [id, price] of [["assessment", 249], ["cohort", 1500], ["window", 2400], ["two-window", 4200], ["elite", 7500], ["club", 149]] as const) {
+for (const [id, price] of [["assessment", 249], ["pathway", 399], ["cohort", 1500], ["window", 2400], ["two-window", 4200], ["elite", 7500], ["club", 149]] as const) {
   if (!new RegExp(`id: "${id}"[^}]*price: ${price}[,\\s]`).test(products)) errors.push(`Locked price changed or missing: ${id} must be $${price}`);
 }
 
 // 2. Forbidden public phrases (implying endorsement, guarantees, or agency licensing).
-const FORBIDDEN = [/FIFA[- ]approved/i, /FIFA[- ]endorsed/i, /FIFA[- ]licensed (agency|team)/i, /guaranteed (trial|contract|placement)/i, /partner clubs/i, /unlock your potential/i, /chase your dreams/i, /\bdelusion\b/i, /\d+\s?% (off|discount)/i, /only \d+ (spots|places) left/i];
+const FORBIDDEN = [/FIFA[- ]approved/i, /FIFA[- ]endorsed/i, /FIFA[- ]licensed (agency|team)/i, /guaranteed (trial|contract|placement)/i, /partner clubs/i, /unlock your potential/i, /chase your dreams/i, /\bdelusion\b/i, /\d+\s?% (off|discount)/i, /only \d+ (spots|places) left/i, /cancel any ?time/i, /\$2,?39\d/];
 for (const { f, s } of all) {
   for (const rx of FORBIDDEN) {
     for (const m of s.matchAll(new RegExp(rx, "gi"))) {

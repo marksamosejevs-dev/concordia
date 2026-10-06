@@ -5,7 +5,7 @@ import { ApplyCta } from "@/components/ui/Cta";
 import { AgencyPlayersRail, NotRepresentation, FinalCta } from "@/components/sections/HomeSections";
 import { LEGAL_ENTITY } from "@/content/site";
 
-export const metadata: Metadata = { title: "Concordia Sports Agency — the relationship", description: "How Concordia Sports Agency and Concordia Soccer · European Pathway relate — and why they stay separate." };
+export const metadata: Metadata = { alternates: { canonical: "/agency/" }, title: "Concordia Sports Agency — the relationship", description: "How Concordia Sports Agency and Concordia Soccer · European Pathway relate — and why they stay separate." };
 
 export default function AgencyPage() {
   return (
@@ -19,7 +19,7 @@ export default function AgencyPage() {
             {[
               ["Concordia Sports Agency", "Professional football agency", "Selective representation of players under separate representation agreements: club communication, negotiation, transfers and contracts on a represented player’s behalf."],
               ["Concordia Soccer", "Consumer football career brand", "The brand under which players and families can access professional career assessment and advisory."],
-              ["European Pathway", "The product family", "Player Pathway Assessment, programmes and Pathway Club: assessment, structure, review and decision support. Never club outreach, trials or representation."],
+              ["European Pathway", "The product family", "Player Pathway Assessment and European Pathway: assessment, structure, review and decision support. Never club outreach, trials or representation."],
             ].map(([t, s, b], i) => (
               <li key={t} className="bg-paper p-7"><span className="mono text-[0.72rem] text-route-deep">0{i + 1}</span><p className="display mt-3 text-[2rem] leading-none">{t}</p><p className="mono mt-2 text-[0.72rem] uppercase tracking-[0.1em] text-ink/60">{s}</p><p className="mt-4 text-ink/80">{b}</p></li>
             ))}

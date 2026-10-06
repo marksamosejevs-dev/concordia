@@ -23,7 +23,7 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-16 grid gap-8 border-t border-white/10 pt-8 text-[0.8rem] leading-relaxed text-slate-light md:grid-cols-3">
+        <div className="mt-16 grid gap-8 border-t border-white/10 pt-8 text-[0.8rem] leading-relaxed text-slate-light md:grid-cols-2">
           <div>
             <p className="font-semibold text-white">{LEGAL_ENTITY.name}</p>
             <p>Reg. No. {LEGAL_ENTITY.registrationNo} · VAT {LEGAL_ENTITY.vatNo}</p>
@@ -31,13 +31,9 @@ export function Footer() {
             <p className="mt-2">{LEGAL_ENTITY.note}</p>
           </div>
           <div>
-            <p className="font-semibold text-white">European Pathway is not representation.</p>
-            <p>Representation by Concordia Sports Agency is separate, selective and cannot be purchased. <Link href="/representation" className="underline">How it works</Link>.</p>
-          </div>
-          <div>
             <p className="font-semibold text-white">Led by FIFA Licensed Football Agent {LICENCE.holder}</p>
             <p>Licence No. {LICENCE.number} · <Link href="/verify" className="underline">Verify</Link></p>
-            <p className="mt-2">No FIFA endorsement of Concordia Soccer or its services is stated or implied.</p>
+            <p className="mt-2"><Link href="/legal/terms#notices" className="underline">Legal notices</Link></p>
           </div>
         </div>
         <p className="mono mt-10 text-[0.68rem] text-slate">© {new Date().getFullYear()} {LEGAL_ENTITY.name}. All rights reserved.</p>

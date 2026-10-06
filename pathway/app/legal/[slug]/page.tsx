@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
-import { LEGAL_ENTITY } from "@/content/site";
+import { LEGAL_ENTITY, LICENCE } from "@/content/site";
+import { PATHWAY_TERMS } from "@/content/pathway";
+
+/** Key notices — moved here from the homepage (Round 1). Same substance, one authoritative place. */
+const NOTICES: [string, string][] = [
+  ["Advisory, not representation", "Concordia Soccer · European Pathway provides career assessment and advisory services. It is not representation. Representation by Concordia Sports Agency is separate and selective, requires its own representation agreement, and cannot be purchased. Paying for any Pathway service does not increase a player’s right, entitlement or chance to be represented."],
+  ["Agency players", "Players presented as represented by Concordia Sports Agency are shown as Agency credibility. They did not necessarily take part in European Pathway, and buying a Pathway service does not make a player a represented player."],
+  ["FIFA licence", `The FIFA football agent licence (No. ${LICENCE.number}) is held personally by ${LICENCE.holder}. No FIFA endorsement of Concordia Soccer, Concordia Sports Agency or their services is stated or implied.`],
+  ["No guaranteed outcomes", "No trial, contract, transfer, club introduction or placement is promised or guaranteed by any service."],
+  ["Contract & offer review", "Contract and offer review within European Pathway is career-advisory review of what an offer commits a player to. It does not create a lawyer–client relationship; where formal legal advice is needed, we will say so."],
+  ["European Pathway billing", `${PATHWAY_TERMS.horizon} ${PATHWAY_TERMS.cancellation} The final subscription terms — minimum term, cancellation and renewal — will be set out in full here before enrolment opens.`],
+];
 
 const DOCS: Record<string, { title: string; outline: string[] }> = {
-  terms: { title: "Terms of Service", outline: ["Who we are (contracting entity)", "Services: career assessment and advisory (Other Services)", "Express exclusion of football-agent services, club contact and placement", "No-guarantee clause", "Honest-assessment clause", "Fees, payment and instalments", "Minors and guardians", "Data and video licence", "Governing law and consumer-law rights"] },
+  terms: { title: "Terms of Service", outline: ["Who we are (contracting entity)", "Services: career assessment and advisory (Other Services)", "Express exclusion of football-agent services, club contact and placement", "No-guarantee clause", "Honest-assessment clause", "Fees and monthly billing (European Pathway)", "Minors and guardians", "Data and video licence", "Governing law and consumer-law rights"] },
   privacy: { title: "Privacy Policy", outline: ["Controller: " + LEGAL_ENTITY.name, "Data collected in the application", "Lawful bases (GDPR)", "Optional agency-viewing consent", "Retention", "Your rights", "International transfers", "Contact"] },
-  refunds: { title: "Refund & Cancellation Policy", outline: ["Assessment refunds", "Programme refunds and the 14-day period", "Pro-rata refunds for non-performance", "Injury pause", "Pathway Club cancellation", "Representation transition refunds / credits"] },
+  refunds: { title: "Refund & Cancellation Policy", outline: ["Assessment refunds", "European Pathway monthly billing: minimum term, cancellation and renewal", "EU / consumer withdrawal rights", "Pro-rata refunds for non-performance", "Injury pause", "Representation transition refunds / credits"] },
   cookies: { title: "Cookie Policy", outline: ["Strictly necessary storage (application draft, attribution)", "Analytics (consent-gated)", "Managing preferences"] },
   safeguarding: { title: "Safeguarding", outline: ["Working with under-18s", "Guardian involvement", "Under-16 policy", "Reporting concerns"] },
   complaints: { title: "Complaints", outline: ["How to complain", "Response times", "Escalation"] },
@@ -14,7 +25,7 @@ const DOCS: Record<string, { title: string; outline: string[] }> = {
 };
 export function generateStaticParams() { return Object.keys(DOCS).map((slug) => ({ slug })); }
 export const dynamicParams = false;
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const { slug } = await params; return { title: DOCS[slug]?.title ?? "Legal" }; }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> { const { slug } = await params; const t = DOCS[slug]?.title ?? "Legal"; return { title: t, description: `${t} — Concordia Soccer · European Pathway, provided by ${LEGAL_ENTITY.name}.`, alternates: { canonical: `/legal/${slug}/` } }; }
 
 export default async function LegalPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params; const d = DOCS[slug]; if (!d) notFound();
@@ -29,6 +40,14 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
           <p>{LEGAL_ENTITY.address.join(", ")}</p>
           <p className="mt-2">{LEGAL_ENTITY.note}</p>
         </div>
+        {slug === "terms" && (
+          <div id="notices" className="mt-12 scroll-mt-28">
+            <h2 className="display d-md">Key notices</h2>
+            <dl className="mt-6 divide-y divide-ink/10 border-y border-ink/10">
+              {NOTICES.map(([t, b]) => <div key={t} className="grid gap-2 py-5 sm:grid-cols-[0.7fr_1.3fr]"><dt className="font-bold">{t}</dt><dd className="text-ink/80">{b}</dd></div>)}
+            </dl>
+          </div>
+        )}
         {d.outline.length > 0 && (
           <div className="gated relative mt-12 p-6">
             <span className="gate-tag absolute -top-3 left-2">Legal text pending review — outline only</span>

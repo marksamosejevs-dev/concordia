@@ -29,3 +29,12 @@ Base directory `pathway` · build `npm run build:export` · publish `out` · Nod
 which Netlify reads only when the base directory is `pathway`. The Agency project (base directory = repository root) is unaffected.
 
 Review deployments: branch `claude/dreamy-meitner-xavjbk` → https://claude-dreamy-meitner-xavjbk--concordia-soccer.netlify.app (noindex).
+
+## Round 1 revision (founder feedback)
+
+- Homepage rebuilt in `components/home/` — 11 sections: hero → proof → decision → $249 assessment → $399/month European Pathway → career team → real football → parents/players → video testimonials → how it works → final offer.
+- Core offer: `content/products.ts` (`catalogue: "core"`) and `content/pathway.ts`. All subscription/cancellation wording is in `PATHWAY_TERMS` — change it there once terms are final.
+- Product page: `/european-pathway`. Former programmes stay in the data model as `catalogue: "legacy"` (noindex, not linked).
+- Images: `npm run build:images` writes responsive WebP variants to `public/_img` (git-ignored); `lib/image-loader.ts` serves them. Runs automatically in `dev`, `build` and `build:export`.
+- OG image: `node scripts/build-og.mjs` → `app/opengraph-image.png`.
+- SEO: `app/robots.ts` (disallows everything in review mode), `app/sitemap.ts`, canonicals, homepage JSON-LD. Set `NEXT_PUBLIC_SITE_URL` once the production domain is decided.

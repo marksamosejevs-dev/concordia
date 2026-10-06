@@ -24,7 +24,7 @@ export const testimonials: Testimonial[] = [
     entity: "Concordia Sports Agency",
     source: "Video supplied by Concordia",
     topic: [],
-    media: { type: "video", src: "/assets/pathway/videos/testimonials/victor-testimonial.mp4" },
+    media: { type: "video", src: "/assets/pathway/videos/testimonials/victor-testimonial-web.mp4", poster: "/assets/pathway/videos/testimonials/victor-poster.jpg" },
     evidence: pending("E15", "Transcript, speaker, relationship, permission"),
   },
 ];
