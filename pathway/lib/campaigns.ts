@@ -8,10 +8,10 @@ export type FootballCategory = "Women’s football" | "Men’s football";
 export interface Campaign { key: string; label: string; category?: FootballCategory; stage: "college" | "youth"; heroLede?: string }
 
 export const CAMPAIGNS: Campaign[] = [
-  { key: "us-mens-college", label: "US men’s college soccer → Europe", category: "Men’s football", stage: "college", heroLede: "Finishing college soccer? Find out where you really stand in European football — then a career team manages your pathway, month by month." },
-  { key: "us-womens-college", label: "US women’s college soccer → Europe", category: "Women’s football", stage: "college", heroLede: "Finishing college soccer? Find out where you really stand in European women’s football — then a career team manages your pathway, month by month." },
-  { key: "youth-mens", label: "Youth men’s football → Europe", category: "Men’s football", stage: "youth", heroLede: "A young player with European ambitions? Get an honest assessment first — then a career team manages the pathway, with parents involved." },
-  { key: "youth-womens", label: "Youth women’s football → Europe", category: "Women’s football", stage: "youth", heroLede: "A young player aiming for European women’s football? Get an honest assessment first — then a career team manages the pathway, with parents involved." },
+  { key: "us-mens-college", label: "US men’s college soccer → Europe", category: "Men’s football", stage: "college", heroLede: "Finishing college soccer? Find out where you really stand in European football — then a FIFA Licensed Football Agent and our team guide your pathway into Europe, month by month." },
+  { key: "us-womens-college", label: "US women’s college soccer → Europe", category: "Women’s football", stage: "college", heroLede: "Finishing college soccer? Find out where you really stand in European women’s football — then a FIFA Licensed Football Agent and our team guide your pathway into Europe, month by month." },
+  { key: "youth-mens", label: "Youth men’s football → Europe", category: "Men’s football", stage: "youth", heroLede: "A young player with European ambitions? Get an honest assessment first — then a FIFA Licensed Football Agent and our team guide your pathway into Europe, month by month, with parents involved." },
+  { key: "youth-womens", label: "Youth women’s football → Europe", category: "Women’s football", stage: "youth", heroLede: "A young player aiming for European women’s football? Get an honest assessment first — then a FIFA Licensed Football Agent and our team guide your pathway into Europe, month by month, with parents involved." },
 ];
 
 export function campaignFor(utmCampaign?: string): Campaign | undefined {
