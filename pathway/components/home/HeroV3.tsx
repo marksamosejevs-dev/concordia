@@ -106,7 +106,6 @@ export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; seconda
                 <div className="absolute inset-0 bg-ink bg-[radial-gradient(120%_85%_at_50%_0%,#1E3C9C66,transparent_65%)]" role="img" aria-label={`${secondary.caption[0]} — photo to follow`}>
                   <div className="absolute inset-0 opacity-[0.18] [background-image:radial-gradient(#fff_1px,transparent_1.2px)] [background-size:14px_14px]" aria-hidden />
                   <span className="absolute left-4 top-4 h-[2px] w-8 bg-route" aria-hidden />
-                  <span className="gate-tag absolute bottom-3 left-3">Review only · waiting for Sassuolo photo file</span>
                 </div>
               )}
             </div>
