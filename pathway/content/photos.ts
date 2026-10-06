@@ -34,8 +34,6 @@ export const photos: Record<string, DocPhoto> = {
   cwcPitchWhite: { id: "cwcPitchWhite", src: B + "events/cwc-final-pitch-white.jpg", w: 1200, h: 1600, alt: "Two men posing on the pitch of an empty stadium after a match", caption: "FIFA Club World Cup 2025 Final, MetLife Stadium. [PEOPLE / CONTEXT — E36]", location: "New Jersey", evidence: pending("E36", "Who is pictured, context, publication") },
   cwcPitchBlue: { id: "cwcPitchBlue", src: B + "events/cwc-final-pitch-blue.jpg", w: 1200, h: 1600, alt: "Two men giving a thumbs-up on a stadium pitch at night", caption: "FIFA Club World Cup 2025 Final, MetLife Stadium. [PEOPLE / CONTEXT — E36]", location: "New Jersey", evidence: pending("E36", "Who is pictured, context, publication") },
   hotelLobby: { id: "hotelLobby", src: B + "events/hotel-lobby.jpg", w: 1200, h: 1600, alt: "Two men in suits smiling in a marble hotel lobby", caption: "[PEOPLE / EVENT / YEAR — E36]", evidence: pending("E36", "Who is pictured, context, publication") },
-  /** Founder-confirmed: Emīlija Ambaine (E12 guardian permission cleared). File to be added at this path; layouts include it only once it exists. */
-  emilijaSassuolo: { id: "emilijaSassuolo", src: B + "players/emilija-ambaine-sassuolo.jpg", w: 1280, h: 960, alt: "Emīlija Ambaine holding a U.S. Sassuolo shirt", caption: "Emīlija Ambaine — U.S. Sassuolo.", evidence: { state: "confirmed", ref: "E12" } },
   celebration: { id: "celebration", src: B + "editorial/latvia-celebration.jpg", w: 2000, h: 1333, alt: "Latvia players celebrating during a match", caption: "[PLAYER / MATCH / PHOTOGRAPHER — E2/E11]", evidence: hold("E2/E11") },
 };
 

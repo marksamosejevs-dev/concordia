@@ -9,13 +9,14 @@ import { CTA } from "@/content/site";
 import { usePrefersReducedMotion, useMounted } from "@/lib/hooks";
 import { readAttribution } from "@/lib/attribution";
 import { campaignFor } from "@/lib/campaigns";
+import { IS_REVIEW } from "@/lib/site-mode";
 import type { ReactNode } from "react";
 
 /**
  * Hero — layered composition: pointer-reactive dot-matrix Europe, oversized drifting "EUROPE",
  * a masked editorial photo, and a floating player-profile UI whose market cycles in sync with the map route.
  */
-export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; secondary?: { src: string; alt: string; position: string; ratio: string; caption: string[] } }) {
+export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; secondary?: { src?: string; alt: string; position: string; ratio: string; caption: string[] } }) {
   const reduced = usePrefersReducedMotion();
   const [i, setI] = useState(0);
   useEffect(() => {
@@ -92,13 +93,22 @@ export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; seconda
           </div>
         </div>
       </div>
-      {secondary && (
+      {secondary && (secondary.src || IS_REVIEW) && (
         /* Secondary editorial image — lower and smaller than the primary frame, leading the eye into the page. */
         <div className="wrap relative -mt-4 flex justify-end pb-14 lg:-mt-28 lg:pb-20">
           <figure className="relative w-[88%] max-w-[560px] sm:w-[64%] lg:mr-[2%] lg:w-[40%]" style={{ transform: "translate3d(calc(var(--px) * 8px), calc(var(--sp) * -30px), 0)" }}>
             <span className="absolute -left-6 top-1/2 hidden h-[2px] w-6 bg-route lg:block" aria-hidden />
             <div style={{ aspectRatio: secondary.ratio }} className="relative overflow-hidden rounded-[14px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.85)] ring-1 ring-white/10">
-              <Image src={secondary.src} alt={secondary.alt} fill sizes="(min-width:1024px) 40vw, 88vw" className="photo-grade object-cover" style={{ objectPosition: secondary.position }} />
+              {secondary.src ? (
+                <Image src={secondary.src} alt={secondary.alt} fill sizes="(min-width:1024px) 40vw, 88vw" className="photo-grade object-cover" style={{ objectPosition: secondary.position }} />
+              ) : (
+                /* Reserved slot (review builds only) — same frame, waiting for the original Sassuolo photo file. */
+                <div className="absolute inset-0 bg-ink bg-[radial-gradient(120%_85%_at_50%_0%,#1E3C9C66,transparent_65%)]" role="img" aria-label={`${secondary.caption[0]} — photo to follow`}>
+                  <div className="absolute inset-0 opacity-[0.18] [background-image:radial-gradient(#fff_1px,transparent_1.2px)] [background-size:14px_14px]" aria-hidden />
+                  <span className="absolute left-4 top-4 h-[2px] w-8 bg-route" aria-hidden />
+                  <span className="gate-tag absolute bottom-3 left-3">Review only · waiting for Sassuolo photo file</span>
+                </div>
+              )}
             </div>
             <figcaption className="mt-2.5 text-right text-[0.78rem] leading-tight"><span className="font-bold text-white">{secondary.caption[0]}</span> <span className="text-white/60">· {secondary.caption[1]}</span></figcaption>
           </figure>

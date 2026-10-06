@@ -10,7 +10,7 @@ export const HERO = {
   position: "62% 30%",
   /** Minimal caption under the frame (founder-supplied facts only). */
   caption: "Marks Amosejevs with Viktors Ohvovoriole · transfer to Korona Kielce",
-  /** Secondary opening image (lower in the hierarchy): Emīlija Ambaine, U.S. Sassuolo. Renders only when the real file exists. */
+  /** Secondary opening image (lower in the hierarchy): Emīlija Ambaine, U.S. Sassuolo. Slot prepared; renders the photo only when the real file exists (see people-assets.ts). */
   secondary: HERO_SECONDARY,
   /** Other plausible hero images, in order of preference. */
   alternates: [photos.cwcStand, photos.okmk, photos.chairmanShirt],
