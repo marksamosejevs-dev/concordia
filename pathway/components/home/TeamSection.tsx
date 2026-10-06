@@ -6,7 +6,6 @@ import { TEAM_PORTRAITS, type PortraitAsset } from "@/content/people-assets";
 
 /** One crop system for every portrait: same ratio, framing (focus + zoom) and treatment. */
 export function PortraitFrame({ a, name, sizes, className = "" }: { a?: PortraitAsset; name: string; sizes: string; className?: string }) {
-  const initials = name.split(" ").map((p) => p[0]).join("");
   return (
     <div className={`relative aspect-[4/5] overflow-hidden rounded-[14px] bg-ink ${className}`}>
       {a?.src ? (
@@ -16,8 +15,13 @@ export function PortraitFrame({ a, name, sizes, className = "" }: { a?: Portrait
           </div>
         </div>
       ) : (
-        <div className="absolute inset-0 grid place-items-center bg-[radial-gradient(120%_80%_at_30%_10%,#1E3C9C55,transparent_60%)]" aria-label={`${name} — portrait to follow`} role="img">
-          <span className="display text-[clamp(3.5rem,8vw,5.5rem)] leading-none text-white/15">{initials}</span>
+        <div className="absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_0%,#1E3C9C66,transparent_65%)]" aria-label={`${name} — portrait to follow`} role="img">
+          <div className="absolute inset-0 opacity-[0.18] [background-image:radial-gradient(#fff_1px,transparent_1.2px)] [background-size:14px_14px] [mask-image:linear-gradient(to_bottom,#000,transparent_85%)]" aria-hidden />
+          <svg viewBox="0 0 200 250" className="absolute inset-x-0 bottom-0 mx-auto h-[78%] w-auto text-white/[0.14]" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden>
+            <circle cx="100" cy="92" r="38" />
+            <path d="M28 250c4-52 34-86 72-86s68 34 72 86" />
+          </svg>
+          <span className="absolute left-4 top-4 h-[2px] w-8 bg-route" aria-hidden />
         </div>
       )}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/45 to-transparent" aria-hidden />

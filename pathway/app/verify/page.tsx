@@ -18,7 +18,7 @@ export default function VerifyPage() {
             <span className="flex items-center gap-2"><span className="inline-block h-3 w-3 rounded-full border-2 border-route" />Document viewable</span>
           </div>
           <VerifyLedger mode="full" />
-          <p className="mt-10 max-w-3xl text-[0.9rem] text-slate-light">Credentials belong to the individual named. <Link href="/legal/terms#notices" className="underline underline-offset-2">Key notices</Link></p>
+          <p className="mt-10 max-w-3xl text-[0.9rem] text-slate-light"><Link href="/legal/terms#notices" className="underline underline-offset-2">Key notices</Link></p>
         </div>
       </Section>
       <FinalCta />

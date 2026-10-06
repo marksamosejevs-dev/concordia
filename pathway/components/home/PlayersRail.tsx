@@ -1,7 +1,4 @@
-import fs from "node:fs";
-import path from "node:path";
 import Image from "next/image";
-import { photos } from "@/content/photos";
 import Link from "next/link";
 import { agencyPlayers, intlStatus } from "@/content/agency-players";
 import { isPublic } from "@/lib/evidence";
@@ -19,9 +16,6 @@ export function PlayersRail() {
   const youth = cleared.filter((p) => intlStatus(p)?.level === "youth").length;
   const clubs = [...new Set(cleared.map((p) => p.club).filter(Boolean))];
   const loop = [...shown, ...shown];
-  // Emīlija Ambaine at U.S. Sassuolo — standalone editorial image once the file is in the repo (E12 cleared).
-  const ed = photos.emilijaSassuolo;
-  const edReady = fs.existsSync(path.join(process.cwd(), "public", ed.src));
 
   return (
     <section className="on-white relative overflow-hidden py-[clamp(4rem,9vw,7rem)]" aria-labelledby="players-title">
@@ -55,17 +49,6 @@ export function PlayersRail() {
           })}
         </ul>
       </div>
-      {edReady && (
-        <figure className="wrap mt-14">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[16px] sm:aspect-[16/9]">
-            <Image src={ed.src} alt={ed.alt} fill sizes="(min-width:1360px) 1240px, 100vw" className="photo-grade object-cover" style={{ objectPosition: "50% 35%" }} />
-            <figcaption className="absolute bottom-4 left-4 rounded-[8px] bg-white/95 px-3 py-2 text-ink shadow-lg sm:bottom-6 sm:left-6">
-              <span className="display block text-[1.3rem] leading-none">Emīlija Ambaine</span>
-              <span className="mt-0.5 block text-[0.8rem] font-semibold text-ink/70">U.S. Sassuolo</span>
-            </figcaption>
-          </div>
-        </figure>
-      )}
       <div className="wrap mt-8"><Link href="/players" className="inline-flex items-center gap-2 font-semibold underline decoration-ink/30 underline-offset-[6px] hover:decoration-ink">Meet the players <span aria-hidden>→</span></Link></div>
     </section>
   );

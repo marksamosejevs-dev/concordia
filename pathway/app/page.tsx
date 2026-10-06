@@ -20,7 +20,7 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 export default function Home() {
   // Secondary hero image appears only once the real asset is in the repository (never substituted).
   const sec = HERO.secondary;
-  const secondary = fs.existsSync(path.join(process.cwd(), "public", sec.photo.src)) ? { src: sec.photo.src, alt: sec.photo.alt, position: sec.position, caption: [...sec.caption] } : undefined;
+  const secondary = fs.existsSync(path.join(process.cwd(), "public", sec.src)) ? { src: sec.src, alt: sec.alt, position: sec.position, ratio: `${sec.w}/${sec.h}`, caption: [...sec.caption] } : undefined;
   return (
     <>
       <StructuredData />
