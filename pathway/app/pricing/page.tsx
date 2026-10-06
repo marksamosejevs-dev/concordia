@@ -7,7 +7,6 @@ import { PATHWAY_TERMS, ASSESSMENT_POINTS, PILLARS } from "@/content/pathway";
 import { LEGAL_ENTITY, CTA } from "@/content/site";
 import { usd } from "@/lib/format";
 import { pending } from "@/lib/evidence";
-import { IS_REVIEW } from "@/lib/site-mode";
 
 export const metadata: Metadata = { alternates: { canonical: "/pricing/" }, title: "Pricing — $249 assessment, then $399/month",
   description: "Two steps, clear prices. Player Pathway Assessment $249 one time. European Pathway career management $399 per month, designed as a 6-month pathway.",
@@ -19,7 +18,6 @@ export default function PricingPage() {
     <>
       <section className="on-ink pb-14 pt-[calc(var(--header-h)+3rem)]" aria-label="Pricing">
         <div className="wrap">
-          <p className="mono mb-5 text-[0.72rem] uppercase tracking-[0.14em] text-route">Pricing</p>
           <h1 className="display d-hero max-w-[14ch]">Two steps. <span className="text-route">Clear prices.</span></h1>
           <p className="lede mt-6 max-w-xl text-white/80">Apply free. If you’re accepted, start with the assessment. Continue with the pathway when it makes sense for you.</p>
         </div>
@@ -52,7 +50,7 @@ export default function PricingPage() {
           <div>
             <h2 className="display d-md">How billing works</h2>
             <p className="mt-4 text-ink/80">{PATHWAY_TERMS.horizon}</p>
-            <p className="mt-2 text-ink/80">{PATHWAY_TERMS.cancellation}{IS_REVIEW && <sup className="mono ml-1 text-[0.65em] text-route-deep">{PATHWAY_TERMS.evidence.ref}</sup>}</p>
+            <p className="mt-2 text-ink/80">{PATHWAY_TERMS.cancellation}</p>
             <p className="mt-2 text-ink/60 text-[0.9rem]">You never pay the six months upfront.</p>
           </div>
           <div>

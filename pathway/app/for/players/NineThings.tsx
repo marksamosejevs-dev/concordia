@@ -14,9 +14,9 @@ const NINE: [string, string][] = [
 export function NineThings() {
   return (
     <ol className="rail -mx-[var(--gutter)] mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto px-[var(--gutter)] pb-2 md:mx-0 md:grid md:grid-cols-3 md:gap-px md:overflow-visible md:bg-ink/10 md:px-0">
-      {NINE.map(([t, b], i) => (
+      {NINE.map(([t, b]) => (
         <li key={t} className="flex w-[82%] shrink-0 snap-center flex-col justify-between bg-ink p-7 text-white md:w-auto md:bg-paper md:text-ink">
-          <span className="mono text-[0.72rem] text-route md:text-route-deep">{String(i + 1).padStart(2, "0")} / 09</span>
+          <span className="block h-1 w-10 bg-route md:bg-route-deep" aria-hidden />
           <div className="mt-10"><p className="display text-[2.6rem] leading-none">{t}</p><p className="mt-3 text-[0.98rem] leading-relaxed opacity-80">{b}</p></div>
         </li>
       ))}

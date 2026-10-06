@@ -46,7 +46,7 @@ export function DecisionSet({ tone = "blue", intro = true }: { tone?: "blue" | "
       <div className="wrap relative">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            {intro && <p className="mono mb-4 text-[0.72rem] uppercase tracking-[0.14em] text-white/70">You sent the reel. Nobody replied. Now what?</p>}
+            {intro && <p className="mb-4 text-[1.1rem] text-white/75">You sent the reel. Nobody replied. Now what?</p>}
             <h2 id="decision-title" className="display d-lg max-w-[18ch]">The right football decision is not always <span className="text-route">“go.”</span></h2>
           </div>
           <p className="max-w-xs text-[0.95rem] text-white/80">Every assessment ends with a clear decision. Nine possible answers. One is yours.</p>
@@ -54,8 +54,7 @@ export function DecisionSet({ tone = "blue", intro = true }: { tone?: "blue" | "
 
         {/* Kinetic word */}
         <div className="relative mt-10 grid min-h-[clamp(10rem,22vw,17rem)] items-center border-y border-white/20 py-6 lg:grid-cols-[1fr_0.55fr] lg:gap-10" aria-live="polite">
-          <div className="flex items-baseline gap-5 overflow-hidden">
-            <span className="mono shrink-0 text-[0.8rem] text-white/60">{String(i + 1).padStart(2, "0")}/09</span>
+          <div className="flex items-baseline overflow-hidden">
             <p key={d.key} className="display word-in text-[clamp(3.6rem,13vw,11.5rem)] leading-[0.85] text-white">{d.label.replace(".", "")}<span className="text-route">.</span></p>
           </div>
           <p key={d.key + "-l"} className="word-in mt-4 max-w-md text-[clamp(1.05rem,1.6vw,1.35rem)] leading-snug text-white/90 lg:mt-0">{d.line}</p>

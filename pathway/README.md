@@ -38,3 +38,10 @@ Review deployments: branch `claude/dreamy-meitner-xavjbk` → https://claude-dre
 - Images: `npm run build:images` writes responsive WebP variants to `public/_img` (git-ignored); `lib/image-loader.ts` serves them. Runs automatically in `dev`, `build` and `build:export`.
 - OG image: `node scripts/build-og.mjs` → `app/opengraph-image.png`.
 - SEO: `app/robots.ts` (disallows everything in review mode), `app/sitemap.ts`, canonicals, homepage JSON-LD. Set `NEXT_PUBLIC_SITE_URL` once the production domain is decided.
+
+## Round 2 revision (interaction / art direction)
+
+- Hero: `components/home/HeroV3.tsx` — pointer-reactive dot-matrix Europe (`components/route/EuropeDots.tsx`, data from `node scripts/build-dots.mjs`), masked photo, floating player profile. Swap the image in `content/hero.ts`.
+- Signature interactions: month-by-month pinned pathway (`PathwayScroller`), market match (`MarketMatch`), moving player rail with senior/youth international badges (`PlayersRail`), scroll photo marquee (`PhotoMarquee` — edit `ROWS`), tilting FIFA licence card (`TeamTrust`/`LicenceCard`), drag video carousel, magnetic CTAs (`[data-magnetic]`).
+- Labels: section kickers/eyebrows no longer render (no numbered "03/09"-style template labels). Hierarchy comes from headlines and content.
+- Pricing wording lives in `PATHWAY_TERMS` (`content/pathway.ts`).

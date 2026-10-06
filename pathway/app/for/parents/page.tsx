@@ -59,7 +59,7 @@ export default function ParentsPage() {
           <div className="mt-6 grid gap-px bg-white/10 md:grid-cols-2">
             {EXPLAINERS.map((x) => (
               <details key={x.n} className="group bg-ink p-7 open:bg-ink-deep md:[&:not([open])]:min-h-[180px]" open>
-                <summary className="flex cursor-pointer list-none items-start justify-between gap-6"><span><span className="mono text-[0.72rem] text-route">{x.n}</span><span className="display mt-2 block text-[clamp(1.5rem,2.4vw,2rem)] leading-none">{x.t}</span></span><span className="mt-6 text-route transition-transform group-open:rotate-45" aria-hidden>+</span></summary>
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-6"><span><span className="display block text-[clamp(1.5rem,2.4vw,2rem)] leading-none">{x.t}</span></span><span className="mt-6 text-route transition-transform group-open:rotate-45" aria-hidden>+</span></summary>
                 <p className="mt-4 leading-relaxed text-white/80">{x.b}</p>
                 {x.legal && <Gate evidence={{ state: "pending", ref: "LEGAL" }} label="minors wording — football-lawyer review" className="mt-3"><span className="text-[0.8rem] text-white/50">FIFA RSTP Art. 19 reference to be legally checked.</span></Gate>}
                 {x.e9 && <p className="mt-3 text-[0.9rem] text-white/70"><Pending evidence={pending("E9")}>Legal services provided by [law practice].</Pending></p>}

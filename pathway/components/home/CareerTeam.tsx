@@ -12,8 +12,7 @@ export function CareerTeam() {
         return (
           <li key={p.key} className="tile border-b border-r border-ink/15" data-active={active}>
             <button onClick={() => setOpen(active ? null : p.key)} aria-expanded={active} className="flex h-full min-h-[118px] w-full flex-col items-start p-4 text-left sm:min-h-[200px] sm:p-6">
-              <span className="mono tile-muted text-[0.7rem] text-ink/50">{p.n}</span>
-              <span className="display mt-auto block pt-4 text-[clamp(1.3rem,2.2vw,2rem)] leading-[0.95]">{p.name}</span>
+                            <span className="display mt-auto block pt-4 text-[clamp(1.3rem,2.2vw,2rem)] leading-[0.95]">{p.name}</span>
               <span className={`tile-muted mt-2 block text-[0.85rem] leading-snug text-ink/65 ${active ? "" : "hidden sm:block"}`}>{p.line}</span>
             </button>
           </li>

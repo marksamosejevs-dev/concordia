@@ -43,7 +43,7 @@ export default function MarksPage() {
         <Section key={c.n} tone={i % 2 ? "deep" : "ink"} label={c.t} className="!py-[clamp(3.5rem,8vw,6rem)]">
           <div className={`wrap grid gap-10 ${c.photo ? "lg:grid-cols-[1.1fr_0.9fr] lg:items-center" : ""}`}>
             <div>
-              <p className="mono text-[0.75rem] text-route">Chapter {c.n}</p>
+              
               <h2 className="display d-lg mt-2">{c.t}</h2>
               <p className="lede mt-6 max-w-2xl text-white/85">{c.body}</p>
               <p className="mt-8 max-w-2xl border-l-2 border-route pl-5 text-[1.05rem] text-white"><span className="mono mr-2 text-[0.65rem] uppercase tracking-[0.12em] text-slate-light">So what</span>{c.so}</p>

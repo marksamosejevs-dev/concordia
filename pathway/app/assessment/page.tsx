@@ -36,7 +36,7 @@ export default function AssessmentPage() {
             {ASSESSMENT_STEPS.map((s) => (
               <li key={s.n} className="relative pb-10 last:pb-0">
                 <span className="absolute -left-[41px] top-1 h-4 w-4 rounded-full border-[3px] border-route bg-ink sm:-left-[57px]" aria-hidden />
-                <span className="mono text-[0.72rem] text-route">{s.n}</span>
+                
                 <p className="display mt-1 text-[1.8rem] leading-none">{s.title}</p>
                 <p className="mt-2 max-w-xl text-white/75">{s.body}</p>
               </li>

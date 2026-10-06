@@ -1,4 +1,4 @@
-import { confirmed, hold, type Evidence } from "@/lib/evidence";
+import { confirmed, type Evidence } from "@/lib/evidence";
 
 /**
  * Players represented by Concordia Sports Agency — roster facts as supplied by the Agency
@@ -16,5 +16,17 @@ export const agencyPlayers: AgencyPlayer[] = [
   { slug: "emile-ngai-eba", name: "Emile Ngai Eba", nationality: "CMR", position: "Attacking Midfield", club: "FK Smiltene", birthYear: 2005, photo: P + "emile-ngai-eba.jpg", evidence: confirmed },
   { slug: "algirdas-grazis", name: "Aļģirdas Gražis", nationality: "LVA", position: "Centre-Forward", club: "Riga Mariners", birthYear: 2003, photo: P + "algirdas-grazis.jpg", evidence: confirmed },
   { slug: "savelijs-boroviks", name: "Savēlijs Boroviks", nationality: "LVA", position: "Right-Back", club: "FC RFS", nationalTeam: "Latvia U19", birthYear: 2008, photo: P + "savelijs-boroviks.jpg", evidence: confirmed },
-  { slug: "emilija-ambaine", name: "Emīlija Ambaine", nationality: "LVA", position: "Midfielder", club: "Sassuolo", nationalTeam: "Latvia U17", birthYear: 2010, photo: P + "emilija-ambaine.jpg", evidence: hold("E12", "Minor — guardian publication permission") },
+  { slug: "emilija-ambaine", name: "Emīlija Ambaine", nationality: "LVA", position: "Midfielder", club: "Sassuolo", nationalTeam: "Latvia U17", birthYear: 2010, photo: P + "emilija-ambaine.jpg", evidence: { state: "confirmed", ref: "E12", note: "Guardian publication permission confirmed by founder (Round 2); document held internally" } },
 ];
+
+/**
+ * International status from verified roster data only (no caps invented).
+ * Senior = the senior national team ("Latvia"); youth = any U-team (U17–U21), current or former.
+ */
+export type IntlLevel = "senior" | "youth";
+export function intlStatus(p: AgencyPlayer): { level: IntlLevel; label: string } | null {
+  const t = p.nationalTeam?.trim();
+  if (!t) return null;
+  if (/\bU\d{2}\b/.test(t)) return { level: "youth", label: `Youth international · ${t.replace(/^Former\s+/i, "")}${/^Former/i.test(t) ? " (former)" : ""}` };
+  return { level: "senior", label: `Senior international · ${t}` };
+}

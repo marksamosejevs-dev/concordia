@@ -13,6 +13,7 @@ import { StickyCta } from "@/components/layout/StickyCta";
 import { ReviewBar } from "@/components/layout/ReviewBar";
 import { AudienceProvider } from "@/components/layout/Audience";
 import { AttributionCapture } from "@/components/layout/AttributionCapture";
+import { MagneticLayer } from "@/components/ui/MagneticLayer";
 import { SITE_URL, INDEXABLE } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[70] focus:bg-route focus:px-4 focus:py-2 focus:text-ink">Skip to content</a>
         <AudienceProvider>
           <AttributionCapture />
+          <MagneticLayer />
           <Header />
           <main id="main">{children}</main>
           <Footer />

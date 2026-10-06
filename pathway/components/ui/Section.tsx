@@ -12,6 +12,12 @@ export function Section({ id, tone = "ink", className = "", children, label }: {
   return <section id={id} aria-label={label} className={`${t} relative overflow-hidden py-[clamp(4.5rem,11vw,9rem)] ${className}`}>{children}</section>;
 }
 
-export function Kicker({ n, children, className = "text-slate" }: { n?: string; children: ReactNode; className?: string }) {
-  return <div className={`mono mb-6 flex items-center gap-3 text-[0.72rem] uppercase tracking-[0.14em] ${className}`}>{n && <span className="text-current opacity-60">{n}</span>}{children}</div>;
+/**
+ * Round 2: section kickers (small uppercase label above every headline, often numbered) read as a
+ * generated template. Kept as an API so pages compile, but intentionally renders nothing —
+ * hierarchy comes from the headline, imagery and interaction instead.
+ */
+export function Kicker(props: { n?: string; children: ReactNode; className?: string }) {
+  void props;
+  return null;
 }

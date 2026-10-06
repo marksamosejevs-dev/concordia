@@ -29,7 +29,7 @@ export default function HowItWorks() {
               <li key={s.n} className="relative pb-14 last:pb-0">
                 <span className={`absolute top-2 h-5 w-5 rounded-full border-[3px] ${i === 4 ? "border-white bg-ink" : "border-route bg-ink"} -left-[43px] sm:-left-[67px]`} aria-hidden />
                 {i === 4 && <span className="mono absolute -left-[3px] -top-6 text-[0.6rem] uppercase tracking-[0.12em] text-slate-light sm:-left-[27px]">Separate agreement</span>}
-                <span className="mono text-[0.75rem] text-route">{s.n}</span>
+                
                 <p className="display d-md mt-1">{s.t}</p>
                 <p className="lede mt-3 max-w-2xl text-white/80">{s.b}</p>
                 {s.link && <Link href={s.link.href} className="mono mt-3 inline-block text-[0.72rem] uppercase tracking-[0.1em] text-route underline">{s.link.label} →</Link>}

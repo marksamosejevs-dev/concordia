@@ -11,7 +11,6 @@ import { product } from "@/content/products";
 import { photos } from "@/content/photos";
 import { LICENCE } from "@/content/site";
 import { usd } from "@/lib/format";
-import { IS_REVIEW } from "@/lib/site-mode";
 
 export const metadata: Metadata = { alternates: { canonical: "/european-pathway/" }, title: "European Pathway — $399/month career management",
   description: "Monthly football career management for players targeting Europe: strategy, match analysis, market matching, contract and offer review, and transfer-window planning. Designed as a 6-month pathway, paid monthly.",
@@ -34,11 +33,11 @@ export default function EuropeanPathwayPage() {
       <section className="on-ink relative overflow-hidden pb-16 pt-[calc(var(--header-h)+3rem)] lg:pb-24" aria-label="European Pathway">
         <div className="wrap grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
-            <p className="mono mb-5 text-[0.72rem] uppercase tracking-[0.14em] text-route">European Pathway · ongoing career management</p>
             <h1 className="display d-hero max-w-[12ch]">Your career team in European football.</h1>
-            <p className="display mt-6 text-[clamp(4.5rem,11vw,8.5rem)] leading-[0.8] text-route">{usd(p.price)}<span className="ml-2 align-top text-[0.3em] text-white">/ month</span></p>
-            <p className="mt-5 max-w-md text-[1.1rem] font-semibold">{PATHWAY_TERMS.horizon}</p>
-            <p className="mt-1.5 max-w-md text-[0.9rem] text-white/70">{PATHWAY_TERMS.cancellation}{IS_REVIEW && <sup className="mono ml-1 text-[0.6em] text-route">{PATHWAY_TERMS.evidence.ref}</sup>}</p>
+            <div className="mt-6 flex items-end gap-3"><p className="display text-[clamp(4.5rem,11vw,8.5rem)] leading-[0.8] text-route">{usd(p.price)}</p><p className="pb-1 text-[1.1rem] font-bold leading-tight">per<br />month</p></div>
+            <p className="mt-4 text-[1.2rem] font-bold">6-month European Pathway</p>
+            <ul className="mt-3 flex flex-wrap gap-2">{PATHWAY_TERMS.points.map((x) => <li key={x} className="rounded-full border border-white/25 px-3 py-1.5 text-[0.85rem] font-semibold">{x}</li>)}</ul>
+            <p className="mt-2 text-[0.8rem] text-white/60"><Link href={PATHWAY_TERMS.termsHref} className="underline underline-offset-2">{PATHWAY_TERMS.footnote}</Link></p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-start">
               <ApplyCta />
               <Link href="#included" className="btn btn-ghost">What’s included <span className="arrow" aria-hidden>↓</span></Link>
@@ -59,13 +58,11 @@ export default function EuropeanPathwayPage() {
       {/* EIGHT PILLARS */}
       <section className="on-white py-[clamp(4.5rem,10vw,8rem)]" aria-labelledby="pillars-title" id="included">
         <div className="wrap">
-          <p className="mono mb-4 text-[0.72rem] uppercase tracking-[0.14em] text-ink/55">What your career team does</p>
           <h2 id="pillars-title" className="display d-xl max-w-[16ch]">Eight jobs. One career team.</h2>
           <div className="mt-12 grid gap-px border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
             {PILLARS.map((x, n) => (
               <Reveal key={x.key} delay={(n % 4) * 80} className="tile bg-white p-6">
-                <p className="mono tile-muted text-[0.7rem] text-ink/50">{x.n}</p>
-                <h3 className="display mt-6 text-[1.8rem] leading-[0.95]">{x.name}</h3>
+                                <h3 className="display mt-6 text-[1.8rem] leading-[0.95]">{x.name}</h3>
                 <p className="tile-muted mt-2 text-[0.92rem] text-ink/70">{x.line}</p>
                 <ul className="mt-5 space-y-2 border-t border-ink/10 pt-4 text-[0.88rem]">
                   {x.detail.map((d) => <li key={d} className="flex gap-2.5"><span className="mt-[0.5em] h-[5px] w-[5px] shrink-0 bg-current" aria-hidden />{d}</li>)}
@@ -86,7 +83,7 @@ export default function EuropeanPathwayPage() {
           <ol className="relative mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
             {MONTHS.map((m, n) => (
               <Reveal as="li" key={m.m} delay={n * 90} className="border-t-[3px] border-route bg-white/[0.06] p-5">
-                <p className="mono text-[0.65rem] uppercase tracking-[0.12em] text-route">Month {m.m}</p>
+                <p className="text-[0.9rem] font-bold text-route">Month {Number(m.m)}</p>
                 <p className="display mt-2 text-[1.7rem] leading-none">{m.t}</p>
                 <p className="mt-2 text-[0.9rem] text-white/80">{m.b}</p>
               </Reveal>

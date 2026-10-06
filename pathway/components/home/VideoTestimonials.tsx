@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { Testimonial } from "@/content/testimonials";
 import { track } from "@/lib/analytics";
@@ -14,18 +14,31 @@ export interface SlotCard { slot: number }
 export function VideoTestimonials({ cards, slots }: { cards: VideoCard[]; slots: SlotCard[] }) {
   const [playing, setPlaying] = useState<string | null>(null);
   const rail = useRef<HTMLDivElement>(null);
+  const bar = useRef<HTMLSpanElement>(null);
   const nudge = (dir: 1 | -1) => rail.current?.scrollBy({ left: dir * (rail.current.clientWidth * 0.7), behavior: "smooth" });
+  // Progress indicator + mouse drag-to-scroll (touch uses native swipe).
+  useEffect(() => {
+    const el = rail.current; if (!el) return;
+    const prog = () => { const max = el.scrollWidth - el.clientWidth; if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? Math.max(0.12, (el.scrollLeft + el.clientWidth) / el.scrollWidth) : 1})`; };
+    let down = false, sx = 0, sl = 0, moved = false;
+    const pd = (e: PointerEvent) => { if (e.pointerType !== "mouse") return; down = true; moved = false; sx = e.clientX; sl = el.scrollLeft; el.style.scrollSnapType = "none"; };
+    const pm = (e: PointerEvent) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; el.scrollLeft = sl - dx; };
+    const pu = () => { if (!down) return; down = false; el.style.scrollSnapType = ""; };
+    const click = (e: MouseEvent) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } };
+    prog(); el.addEventListener("scroll", prog, { passive: true }); el.addEventListener("pointerdown", pd); window.addEventListener("pointermove", pm); window.addEventListener("pointerup", pu); el.addEventListener("click", click, true);
+    return () => { el.removeEventListener("scroll", prog); el.removeEventListener("pointerdown", pd); window.removeEventListener("pointermove", pm); window.removeEventListener("pointerup", pu); el.removeEventListener("click", click, true); };
+  }, []);
 
   return (
     <div>
       <div className="mb-6 hidden justify-end gap-2 sm:flex">
         {[-1, 1].map((d) => <button key={d} onClick={() => nudge(d as 1 | -1)} aria-label={d < 0 ? "Previous testimonials" : "Next testimonials"} className="grid h-11 w-11 place-items-center rounded-full border border-white/25 text-lg transition-colors hover:border-route hover:bg-route hover:text-ink">{d < 0 ? "←" : "→"}</button>)}
       </div>
-      <div ref={rail} className="rail -mx-[var(--gutter)] flex snap-x snap-mandatory gap-4 overflow-x-auto px-[var(--gutter)] pb-2 pt-5">
+      <div ref={rail} className="rail -mx-[var(--gutter)] flex cursor-grab snap-x snap-mandatory gap-4 overflow-x-auto px-[var(--gutter)] pb-2 pt-5 select-none active:cursor-grabbing">
         {cards.map(({ t, tag }) => {
           const on = playing === t.id;
           return (
-            <article key={t.id} className={`relative w-[72%] shrink-0 snap-start sm:w-[42%] lg:w-[23%] ${tag ? "outline-[1.5px] outline-dashed outline-route/75 outline-offset-4" : ""}`}>
+            <article key={t.id} className={`relative w-[72%] transition-transform duration-500 hover:-translate-y-2 shrink-0 snap-start sm:w-[42%] lg:w-[23%] ${tag ? "outline-[1.5px] outline-dashed outline-route/75 outline-offset-4" : ""}`}>
               {tag && <span className="gate-tag absolute -top-3 left-2 z-20">{tag}</span>}
               <div className="group relative aspect-[9/16] overflow-hidden rounded-[10px] bg-ink-soft">
                 {on && t.media ? (
@@ -61,6 +74,7 @@ export function VideoTestimonials({ cards, slots }: { cards: VideoCard[]; slots:
           </article>
         ))}
       </div>
+      <div className="mt-6 h-[3px] w-full max-w-sm overflow-hidden rounded-full bg-white/15" aria-hidden><span ref={bar} className="block h-full origin-left rounded-full bg-route transition-transform duration-300" /></div>
     </div>
   );
 }
