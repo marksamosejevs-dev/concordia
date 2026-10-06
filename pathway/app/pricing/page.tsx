@@ -19,7 +19,7 @@ export default function PricingPage() {
       <section className="on-ink pb-14 pt-[calc(var(--header-h)+3rem)]" aria-label="Pricing">
         <div className="wrap">
           <h1 className="display d-hero max-w-[14ch]">Two steps. <span className="text-route">Clear prices.</span></h1>
-          <p className="lede mt-6 max-w-xl text-white/80">Apply free. If you’re accepted, start with the assessment. Continue with the pathway when it makes sense for you.</p>
+          <p className="lede mt-6 max-w-xl text-white/80">Apply free. If you’re accepted for a Pathway Assessment, start with the assessment. Continue with the pathway when it makes sense for you.</p>
         </div>
       </section>
 
@@ -29,7 +29,7 @@ export default function PricingPage() {
             <p className="mono text-[0.68rem] uppercase tracking-[0.14em] text-ink/55">Step 1 · Start</p>
             <h2 className="display mt-2 text-[clamp(2rem,3.4vw,2.8rem)] leading-none">{a.name}</h2>
             <p className="display mt-7 text-[clamp(4rem,8vw,6rem)] leading-[0.82]">{usd(a.price)}</p>
-            <p className="mono mt-2 text-[0.72rem] uppercase tracking-[0.12em] text-ink/60">One time · ready within 7 days of your materials</p>
+            <p className="mono mt-2 text-[0.72rem] uppercase tracking-[0.12em] text-ink/60">One time · within 7 days once your materials are confirmed</p>
             <ul className="mt-7 space-y-2.5">{ASSESSMENT_POINTS.map((x) => <li key={x} className="flex gap-3"><span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 bg-ink" aria-hidden />{x}</li>)}</ul>
             <div className="mt-auto pt-9"><ApplyCta tone="ink" /></div>
           </article>
@@ -57,7 +57,7 @@ export default function PricingPage() {
             <h2 className="display d-md">Assessment credit</h2>
             <Gate evidence={pending("Founder Q3", "Credit toward the first Pathway month(s)?")} label="credit decision"><p className="mt-4 text-ink/80">${ASSESSMENT_CREDIT.amount} of your assessment credited toward European Pathway if you start within {ASSESSMENT_CREDIT.days} days.</p></Gate>
             <h2 className="display d-md mt-8">Refunds</h2>
-            <Gate evidence={pending("E24")} label="approved refund text"><p className="mt-4 text-ink/80">Assessment: full refund until the review of your match begins. European Pathway: terms set out in the Refund &amp; Cancellation Policy.</p></Gate>
+            <Gate evidence={pending("E24")} label="approved refund text"><p className="mt-4 text-ink/80">Assessment: full refund until we begin reviewing your materials. European Pathway: terms set out in the Refund &amp; Cancellation Policy.</p></Gate>
           </div>
           <div>
             <h2 className="display d-md">Who you contract with</h2>

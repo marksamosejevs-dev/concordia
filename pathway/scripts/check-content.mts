@@ -41,6 +41,12 @@ for (const { f, s } of all) {
   }
 }
 
+// 2b. The 7-day period is never computed in the customer UI: only lib/assessment-status.ts (team-confirmed sufficiency) may.
+for (const { f, s: src } of all) {
+  if (!f.startsWith("components/") && !f.startsWith("app/")) continue;
+  if (/addDays\(|dueBy|assessment_due/.test(src)) errors.push(`Automatic assessment deadline in ${f} — use lib/assessment-status.ts (payment + team-confirmed sufficiency)`);
+}
+
 // 3. Legal entity present and correct.
 const site = fs.readFileSync(path.join(root, "content/site.ts"), "utf8");
 if (!site.includes("Concordia Sports Agency SIA") || !site.includes("40203574668")) errors.push("Legal contracting entity details missing from content/site.ts");

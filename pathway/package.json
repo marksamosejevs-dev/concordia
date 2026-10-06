@@ -7,12 +7,13 @@
     "build": "npm run check:content && npm run build:images && npm run build:forms && next build",
     "start": "next start --port 3100",
     "lint": "eslint",
-    "check:content": "node --experimental-strip-types scripts/check-content.mts",
+    "check:content": "node --experimental-strip-types scripts/check-content.mts && npm run -s test:status",
     "build:logo": "node scripts/build-logo.mjs",
     "build:map": "node scripts/build-map.mjs",
     "build:export": "npm run check:content && npm run build:images && npm run build:forms && PREVIEW_EXPORT=1 next build",
     "build:images": "node scripts/build-images.mjs",
-    "build:forms": "node --no-warnings --experimental-strip-types scripts/build-forms.mts"
+    "build:forms": "node --no-warnings --experimental-strip-types scripts/build-forms.mts",
+    "test:status": "node --no-warnings --experimental-strip-types scripts/test-assessment-status.mts"
   },
   "dependencies": {
     "@fontsource/anton": "^5.3.0",

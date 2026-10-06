@@ -5,7 +5,7 @@ import { Section, Kicker } from "@/components/ui/Section";
 import { ApplyCta, TextLink } from "@/components/ui/Cta";
 import { ReportViewer } from "@/components/report/ReportViewer";
 import { Pending } from "@/components/ui/Gate";
-import { ACCEPTED_MEANING, ASSESSMENT_STEPS, RECEIVE, NOT_RECEIVE } from "@/content/assessment";
+import { ACCEPTED_MEANING, DELIVERY_FULL, ASSESSMENT_STEPS, RECEIVE, NOT_RECEIVE } from "@/content/assessment";
 import { decisions } from "@/content/decisions";
 import { ASSESSMENT_CREDIT } from "@/content/products";
 import { FaqSection, FinalCta } from "@/components/sections/HomeSections";
@@ -19,7 +19,7 @@ export default function AssessmentPage() {
       <PageHero eyebrow="Player Pathway Assessment · $249" title={<>What should you actually do with your football career <span className="text-route">next?</span></>}
         lede="A professional assessment of your football profile and your realistic European market options — explained in a 60-minute call, by a team working inside European football.">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start"><ApplyCta /><TextLink href="#sample" className="mt-3.5">See a sample</TextLink></div>
-        <p className="mono mt-6 text-[0.72rem] text-slate-light">Ready within 7 days of payment and your materials · Every assessment follows Concordia’s professional assessment framework and receives senior review</p>
+        <p className="mono mt-6 text-[0.72rem] text-slate-light">Within 7 days once payment is received and your materials are confirmed · Every assessment follows Concordia’s professional assessment framework and receives senior review</p>
       </PageHero>
 
       <Section tone="paper" label="Not an opinion">
@@ -84,7 +84,7 @@ export default function AssessmentPage() {
         <div className="wrap grid gap-12 lg:grid-cols-3">
           <div><p className="display d-md">Who it’s for</p><p className="mt-4 text-ink/80">Players aged 18 and over who are serious about professional football — college players nearing the end of eligibility, semi-professional players, players with a second passport, and families of 16–17-year-olds (a parent or guardian applies). You’ll need at least one full match on video.</p></div>
           <div><p className="display d-md">Who it isn’t for</p><p className="mt-4 text-ink/80">Anyone looking for a guaranteed trial or contract. Players under 16 receive guidance only — we don’t sell them an assessment.</p></div>
-          <div><p className="display d-md">Timing &amp; refunds</p><ul className="mt-4 space-y-2 text-ink/80"><li>We aim to complete the assessment within 7 days after payment and receipt of the information and materials reasonably required.</li><li>${ASSESSMENT_CREDIT.amount} credited toward European Pathway if you continue within {ASSESSMENT_CREDIT.days} days.</li><li><Pending evidence={pending("E24", "Approved refund wording")}>Full refund until the review of your match begins.</Pending></li></ul></div>
+          <div><p className="display d-md">Timing &amp; refunds</p><ul className="mt-4 space-y-2 text-ink/80"><li>{DELIVERY_FULL}</li><li>${ASSESSMENT_CREDIT.amount} credited toward European Pathway if you continue within {ASSESSMENT_CREDIT.days} days.</li><li><Pending evidence={pending("E24", "Approved refund wording")}>Full refund until we begin reviewing your materials.</Pending></li></ul></div>
         </div>
       </Section>
       <FaqSection />

@@ -3,7 +3,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import type { ApplicationData } from "@/lib/applications/schema";
 import { triage, ageFrom } from "@/lib/applications/triage";
-import { deliverApplication } from "@/lib/applications/destination";
+import { deliverApplication, lastApplication } from "@/lib/applications/destination";
+import { campaignFor } from "@/lib/campaigns";
 import { FlowLine } from "@/components/funnel/FlowLine";
 import { readAttribution } from "@/lib/attribution";
 import { track } from "@/lib/analytics";
@@ -22,6 +23,7 @@ const STEPS: Step[] = [
   { id: "about", title: "About you", intro: "The basics, so we know who we’re assessing.", fields: [
     { key: "applicant", label: "Who is filling this in?", type: "select", required: true, options: ["The player", "A parent or guardian"] },
     { key: "fullName", label: "Player’s full name", type: "text", required: true, autoComplete: "name" },
+    { key: "footballCategory", label: "The player plays in", type: "select", required: true, options: ["Women’s football", "Men’s football"] },
     { key: "dateOfBirth", label: "Player’s date of birth", type: "date", required: true, help: "We use age to apply the right rules for young players." },
     { key: "nationality", label: "Nationality", type: "text", required: true },
     { key: "residence", label: "Country of residence", type: "text", required: true, autoComplete: "country-name" },
@@ -52,12 +54,12 @@ const STEPS: Step[] = [
     { key: "eligibilityYears", label: "Years of eligibility remaining", type: "text", help: "The assessment is career advisory and involves no agency agreement. Check with your compliance office if you have eligibility questions.", pendingLegal: true },
   ] },
   { id: "status", title: "Your status", intro: "Contracts, offers and whether you currently have an agent.", fields: [
-    { key: "contractStatus", label: "Contract status", type: "select", required: true, options: ["No contract", "Under contract", "Contract ending within 6 months", "Not applicable"] },
+    { key: "contractStatus", label: "Contract status", type: "select", required: true, options: ["Free agent / no contract", "Under contract", "Contract ending within 6 months", "Not applicable"] },
     { key: "contractEnds", label: "Contract end date (if any)", type: "date" },
     { key: "offers", label: "Any current offers? (short description)", type: "textarea" },
     { key: "hasAgent", label: "Do you currently have an agent?", type: "select", required: true, options: ["No", "Yes", "Not sure"], help: "If you do, tell us. We’ll explain how the assessment fits." },
   ] },
-  { id: "footage", title: "Footage & profile", intro: "A full match is required for an assessment. Highlights help; they don’t replace it.", fields: [
+  { id: "footage", title: "Footage & profile", intro: "Share what you have. A full match helps us most, but it isn’t required to apply — no video yet is not an automatic barrier.", fields: [
     { key: "fullMatchUrl", label: "Full-match link (if you have one)", type: "url", inputMode: "url", help: "Any full match, unedited, helps us decide. A phone recording from the stand is fine. You can send more video after acceptance.", placeholder: "https://" },
     { key: "highlightsUrl", label: "Highlights link (optional)", type: "url", inputMode: "url", placeholder: "https://" },
     { key: "transfermarktUrl", label: "Transfermarkt profile (optional)", type: "url", inputMode: "url" },
@@ -135,7 +137,7 @@ function ApplicationInner() {
     setSubmitting(true);
     const data: ApplicationData = {
       applicant: v.applicant === "A parent or guardian" ? "guardian" : "player",
-      fullName: String(v.fullName || ""), dateOfBirth: String(v.dateOfBirth || ""), nationality: String(v.nationality || ""), residence: String(v.residence || ""), email: String(v.email || ""), whatsapp: String(v.whatsapp || "") || undefined,
+      fullName: String(v.fullName || ""), footballCategory: String(v.footballCategory || "") || undefined, dateOfBirth: String(v.dateOfBirth || ""), nationality: String(v.nationality || ""), residence: String(v.residence || ""), email: String(v.email || ""), whatsapp: String(v.whatsapp || "") || undefined,
       guardian: v.guardianName ? { name: String(v.guardianName), relationship: String(v.guardianRelationship || ""), email: String(v.guardianEmail || ""), phone: String(v.guardianPhone || "") || undefined, consent: Boolean(v.guardianConsent) } : undefined,
       positions: (v.positions as string[]) || [], height: String(v.height || "") || undefined, foot: String(v.foot || "") || undefined, currentClub: String(v.currentClub || "") || undefined, level: String(v.level || ""), previousClubs: String(v.previousClubs || "") || undefined, minutesLastSeason: String(v.minutesLastSeason || "") || undefined, nationalTeam: String(v.nationalTeam || "") || undefined,
       education: { status: String(v.educationStatus || ""), college: String(v.college || "") || undefined, division: String(v.division || "") || undefined, eligibilityYears: String(v.eligibilityYears || "") || undefined },
@@ -146,7 +148,10 @@ function ApplicationInner() {
       consents: { terms: Boolean(v.cTerms), assessmentData: Boolean(v.cData), agencyView: Boolean(v.cAgency), marketing: Boolean(v.cMarketing) },
     };
     const result = triage(data);
-    const sub = { id: `APP-${Date.now().toString(36).toUpperCase()}`, data, triage: result, attribution: readAttribution(), submittedAt: new Date().toISOString(), siteMode: SITE_MODE };
+    const attribution = readAttribution();
+    const prev = lastApplication();
+    const duplicateOf = prev && prev.data.email.trim().toLowerCase() === data.email.trim().toLowerCase() ? prev.id : undefined;
+    const sub = { id: `APP-${Date.now().toString(36).toUpperCase()}`, data, triage: result, attribution, submittedAt: new Date().toISOString(), siteMode: SITE_MODE, campaign: campaignFor(attribution.last?.utm_campaign ?? attribution.first?.utm_campaign)?.key, duplicateOf };
     const delivered = await deliverApplication(sub);
     if (!delivered.ok) {
       setSubmitting(false);
@@ -154,7 +159,7 @@ function ApplicationInner() {
       track("application_delivery_failed", { mode: delivered.mode });
       return;
     }
-    track("application_complete", { route: result.route });
+    track("application_complete", { route: result.route, segment: data.footballCategory ?? "", campaign: sub.campaign ?? "", duplicate: Boolean(duplicateOf) });
     try { localStorage.removeItem(KEY); } catch {}
     router.push("/apply/result");
   };

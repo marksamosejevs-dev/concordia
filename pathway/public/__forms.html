@@ -10,6 +10,9 @@
     <input type="hidden" name="email" />
     <input type="hidden" name="date_of_birth" />
     <input type="hidden" name="applicant" />
+    <input type="hidden" name="football_category" />
+    <input type="hidden" name="campaign" />
+    <input type="hidden" name="duplicate_of" />
     <input type="hidden" name="submitted_at" />
     <input type="hidden" name="internal_triage" />
     <textarea name="summary"></textarea>
@@ -18,6 +21,7 @@
   <form name="pathway-onboarding" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
     <input name="bot-field" />
     <input type="text" name="full_name" />
+    <input type="text" name="football_category" />
     <input type="text" name="dob" />
     <input type="text" name="nationalities" />
     <input type="text" name="passports" />
@@ -39,9 +43,11 @@
     <input type="text" name="highlights_url" />
     <input type="checkbox" name="no_highlights" />
     <textarea name="full_match_urls"></textarea>
+    <input type="checkbox" name="no_full_match" />
     <textarea name="additional_footage"></textarea>
     <input type="file" name="cv_file" />
     <input type="text" name="cv_url" />
+    <input type="checkbox" name="no_cv" />
     <input type="file" name="other_document" />
     <input type="text" name="has_agent" />
     <textarea name="agent_details"></textarea>
@@ -55,10 +61,13 @@
     <input type="hidden" name="order_ref" />
     <input type="hidden" name="payment_status" />
     <input type="hidden" name="payment_date" />
-    <input type="hidden" name="materials_received" />
-    <input type="hidden" name="assessment_due" />
-    <input type="hidden" name="materials_status" />
+    <input type="hidden" name="materials_submitted" />
+    <input type="hidden" name="assessment_status" />
+    <input type="hidden" name="assessment_start" />
+    <input type="hidden" name="target_completion" />
     <input type="hidden" name="submission_type" />
+    <input type="hidden" name="football_segment" />
+    <input type="hidden" name="campaign" />
     <textarea name="summary"></textarea>
   </form>
 </body></html>

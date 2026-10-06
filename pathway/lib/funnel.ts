@@ -13,7 +13,10 @@ export const addDays = (iso: string, days: number) => new Date(new Date(iso).get
 export const fmtDate = (iso?: string) => (iso ? new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : "—");
 
 export interface PaidOrder { order: Order; session: CheckoutSession; paidAt?: string }
-export interface MaterialsRecord { orderRef: string; submittedAt: string; complete: boolean; dueBy?: string; submissions: number }
+/** What this browser knows. Sufficiency, assessment start and the 7-day target are set ONLY by the team (see lib/assessment-status.ts). */
+export interface MaterialsRecord { orderRef: string; submittedAt: string; firstSubmittedAt: string; submissions: number }
+/** Payment counts only when the provider confirmed it ("paid"); preview never counts. */
+export const paymentConfirmed = (o: PaidOrder | null) => o?.session.status === "paid";
 
 const read = <T,>(k: string): T | null => { try { return JSON.parse(sessionStorage.getItem(k) || localStorage.getItem(k) || "null"); } catch { return null; } };
 const write = (k: string, v: unknown) => { try { const s = JSON.stringify(v); sessionStorage.setItem(k, s); localStorage.setItem(k, s); } catch {} };

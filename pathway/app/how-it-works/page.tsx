@@ -9,11 +9,7 @@ import { FlowLine } from "@/components/funnel/FlowLine";
 
 export const metadata: Metadata = { alternates: { canonical: "/how-it-works/" }, title: "How it works", description: "Apply free, get accepted for a Pathway Assessment, pay $249, send your profile and video, and get your assessment and a 60-minute call." };
 
-const STEPS: { n: string; t: string; b: string; link?: { href: string; label: string } }[] = [
-  ...ASSESSMENT_STEPS.map((x) => ({ n: x.n, t: x.title + ".", b: x.body })),
-  { n: "08", t: "Continue, if it fits.", b: "European Pathway — $399/month, designed as a 6-month pathway and paid monthly — is offered after the assessment, under its own terms. Paying $249 doesn’t create any ongoing commitment or agency relationship." },
-  { n: "09", t: "Representation is separate.", b: "Football-agent representation by Concordia Sports Agency can only arise under a separate, compliant representation agreement — never from applying, being accepted, paying or taking part in the call." },
-];
+const STEPS: { n: string; t: string; b: string; link?: { href: string; label: string } }[] = ASSESSMENT_STEPS.map((x) => ({ n: x.n, t: x.title + ".", b: x.body }));
 const NEVER = ["Promise a trial, a club or a contract", "Contact clubs about you as part of European Pathway", "Sell representation", "Charge for “priority” consideration by the Agency", "Tell everyone to go to Europe"];
 
 export default function HowItWorks() {

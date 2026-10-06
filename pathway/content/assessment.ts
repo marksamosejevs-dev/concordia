@@ -3,45 +3,44 @@
  */
 export const ACCEPTED_MEANING = "Being accepted means accepted for a Pathway Assessment — not for representation, by the Agency or by any club.";
 export const DELIVERY = "We aim to complete the Pathway Assessment within 7 days after payment and receipt of the information and materials reasonably required to conduct the assessment.";
-export const DELIVERY_SHORT = "Ready within 7 days of payment and your materials";
+export const DELIVERY_FULL = DELIVERY + " If additional information or materials are reasonably required, the assessment period will begin once those materials have been received and the submitted materials are sufficient for the assessment to proceed.";
+export const DELIVERY_SHORT = "Within 7 days once payment is received and your materials are confirmed";
 export const CALL_MINUTES = 60;
 
-/** What the $249 Pathway Assessment includes (founder wording). */
+/** What the $249 Pathway Assessment includes (founder wording, Round 3 final). */
 export const ASSESSMENT_INCLUDES = [
   "Review of your football profile and submitted materials",
-  "Review of your CV and football history",
-  "Review of your match footage and highlight video",
-  "Review of your Transfermarkt profile, if available",
-  "Review of current club, level, position, age category, passport and eligibility",
-  "Assessment of realistic European market options",
-  "An individual pathway assessment, prepared for you",
-  "A 60-minute consultation call to explain our assessment, realistic options, possible markets and next steps",
+  "Review of your football CV and playing history",
+  "Review of available match footage and highlight video, where available",
+  "Review of your Transfermarkt profile, where available",
+  "Review of current club, playing level, position, age category, nationality, passport and football eligibility where relevant",
+  "A realistic European market assessment",
+  "An individual Pathway Assessment, prepared for you",
+  "A consultation call of up to 60 minutes: realistic options, possible markets, strengths and weaknesses of your current profile, and recommended next steps",
 ];
 
-/** What the 60-minute call covers — advisory only. */
-export const CALL_COVERS = ["Our assessment of your current profile", "Realistic market positioning", "Countries and leagues that may fit", "Strengths and weaknesses of your football profile", "What may need to improve", "Possible next steps", "Whether there may be a basis for further cooperation"];
+/** What the consultation call may cover — advisory only; the call does not create representation. */
+export const CALL_COVERS = ["Your current football profile", "Realistic market positioning", "Suitable countries and leagues", "Strengths", "Weaknesses and profile gaps", "Career risks", "Possible next steps", "Whether further cooperation may make sense"];
 
-/** Application → next steps, as one line of the route. */
+/**
+ * CANONICAL JOURNEY — the only version of the flow on the site (FlowLine, steps lists, Terms order).
+ * `k` = short label (flow line), `b` = sub-line, `body` = full explanation (steps lists).
+ */
 export const FLOW = [
-  { k: "Apply", b: "Free, about 10 minutes" },
-  { k: "Review", b: "We read your profile" },
-  { k: "Accepted for assessment", b: "Not representation" },
-  { k: "$249", b: "One payment" },
-  { k: "Send profile + video", b: "CV, Transfermarkt, footage" },
-  { k: "We assess", b: "Within 7 days of materials" },
-  { k: "60-minute call", b: "Your options, explained" },
-  { k: "Next steps", b: "Your decision" },
+  { k: "Apply", b: "Free", body: "Tell us about your football, passports and goals. Free — no payment to apply." },
+  { k: "We review", b: "Your application", body: "Concordia reviews your application. Outcome: accepted for a Pathway Assessment, or not accepted at this stage." },
+  { k: "Accepted for assessment", b: "Not representation", body: ACCEPTED_MEANING },
+  { k: "$249", b: "Pathway Assessment", body: "Only players accepted for a Pathway Assessment pay — once, online." },
+  { k: "Onboarding", b: "Straight after payment", body: "Immediately after payment we send your onboarding request." },
+  { k: "Profile + materials", b: "CV, history, video links", body: "Send your football profile and materials — links for video. Missing a Transfermarkt profile or highlight video? Tell us; it isn’t an automatic problem." },
+  { k: "Materials check", b: "By our team", body: "We confirm whether we have what’s reasonably required for your assessment — or ask for anything missing." },
+  { k: "Assessment in progress", b: "7 days from confirmation", body: DELIVERY },
+  { k: "Your Pathway Assessment", b: "Prepared for you", body: "Your individual Pathway Assessment: realistic European options, written for you." },
+  { k: "60-minute call", b: "Options explained", body: "A consultation call of up to 60 minutes to explain the assessment, possible markets and recommended next steps." },
+  { k: "Next steps", b: "Your decision", body: "Your decision. Continuing with European Pathway ($399/month) or any representation is agreed separately." },
 ];
 
-export const ASSESSMENT_STEPS = [
-  { n: "01", title: "Apply", body: "Tell us about your football, passports and goals. Free — no payment to apply." },
-  { n: "02", title: "We review", body: "We decide whether we can offer you a Pathway Assessment. You’re either accepted for an assessment or not at this stage." },
-  { n: "03", title: "Pay $249", body: "Only after acceptance. " + ACCEPTED_MEANING },
-  { n: "04", title: "Send your profile + video", body: "Straight after payment: CV, Transfermarkt, highlight and match video, contract and eligibility details." },
-  { n: "05", title: "We assess", body: DELIVERY },
-  { n: "06", title: "60-minute call", body: "We explain our assessment, realistic options, possible markets and recommended next steps." },
-  { n: "07", title: "Next steps", body: "Your decision. Further cooperation, if any, is agreed separately." },
-];
+export const ASSESSMENT_STEPS = FLOW.map((f, i) => ({ n: String(i + 1).padStart(2, "0"), title: f.k, body: f.body }));
 
 export const RECEIVE = ASSESSMENT_INCLUDES;
 

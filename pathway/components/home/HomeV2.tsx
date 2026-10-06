@@ -84,7 +84,7 @@ export function StartHere() {
           <h2 id="start-title" className="display text-[clamp(2.4rem,4.6vw,4.4rem)] leading-[0.92]">Start with the truth about your level.</h2>
           <div className="mt-7 flex flex-wrap items-end gap-x-5 gap-y-2">
             <p className="display text-[clamp(4.5rem,10vw,7.5rem)] leading-[0.8]">{usd(A().price)}</p>
-            <p className="pb-1 text-[1rem] font-semibold leading-snug">Player Pathway Assessment<br /><span className="font-normal text-ink/65">one time · ready within 7 days of your materials</span></p>
+            <p className="pb-1 text-[1rem] font-semibold leading-snug">Player Pathway Assessment<br /><span className="font-normal text-ink/65">one time · within 7 days once your materials are confirmed</span></p>
           </div>
           <ul className="mt-8 flex max-w-xl flex-wrap gap-2">
             {ASSESSMENT_POINTS.map((p) => <li key={p} className="rounded-full border border-ink/15 bg-white px-3.5 py-2 text-[0.9rem] font-semibold transition-colors hover:border-ink hover:bg-route">{p}</li>)}

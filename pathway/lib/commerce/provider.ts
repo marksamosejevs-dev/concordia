@@ -6,7 +6,8 @@
 import type { Order } from "./types";
 import { FEATURES } from "../site-mode";
 
-export interface CheckoutSession { redirectUrl?: string; status: "redirect" | "preview" | "error"; message?: string }
+/** "paid" is set only by a confirmed payment (Stripe webhook / return verification when live). "preview" never counts as payment. */
+export interface CheckoutSession { redirectUrl?: string; status: "redirect" | "preview" | "paid" | "error"; message?: string }
 
 export interface PaymentProvider {
   readonly name: string;

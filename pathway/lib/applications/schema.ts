@@ -3,7 +3,7 @@ import type { Attribution } from "../attribution";
 /** Application data model. Destination-agnostic (CRM / email / DB chosen later). */
 export interface ApplicationData {
   applicant: "player" | "guardian";
-  fullName: string; dateOfBirth: string; nationality: string; residence: string; email: string; whatsapp?: string;
+  fullName: string; footballCategory?: string; dateOfBirth: string; nationality: string; residence: string; email: string; whatsapp?: string;
   guardian?: { name: string; relationship: string; email: string; phone?: string; consent: boolean };
   positions: string[]; height?: string; foot?: string; currentClub?: string; level: string; previousClubs?: string; minutesLastSeason?: string; nationalTeam?: string;
   education?: { status: string; college?: string; division?: string; eligibilityYears?: string; graduation?: string };
@@ -21,6 +21,10 @@ export interface ApplicationSubmission {
   attribution: Attribution;
   submittedAt: string;
   siteMode: string;
+  /** Matched acquisition campaign (lib/campaigns.ts), if any. */
+  campaign?: string;
+  /** Earlier application ID from this device with the same email, if any. */
+  duplicateOf?: string;
 }
 
 export type TriageRoute = "accepted" | "needs_full_match" | "guardian_payment" | "under_16" | "not_now";

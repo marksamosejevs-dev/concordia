@@ -66,7 +66,7 @@ function CheckoutInner() {
   if (!eligible) return (
     <div className="border border-white/15 bg-ink-deep p-8">
       <h1 className="display d-md">Apply first.</h1>
-      <p className="mt-3 text-white/80">The assessment is paid for only after a free application and our review. If you’ve been accepted, use the payment link in your acceptance email.</p>
+      <p className="mt-3 text-white/80">The assessment is paid for only after a free application and our review. If you’ve been accepted for a Pathway Assessment, use the payment link in your acceptance email.</p>
       <Link href="/apply" className="btn btn-route mt-6">Apply free <span className="arrow">→</span></Link>
     </div>
   );

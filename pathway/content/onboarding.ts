@@ -10,6 +10,7 @@ export interface OnbSection { key: string; title: string; intro?: string; fields
 export const ONBOARDING: OnbSection[] = [
   { key: "player", title: "Player", fields: [
     { name: "full_name", label: "Full name", type: "text", required: true },
+    { name: "football_category", label: "You play in", type: "select", required: true, options: ["Women’s football", "Men’s football"] },
     { name: "dob", label: "Date of birth", type: "date", required: true },
     { name: "nationalities", label: "Nationality / nationalities", type: "text", required: true },
     { name: "passports", label: "Passport(s) and football eligibility", type: "text", help: "e.g. US + Italian passport; any eligibility questions" },
@@ -20,8 +21,8 @@ export const ONBOARDING: OnbSection[] = [
     { name: "preferred_foot", label: "Preferred foot", type: "select", required: true, options: ["Right", "Left", "Both"] },
     { name: "height", label: "Height", type: "text", placeholder: "e.g. 182 cm" },
     { name: "current_club", label: "Current club", type: "text", skipIf: "no_current_club" },
-    { name: "no_current_club", label: "I don’t have a current club", type: "checkbox" },
-    { name: "contract_status", label: "Contract status", type: "select", required: true, options: ["No contract", "Under contract", "Amateur / college registration", "Contract ending soon"] },
+    { name: "no_current_club", label: "No current club — I’m a free agent", type: "checkbox" },
+    { name: "contract_status", label: "Contract status", type: "select", options: ["Free agent / no contract", "Under contract", "Amateur / college registration", "Contract ending within 6 months"] },
     { name: "contract_expiry", label: "Contract expiry date", type: "date", help: "If under contract" },
     { name: "playing_history", label: "Recent playing history", type: "textarea", help: "Last two seasons: club, level, minutes" },
     { name: "previous_clubs", label: "Previous clubs", type: "textarea" },
@@ -33,15 +34,17 @@ export const ONBOARDING: OnbSection[] = [
     { name: "no_transfermarkt", label: "I don’t have a Transfermarkt profile", type: "checkbox" },
     { name: "other_profile_url", label: "Other profile (Wyscout, club page, social)", type: "url" },
   ] },
-  { key: "video", title: "Video", intro: "Links, please — YouTube, Vimeo, Google Drive, Dropbox or similar. Don’t upload raw video files.", fields: [
+  { key: "video", title: "Video", intro: "Links, please — YouTube, Vimeo, Google Drive, Dropbox or similar. Don’t upload raw video files. Nothing here is mandatory: if something isn’t available, tick it — that’s fine.", fields: [
     { name: "highlights_url", label: "Highlight video link", type: "url", skipIf: "no_highlights" },
     { name: "no_highlights", label: "I don’t have a highlight video yet", type: "checkbox" },
-    { name: "full_match_urls", label: "Full-match video links", type: "textarea", help: "One per line, if available" },
+    { name: "full_match_urls", label: "Full-match video links", type: "textarea", help: "One per line, if available", skipIf: "no_full_match" },
+    { name: "no_full_match", label: "No full-match footage available", type: "checkbox" },
     { name: "additional_footage", label: "Other recent match footage", type: "textarea", help: "One link per line" },
   ] },
   { key: "documents", title: "Documents", intro: "PDF, Word or image files, up to 3 MB each (8 MB in total). A link works too.", fields: [
     { name: "cv_file", label: "Football CV (file)", type: "file" },
-    { name: "cv_url", label: "Football CV (link)", type: "url" },
+    { name: "cv_url", label: "Football CV (link)", type: "url", skipIf: "no_cv" },
+    { name: "no_cv", label: "I don’t have a football CV yet", type: "checkbox" },
     { name: "other_document", label: "Other document", type: "file" },
   ] },
   { key: "representation", title: "Representation status", fields: [
@@ -60,9 +63,12 @@ export const ONBOARDING: OnbSection[] = [
 ];
 
 /** Hidden/meta fields included with every onboarding submission. */
-export const ONBOARDING_META = ["subject", "application_id", "order_ref", "payment_status", "payment_date", "materials_received", "assessment_due", "materials_status", "submission_type", "summary"];
+export const ONBOARDING_META = ["subject", "application_id", "order_ref", "payment_status", "payment_date", "materials_submitted", "assessment_status", "assessment_start", "target_completion", "submission_type", "football_segment", "campaign", "summary"];
 
-export const APPLICATION_FIELDS = ["subject", "application_id", "player_name", "email", "date_of_birth", "applicant", "submitted_at", "internal_triage", "summary", "data_json"];
+/** Items a player can mark as genuinely NOT AVAILABLE (vs simply NOT PROVIDED). */
+export const NOT_AVAILABLE: Record<string, string> = { current_club: "no_current_club", transfermarkt_url: "no_transfermarkt", highlights_url: "no_highlights", full_match_urls: "no_full_match", cv_url: "no_cv" };
+
+export const APPLICATION_FIELDS = ["subject", "application_id", "player_name", "email", "date_of_birth", "applicant", "football_category", "campaign", "duplicate_of", "submitted_at", "internal_triage", "summary", "data_json"];
 
 export const FORM_NAMES = { application: "pathway-application", onboarding: "pathway-onboarding" } as const;
 

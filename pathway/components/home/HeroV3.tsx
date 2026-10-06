@@ -6,7 +6,9 @@ import { EuropeDots } from "@/components/route/EuropeDots";
 import { Parallax } from "@/components/ui/Parallax";
 import { HERO, HERO_PROFILE } from "@/content/hero";
 import { CTA } from "@/content/site";
-import { usePrefersReducedMotion } from "@/lib/hooks";
+import { usePrefersReducedMotion, useMounted } from "@/lib/hooks";
+import { readAttribution } from "@/lib/attribution";
+import { campaignFor } from "@/lib/campaigns";
 import type { ReactNode } from "react";
 
 /**
@@ -22,6 +24,10 @@ export function HeroV3({ pricePair }: { pricePair: ReactNode }) {
     return () => clearInterval(id);
   }, [reduced]);
   const m = HERO_PROFILE.markets[i];
+  // Campaign-specific landing variant (utm_campaign → lib/campaigns.ts); same page, same funnel.
+  const mounted = useMounted();
+  const camp = mounted ? campaignFor(readAttribution().last?.utm_campaign ?? readAttribution().first?.utm_campaign) : undefined;
+  const lede = camp?.heroLede ?? "An honest assessment of where you stand — in women’s or men’s football. Then a career team that manages your pathway into Europe, month by month.";
 
   return (
     <Parallax as="section" className="on-ink relative isolate overflow-hidden pt-[var(--header-h)]">
@@ -37,7 +43,7 @@ export function HeroV3({ pricePair }: { pricePair: ReactNode }) {
       <div className="wrap relative grid gap-10 pb-14 pt-8 lg:min-h-[calc(100svh-var(--header-h))] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:pb-20 lg:pt-0">
         <div className="relative z-10">
           <h1 className="display max-w-[15ch] text-[clamp(2.8rem,5.8vw,6.3rem)] leading-[0.9]">Think you can play in Europe? <span className="text-route">Ask people who work in it.</span></h1>
-          <p className="lede mt-6 max-w-lg text-white/85">An honest assessment of where you stand. Then a career team that manages your pathway into European football — month by month.</p>
+          <p className="lede mt-6 max-w-lg text-white/85">{lede}</p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-start">
             <div className="flex flex-col items-start gap-2">
               <Link href="/apply" className="btn btn-route" data-magnetic data-cta="apply">{CTA.apply} <span className="arrow" aria-hidden>→</span></Link>
