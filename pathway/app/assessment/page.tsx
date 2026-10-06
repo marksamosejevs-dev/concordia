@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { FlowLine } from "@/components/funnel/FlowLine";
 import { PageHero } from "@/components/sections/PageHero";
 import { Section, Kicker } from "@/components/ui/Section";
 import { ApplyCta, TextLink } from "@/components/ui/Cta";
 import { ReportViewer } from "@/components/report/ReportViewer";
 import { Pending } from "@/components/ui/Gate";
-import { ASSESSMENT_STEPS, RECEIVE, NOT_RECEIVE } from "@/content/assessment";
+import { ACCEPTED_MEANING, ASSESSMENT_STEPS, RECEIVE, NOT_RECEIVE } from "@/content/assessment";
 import { decisions } from "@/content/decisions";
 import { ASSESSMENT_CREDIT } from "@/content/products";
 import { FaqSection, FinalCta } from "@/components/sections/HomeSections";
@@ -16,9 +17,9 @@ export default function AssessmentPage() {
   return (
     <>
       <PageHero eyebrow="Player Pathway Assessment · $249" title={<>What should you actually do with your football career <span className="text-route">next?</span></>}
-        lede="A professional assessment of your level, your realistic markets and your next 90 days — from a team working inside European football.">
+        lede="A professional assessment of your football profile and your realistic European market options — explained in a 60-minute call, by a team working inside European football.">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start"><ApplyCta /><TextLink href="#sample" className="mt-3.5">See a sample</TextLink></div>
-        <p className="mono mt-6 text-[0.72rem] text-slate-light">Report within 7 business days · Every assessment follows Concordia’s professional assessment framework and receives senior review</p>
+        <p className="mono mt-6 text-[0.72rem] text-slate-light">Ready within 7 days of payment and your materials · Every assessment follows Concordia’s professional assessment framework and receives senior review</p>
       </PageHero>
 
       <Section tone="paper" label="Not an opinion">
@@ -32,6 +33,7 @@ export default function AssessmentPage() {
         <div className="wrap">
           <Kicker>Ten steps</Kicker>
           <h2 className="display d-lg">From application to your next decision.</h2>
+          <FlowLine className="mt-12" />
           <ol className="relative mt-14 border-l-2 border-route/60 pl-8 sm:pl-12">
             {ASSESSMENT_STEPS.map((s) => (
               <li key={s.n} className="relative pb-10 last:pb-0">
@@ -49,12 +51,13 @@ export default function AssessmentPage() {
         <div className="wrap grid gap-14 lg:grid-cols-2" data-hide-sticky>
           <div>
             <p className="eyebrow text-route">What you receive</p>
-            <ul className="mt-6 space-y-3">{RECEIVE.map((r, i) => <li key={r} className="flex gap-3 text-[1.05rem]"><span className="mt-[0.55em] inline-block h-[6px] w-[6px] shrink-0 bg-route" />{i === RECEIVE.length - 1 ? <Pending evidence={pending("E13", "Exact sign-off wording")}>{r}</Pending> : r}</li>)}</ul>
+            <ul className="mt-6 space-y-3">{RECEIVE.map((r) => <li key={r} className="flex gap-3 text-[1.05rem]"><span className="mt-[0.55em] inline-block h-[6px] w-[6px] shrink-0 bg-route" />{r}</li>)}</ul>
           </div>
           <div>
             <p className="eyebrow text-slate-light">What you don’t receive — and why that matters</p>
             <ul className="mt-6 space-y-5">{NOT_RECEIVE.map((r) => <li key={r.t}><p className="text-[1.05rem] font-bold">{r.t}</p><p className="text-white/70">{r.b}</p></li>)}</ul>
             <p className="display d-sm mt-8 text-route">We’d rather tell you Europe isn’t the right move today than sell you a trial you don’t need.</p>
+            <p className="mt-8 rounded-[10px] border border-white/15 p-4 text-[0.95rem] text-white/85">{ACCEPTED_MEANING} The Pathway Assessment itself is not football-agent representation.</p>
           </div>
         </div>
       </Section>
@@ -81,7 +84,7 @@ export default function AssessmentPage() {
         <div className="wrap grid gap-12 lg:grid-cols-3">
           <div><p className="display d-md">Who it’s for</p><p className="mt-4 text-ink/80">Players aged 18 and over who are serious about professional football — college players nearing the end of eligibility, semi-professional players, players with a second passport, and families of 16–17-year-olds (a parent or guardian applies). You’ll need at least one full match on video.</p></div>
           <div><p className="display d-md">Who it isn’t for</p><p className="mt-4 text-ink/80">Anyone looking for a guaranteed trial or contract. Players under 16 receive guidance only — we don’t sell them an assessment.</p></div>
-          <div><p className="display d-md">Timing &amp; refunds</p><ul className="mt-4 space-y-2 text-ink/80"><li>Report within 7 business days of payment and footage.</li><li>${ASSESSMENT_CREDIT.amount} credited toward European Pathway if you continue within {ASSESSMENT_CREDIT.days} days.</li><li><Pending evidence={pending("E24", "Approved refund wording")}>Full refund until the review of your match begins.</Pending></li></ul></div>
+          <div><p className="display d-md">Timing &amp; refunds</p><ul className="mt-4 space-y-2 text-ink/80"><li>We aim to complete the assessment within 7 days after payment and receipt of the information and materials reasonably required.</li><li>${ASSESSMENT_CREDIT.amount} credited toward European Pathway if you continue within {ASSESSMENT_CREDIT.days} days.</li><li><Pending evidence={pending("E24", "Approved refund wording")}>Full refund until the review of your match begins.</Pending></li></ul></div>
         </div>
       </Section>
       <FaqSection />

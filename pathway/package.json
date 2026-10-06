@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npm run build:images && next dev --port 3100",
-    "build": "npm run check:content && npm run build:images && next build",
+    "dev": "npm run build:images && npm run build:forms && next dev --port 3100",
+    "build": "npm run check:content && npm run build:images && npm run build:forms && next build",
     "start": "next start --port 3100",
     "lint": "eslint",
     "check:content": "node --experimental-strip-types scripts/check-content.mts",
     "build:logo": "node scripts/build-logo.mjs",
     "build:map": "node scripts/build-map.mjs",
-    "build:export": "npm run check:content && npm run build:images && PREVIEW_EXPORT=1 next build",
-    "build:images": "node scripts/build-images.mjs"
+    "build:export": "npm run check:content && npm run build:images && npm run build:forms && PREVIEW_EXPORT=1 next build",
+    "build:images": "node scripts/build-images.mjs",
+    "build:forms": "node --no-warnings --experimental-strip-types scripts/build-forms.mts"
   },
   "dependencies": {
     "@fontsource/anton": "^5.3.0",

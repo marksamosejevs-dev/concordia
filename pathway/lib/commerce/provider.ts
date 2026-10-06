@@ -10,13 +10,15 @@ export interface CheckoutSession { redirectUrl?: string; status: "redirect" | "p
 
 export interface PaymentProvider {
   readonly name: string;
-  createCheckout(order: Order): Promise<CheckoutSession>;
+  createCheckout(order: Order, opts?: { simulate?: "success" | "failure" }): Promise<CheckoutSession>;
 }
 
 /** Used until live payments are approved: never charges, returns a preview result. */
 export const previewProvider: PaymentProvider = {
   name: "preview",
-  async createCheckout() {
+  async createCheckout(_order, opts) {
+    void _order;
+    if (opts?.simulate === "failure") return { status: "error", message: "Your card was declined (simulated). No money was taken — please try again or use another card." };
     return { status: "preview", message: "Payments are not active in this build. No card has been charged." };
   },
 };

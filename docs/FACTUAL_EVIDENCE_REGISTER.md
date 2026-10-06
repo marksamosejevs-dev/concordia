@@ -141,6 +141,7 @@ Record each resolved item here (newest first).
 |---|---|
 | 2026-09-29 | Register created after Phase 2A pre-audit. Founder clarifications recorded as FS; licence card recorded as PD. |
 | 2026-09-29 | Phase 2B: added E22–E27. Standing decisions recorded below. |
+| 2026-10-06 | Round 3: korona photo (E11) approved by founder as primary hero — "Marks Amosejevs with Viktors Ohvovoriole · transfer to Korona Kielce" (names from founder file name; year still E14). Marks team description supplied by founder (FS-R3, incl. LPFA co-founder + sports lawyer). Valerija label "Concordia Team" approved; title/bio still E32. Filipp bio still E31. Founder named "the photo of Filipp at the stadium": MetLife stand photo (cwcStand) used on Filipp's card — file choice to be confirmed (E36). Emīlija Sassuolo photo: founder-confirmed identity; file not yet received. Separate Marks profile page removed (301 → /about/#team). |
 | 2026-10-06 | Round 2: E12 cleared for Emīlija Ambaine; E29 resolved (monthly); added E36 (event photos) and E37 (licence card). |
 
 ## Standing content decisions (founder-approved)

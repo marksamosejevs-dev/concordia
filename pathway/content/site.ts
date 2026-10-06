@@ -24,7 +24,7 @@ export const LICENCE = { holder: "Marks Amosejevs", number: "202406-7079", regis
 
 export const CTA = {
   apply: "Start your assessment",
-  micro: "Free 2-minute application · $249 if accepted",
+  micro: "Free application · $249 only if accepted for assessment",
   pathway: "Explore European Pathway",
 };
 
@@ -40,7 +40,7 @@ export const NAV = [
 export const FOOTER_GROUPS = [
   { title: "European Pathway", links: [["/assessment", "Player Pathway Assessment · $249"], ["/european-pathway", "European Pathway · $399/mo"], ["/pricing", "Pricing"], ["/how-it-works", "How it works"], ["/find-your-path", "Find your path"], ["/markets", "European markets"]] },
   { title: "Who it’s for", links: [["/for/players", "Players"], ["/for/parents", "Parents & guardians"], ["/careers", "Real careers"], ["/faq", "Questions"]] },
-  { title: "Concordia", links: [["/about", "About Concordia Soccer"], ["/about/marks-amosejevs", "Marks Amosejevs"], ["/verify", "Verify us"], ["/agency", "Concordia Sports Agency"], ["/players", "Agency players"], ["/representation", "Representation"], ["/football-law", "Football law"]] },
+  { title: "Concordia", links: [["/about", "About Concordia Soccer"], ["/verify", "Verify us"], ["/agency", "Concordia Sports Agency"], ["/players", "Agency players"], ["/representation", "Representation"], ["/football-law", "Football law"]] },
   { title: "Legal", links: [["/legal/terms", "Terms"], ["/legal/privacy", "Privacy"], ["/legal/refunds", "Refunds & cancellations"], ["/legal/cookies", "Cookies"], ["/legal/safeguarding", "Safeguarding"], ["/legal/complaints", "Complaints"], ["/legal/company", "Company information"]] },
 ] as const;
 

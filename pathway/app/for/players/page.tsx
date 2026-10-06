@@ -28,7 +28,7 @@ export default function PlayersPage() {
       </Section>
       <Section tone="ink" label="Stop guessing">
         <div className="wrap grid gap-12 lg:grid-cols-2">
-          <div><h2 className="display d-xl">Stop guessing which level you belong at.</h2><p className="lede mt-6 text-white/80">You’ll get a realistic level range — with the reasoning — three market directions, and a 90-day plan.</p><div className="mt-8"><TextLink href="/assessment#sample">See a sample report</TextLink></div></div>
+          <div><h2 className="display d-xl">Stop guessing which level you belong at.</h2><p className="lede mt-6 text-white/80">You’ll get an individual pathway assessment — your realistic European market options, explained in a 60-minute call.</p><div className="mt-8"><TextLink href="/assessment#sample">See a sample report</TextLink></div></div>
           <WorkedExampleCard x={workedExamples[0]} />
         </div>
       </Section>

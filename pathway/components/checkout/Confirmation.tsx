@@ -1,28 +1,42 @@
 "use client";
 import Link from "next/link";
 import { useMounted } from "@/lib/hooks";
-import type { Order } from "@/lib/commerce/types";
-import type { CheckoutSession } from "@/lib/commerce/provider";
+import { lastOrder, fmtDate } from "@/lib/funnel";
+import { FlowLine } from "@/components/funnel/FlowLine";
+import { DELIVERY, ACCEPTED_MEANING } from "@/content/assessment";
 import { LEGAL_ENTITY } from "@/content/site";
 
+/** Payment confirmed → onboarding starts immediately (no waiting days for materials). */
 export function Confirmation() {
   const mounted = useMounted();
-  let data: { order: Order; session: CheckoutSession } | null = null;
-  if (mounted) { try { data = JSON.parse(sessionStorage.getItem("cs_last_order") || "null"); } catch {} }
-  const preview = !data || data.session.status === "preview";
+  if (!mounted) return <div className="h-64" />;
+  const data = lastOrder();
+  if (!data) return (
+    <div className="rounded-[16px] border border-white/15 bg-ink-deep p-8">
+      <h1 className="display d-md">No payment found on this device.</h1>
+      <p className="mt-3 text-white/75">If you’ve paid, use the onboarding link in your confirmation email.</p>
+      <Link href="/apply" className="btn btn-ghost mt-6">Apply</Link>
+    </div>
+  );
+  const preview = data.session.status === "preview";
+  const href = `/onboarding/?order=${encodeURIComponent(data.order.id)}`;
   return (
-    <div className="border border-white/15 bg-ink-deep p-7 sm:p-10">
-      {preview && <p className="gate-tag inline-block">Preview — payments not active · no card was charged</p>}
-      <h1 className="display d-lg mt-5">What happens next.</h1>
-      <p className="lede mt-4 max-w-2xl text-white/85">Once payment is confirmed, your assessment begins. Here’s the timeline.</p>
-      <ol className="mt-10 grid gap-px bg-white/10 sm:grid-cols-4">
-        {[["Today", "Confirmation email and receipt from " + LEGAL_ENTITY.name + "."], ["Days 1–2", "Your profile and footage are prepared for review."], ["Within 7 business days", "Your written report is delivered."], ["After the report", "Book your 30-minute review call — family welcome."]].map(([t, b], i) => (
-          <li key={t} className="bg-ink-deep p-5"><span className="mono text-[0.7rem] text-route">0{i + 1}</span><p className="display mt-2 text-[1.3rem] leading-none">{t}</p><p className="mt-2 text-[0.88rem] text-white/75">{b}</p></li>
-        ))}
-      </ol>
-      {data && <p className="mono mt-8 text-[0.7rem] text-slate">Order {data.order.id} · {data.order.playerName} · ${data.order.amount}</p>}
-      <p className="mt-8 text-[0.9rem] text-white/70">Reminder: European Pathway is career advisory. It is not representation by Concordia Sports Agency.</p>
-      <Link href="/" className="btn btn-ghost mt-8">Back to home</Link>
+    <div className="space-y-8">
+      <div className="rounded-[16px] border border-route/60 bg-ink-deep p-7 sm:p-10">
+        {preview && <p className="gate-tag inline-block">Preview — payments not active · no card was charged</p>}
+        <h1 className="display d-lg mt-4 max-w-[18ch]">We’re ready to start your Pathway Assessment.</h1>
+        <p className="lede mt-4 max-w-2xl text-white/85">One thing first: send us your football profile, CV and video. The sooner we have them, the sooner we start.</p>
+        <Link href={href} className="btn btn-route mt-8" data-magnetic>Send your football profile + video <span className="arrow" aria-hidden>→</span></Link>
+        <dl className="mt-10 grid gap-4 border-t border-white/10 pt-6 text-[0.9rem] sm:grid-cols-3">
+          <div><dt className="text-white/55">Payment</dt><dd className="mt-1 font-semibold">{preview ? "Preview — not charged" : "Confirmed"} · ${data.order.amount}</dd></div>
+          <div><dt className="text-white/55">Reference</dt><dd className="mt-1 font-semibold">{data.order.id}{data.order.applicationId ? ` · ${data.order.applicationId}` : ""}</dd></div>
+          <div><dt className="text-white/55">Date</dt><dd className="mt-1 font-semibold">{fmtDate(data.paidAt ?? data.order.createdAt)}</dd></div>
+        </dl>
+        <p className="mt-6 text-[0.85rem] text-white/60">{DELIVERY}</p>
+        <p className="mt-2 text-[0.85rem] text-white/60">{ACCEPTED_MEANING}</p>
+        <p className="mt-2 text-[0.8rem] text-white/45">Receipts are issued by {LEGAL_ENTITY.name}.</p>
+      </div>
+      <FlowLine current={4} />
     </div>
   );
 }

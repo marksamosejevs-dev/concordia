@@ -11,8 +11,8 @@ import { IS_REVIEW } from "@/lib/site-mode";
  * photos whose file isn't uploaded yet are skipped. (Wembley is deliberately not in this sequence.)
  */
 const ROWS: string[][] = [
-  ["cwcPitchWhite", "okmk", "emilijaSassuolo", "chairmanShirt", "cwcPitchBlue", "coaches"],
-  ["stadium", "hotelLobby", "clubChairman", "korona", "lff", "certificate"],
+  ["cwcPitchWhite", "okmk", "chairmanShirt", "cwcPitchBlue", "coaches"],
+  ["stadium", "hotelLobby", "clubChairman", "lff", "certificate"],
 ];
 const usable = (p?: DocPhoto) => !!p && (p.evidence.state !== "hold" || IS_REVIEW) && fs.existsSync(path.join(process.cwd(), "public", p.src));
 

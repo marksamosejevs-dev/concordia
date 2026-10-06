@@ -29,7 +29,7 @@ export default function PricingPage() {
             <p className="mono text-[0.68rem] uppercase tracking-[0.14em] text-ink/55">Step 1 · Start</p>
             <h2 className="display mt-2 text-[clamp(2rem,3.4vw,2.8rem)] leading-none">{a.name}</h2>
             <p className="display mt-7 text-[clamp(4rem,8vw,6rem)] leading-[0.82]">{usd(a.price)}</p>
-            <p className="mono mt-2 text-[0.72rem] uppercase tracking-[0.12em] text-ink/60">One time · report in 7 business days</p>
+            <p className="mono mt-2 text-[0.72rem] uppercase tracking-[0.12em] text-ink/60">One time · ready within 7 days of your materials</p>
             <ul className="mt-7 space-y-2.5">{ASSESSMENT_POINTS.map((x) => <li key={x} className="flex gap-3"><span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 bg-ink" aria-hidden />{x}</li>)}</ul>
             <div className="mt-auto pt-9"><ApplyCta tone="ink" /></div>
           </article>

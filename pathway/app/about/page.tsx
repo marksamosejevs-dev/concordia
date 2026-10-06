@@ -27,7 +27,7 @@ export default function AboutPage() {
           <p className="lede text-white/80">Every assessment follows Concordia’s professional assessment framework and receives senior review, led by FIFA Licensed Football Agent Marks Amosejevs. The service is built by a team so that the standard doesn’t depend on one person’s calendar.</p>
         </div>
       </Section>
-      <Section tone="paper" label="The team" className="!pt-10">
+      <Section id="team" tone="paper" label="The team" className="!pt-10">
         <div className="wrap">
           <Kicker>The team</Kicker>
           <h2 className="display d-xl">The people behind the assessment.</h2>

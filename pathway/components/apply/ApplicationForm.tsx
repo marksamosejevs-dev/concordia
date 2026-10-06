@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { ApplicationData } from "@/lib/applications/schema";
 import { triage, ageFrom } from "@/lib/applications/triage";
 import { deliverApplication } from "@/lib/applications/destination";
+import { FlowLine } from "@/components/funnel/FlowLine";
 import { readAttribution } from "@/lib/attribution";
 import { track } from "@/lib/analytics";
 import { SITE_MODE, IS_REVIEW } from "@/lib/site-mode";
@@ -57,7 +58,7 @@ const STEPS: Step[] = [
     { key: "hasAgent", label: "Do you currently have an agent?", type: "select", required: true, options: ["No", "Yes", "Not sure"], help: "If you do, tell us. We’ll explain how the assessment fits." },
   ] },
   { id: "footage", title: "Footage & profile", intro: "A full match is required for an assessment. Highlights help; they don’t replace it.", fields: [
-    { key: "fullMatchUrl", label: "Full-match link", type: "url", inputMode: "url", help: "Any full 90 minutes, unedited. A phone recording from the stand is better than no match at all.", placeholder: "https://" },
+    { key: "fullMatchUrl", label: "Full-match link (if you have one)", type: "url", inputMode: "url", help: "Any full match, unedited, helps us decide. A phone recording from the stand is fine. You can send more video after acceptance.", placeholder: "https://" },
     { key: "highlightsUrl", label: "Highlights link (optional)", type: "url", inputMode: "url", placeholder: "https://" },
     { key: "transfermarktUrl", label: "Transfermarkt profile (optional)", type: "url", inputMode: "url" },
     { key: "instagram", label: "Instagram (optional)", type: "text" },
@@ -106,6 +107,7 @@ function ApplicationInner() {
   const [idx, setIdx] = useState(-1); // -1 = intro
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch {} }, [v]);
 
@@ -145,7 +147,13 @@ function ApplicationInner() {
     };
     const result = triage(data);
     const sub = { id: `APP-${Date.now().toString(36).toUpperCase()}`, data, triage: result, attribution: readAttribution(), submittedAt: new Date().toISOString(), siteMode: SITE_MODE };
-    await deliverApplication(sub);
+    const delivered = await deliverApplication(sub);
+    if (!delivered.ok) {
+      setSubmitting(false);
+      setSubmitError("We couldn’t send your application just now. Nothing was lost — your answers are saved on this device. Please try again in a moment.");
+      track("application_delivery_failed", { mode: delivered.mode });
+      return;
+    }
     track("application_complete", { route: result.route });
     try { localStorage.removeItem(KEY); } catch {}
     router.push("/apply/result");
@@ -158,11 +166,7 @@ function ApplicationInner() {
         <h1 className="display d-lg mt-4">Apply for your Pathway Assessment.</h1>
         <p className="lede mt-5 max-w-2xl text-white/85">Before accepting payment, we review whether an assessment is right for your situation. Not every player needs one — and we’d rather tell you now.</p>
         <ul className="mono mt-7 flex flex-wrap gap-x-6 gap-y-2 text-[0.75rem] text-slate-light"><li>About 10 minutes</li><li>Free</li><li>Saves as you go</li><li>{steps.length} short steps</li></ul>
-        <div className="mt-8 grid gap-4 border-t border-white/10 pt-6 text-[0.92rem] text-white/75 sm:grid-cols-3">
-          <p><span className="display block text-[1.3rem] text-white">1 · Apply free</span>Your football, footage, passports and goals.</p>
-          <p><span className="display block text-[1.3rem] text-white">2 · Instant review</span>We check whether an assessment makes sense for you.</p>
-          <p><span className="display block text-[1.3rem] text-white">3 · $249 if accepted</span>Pay online. Report within 7 business days.</p>
-        </div>
+        <FlowLine current={0} className="mt-8 border-t border-white/10 pt-8" />
         <button onClick={next} className="btn btn-route mt-9">Start application <span className="arrow">→</span></button>
         <p className="mt-6 text-[0.82rem] text-slate-light">Being accepted means accepted for a Pathway Assessment — not for representation, by the Agency or by any club.</p>
       </div>
@@ -203,6 +207,8 @@ function ApplicationInner() {
             ))}
           </div>
           <button onClick={submit} disabled={submitting} className="btn btn-route mt-8 w-full sm:w-auto">{submitting ? "Submitting…" : "Submit for review"} <span className="arrow">→</span></button>
+          {submitError && <p role="alert" className="mt-4 border-l-2 border-alert pl-4 text-[0.95rem] text-white">{submitError}</p>}
+          <p className="mt-4 text-[0.85rem] text-white/60">We review every application and email you whether we can offer you a Pathway Assessment. No payment is taken to apply.</p>
           <p className="mt-4 text-[0.82rem] text-slate-light">Submitting is free. You’ll see the result immediately.{IS_REVIEW ? " (Review build: the application stays in this browser.)" : ""}</p>
         </div>
       )}

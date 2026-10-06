@@ -3,12 +3,16 @@ import { notFound } from "next/navigation";
 import { Section } from "@/components/ui/Section";
 import { LEGAL_ENTITY, LICENCE } from "@/content/site";
 import { PATHWAY_TERMS } from "@/content/pathway";
+import { ASSESSMENT_TERMS } from "@/content/terms";
+import { ACCEPTED_MEANING } from "@/content/assessment";
+import { IS_REVIEW } from "@/lib/site-mode";
 
 /** Key notices — moved here from the homepage (Round 1). Same substance, one authoritative place. */
 const NOTICES: [string, string][] = [
   ["Advisory, not representation", "Concordia Soccer · European Pathway provides career assessment and advisory services. It is not representation. Representation by Concordia Sports Agency is separate and selective, requires its own representation agreement, and cannot be purchased. Paying for any Pathway service does not increase a player’s right, entitlement or chance to be represented."],
   ["Agency players", "Players presented as represented by Concordia Sports Agency are shown as Agency credibility. They did not necessarily take part in European Pathway, and buying a Pathway service does not make a player a represented player."],
   ["FIFA licence", `The FIFA football agent licence (No. ${LICENCE.number}) is held personally by ${LICENCE.holder}. No FIFA endorsement of Concordia Soccer, Concordia Sports Agency or their services is stated or implied.`],
+  ["Acceptance", "Being accepted means accepted for a Pathway Assessment — not for representation, by the Agency or by any club."],
   ["No guaranteed outcomes", "No trial, contract, transfer, club introduction or placement is promised or guaranteed by any service."],
   ["Contract & offer review", "Contract and offer review within European Pathway is career-advisory review of what an offer commits a player to. It does not create a lawyer–client relationship; where formal legal advice is needed, we will say so."],
   ["European Pathway billing", `${PATHWAY_TERMS.horizon} ${PATHWAY_TERMS.cancellation} The final subscription terms — minimum term, cancellation and renewal — will be set out in full here before enrolment opens.`],
@@ -40,6 +44,22 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
           <p>{LEGAL_ENTITY.address.join(", ")}</p>
           <p className="mt-2">{LEGAL_ENTITY.note}</p>
         </div>
+        {slug === "terms" && (
+          <div id="pathway-assessment" className="mt-12 scroll-mt-28">
+            <h2 className="display d-md">Pathway Assessment</h2>
+            {IS_REVIEW && <p className="gate-tag mt-3 inline-block">Draft wording · pending legal review (E35)</p>}
+            <p className="mt-5 rounded-[10px] bg-route/40 px-4 py-3 font-semibold text-ink">{ACCEPTED_MEANING}</p>
+            <ol className="mt-8 space-y-8">
+              {ASSESSMENT_TERMS.map((c, i) => (
+                <li key={c.id} id={c.id} className="scroll-mt-28">
+                  <h3 className="text-[1.15rem] font-bold">{i + 1}. {c.title}</h3>
+                  {c.paras.map((p) => <p key={p} className="mt-2 text-ink/80">{p}</p>)}
+                  {c.list && <ul className="mt-2 list-disc space-y-1 pl-6 text-ink/80">{c.list.map((l) => <li key={l}>{l}</li>)}</ul>}
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
         {slug === "terms" && (
           <div id="notices" className="mt-12 scroll-mt-28">
             <h2 className="display d-md">Key notices</h2>

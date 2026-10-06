@@ -48,20 +48,27 @@ export function HeroV3({ pricePair }: { pricePair: ReactNode }) {
           <div className="mt-9 max-w-[560px]">{pricePair}</div>
         </div>
 
-        {/* Stage: masked photo + floating football UI */}
-        <div className="relative mx-auto h-[min(118vw,560px)] w-full max-w-[520px] lg:h-[min(76vh,680px)] lg:max-w-none">
-          <div className="absolute inset-y-0 right-[6%] w-[74%] overflow-hidden rounded-t-[999px] rounded-b-[18px] shadow-[0_60px_120px_-40px_rgba(0,0,0,0.8)] lg:right-[-2%] lg:w-[56%]"
-            style={{ transform: "translate3d(calc(var(--px) * 14px), calc(var(--sp) * -50px + var(--py) * 10px), 0)" }}>
-            <div className="absolute inset-[-6%]" style={{ transform: "translate3d(calc(var(--px) * -18px), calc(var(--sp) * 60px), 0) scale(1.06)" }}>
-              <Image src={HERO.photo.src} alt={HERO.photo.alt} fill priority sizes="(min-width:1024px) 36vw, 80vw" className="photo-grade object-cover" style={{ objectPosition: HERO.position }} />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" aria-hidden />
-          </div>
+        {/* Stage: domed editorial frame + floating football UI (kept clear of the faces and the shirt) */}
+        <div className="relative mx-auto h-[min(138vw,640px)] w-full max-w-[560px] lg:h-[min(78vh,700px)] lg:max-w-none">
           {/* Yellow route ring behind the frame */}
-          <div className="absolute right-[1%] top-[8%] h-[46%] w-[46%] rounded-full border-2 border-route/70 lg:right-0" style={{ transform: "translate3d(calc(var(--px) * -24px), calc(var(--py) * -16px), 0)" }} aria-hidden />
+          <div className="absolute right-[-4%] top-[-3%] h-[42%] w-[42%] rounded-full border-2 border-route/70" style={{ transform: "translate3d(calc(var(--px) * -24px), calc(var(--py) * -16px), 0)" }} aria-hidden />
+          <figure className="absolute inset-x-0 top-0 h-[64%] overflow-hidden rounded-t-[110px] sm:rounded-t-[200px] lg:rounded-t-[260px] rounded-b-[18px] shadow-[0_60px_120px_-40px_rgba(0,0,0,0.85)] lg:left-[4%] lg:h-[76%]"
+            style={{ transform: "translate3d(calc(var(--px) * 12px), calc(var(--sp) * -40px + var(--py) * 8px), 0)" }}>
+            <div className="absolute inset-[-5%]" style={{ transform: "translate3d(calc(var(--px) * -14px), calc(var(--sp) * 50px), 0) scale(1.04)" }}>
+              <Image src={HERO.photo.src} alt={HERO.photo.alt} fill priority sizes="(min-width:1024px) 42vw, 92vw" className="photo-grade object-cover" style={{ objectPosition: HERO.position }} />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-ink/10" aria-hidden />
+          </figure>
 
-          {/* Floating player profile */}
-          <div className="absolute bottom-[8%] left-0 w-[64%] max-w-[300px] rounded-[14px] border border-white/15 bg-ink/80 p-4 shadow-2xl backdrop-blur-md sm:p-5" style={{ transform: "translate3d(calc(var(--px) * 26px), calc(var(--py) * 18px + var(--sp) * -30px), 0)" }} aria-label="Illustrative player profile">
+          <p className="absolute right-0 top-[66%] max-w-[32%] text-right text-[0.72rem] font-semibold leading-snug text-white/70 lg:top-[78%]">{HERO.caption}</p>
+
+          {/* Floating window chip — over the sponsor wall, top right */}
+          <div className="absolute right-[2%] top-[7%] hidden rounded-full bg-route sm:block px-4 py-2 text-[0.8rem] font-bold text-ink shadow-xl" style={{ transform: "translate3d(calc(var(--px) * -30px), calc(var(--py) * -22px), 0)" }} aria-hidden>
+            Next window → planned
+          </div>
+
+          {/* Floating player profile — below the frame edge, never over the faces or shirt */}
+          <div className="absolute bottom-0 left-0 w-[66%] max-w-[300px] rounded-[14px] border border-white/15 bg-ink/85 p-4 shadow-2xl backdrop-blur-md sm:p-5" style={{ transform: "translate3d(calc(var(--px) * 22px), calc(var(--py) * 14px + var(--sp) * -24px), 0)" }} aria-label="Illustrative player profile">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-[0.95rem] font-bold leading-tight">{HERO_PROFILE.title}</p>
@@ -69,18 +76,13 @@ export function HeroV3({ pricePair }: { pricePair: ReactNode }) {
               </div>
               <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-route text-[0.8rem] font-bold text-route">{m.fit}</span>
             </div>
-            <div className="mt-4 border-t border-white/10 pt-3" aria-live="polite">
+            <div className="mt-3 border-t border-white/10 pt-3" aria-live="polite">
               <p className="text-[0.7rem] text-white/55">Best market fit right now</p>
-              <p key={m.iso} className="display word-in mt-1 text-[1.9rem] leading-none">{m.name}</p>
+              <p key={m.iso} className="display word-in mt-1 text-[1.8rem] leading-none">{m.name}</p>
               <p className="mt-1 text-[0.78rem] text-white/70">{m.level} · fit {m.fit}/100</p>
               <div className="mt-3 grid grid-cols-4 gap-1">{HERO_PROFILE.markets.map((x, n) => <span key={x.iso} className={`h-1 rounded-full transition-colors duration-500 ${n === i ? "bg-route" : "bg-white/15"}`} />)}</div>
             </div>
-            <p className="mt-3 text-[0.62rem] text-white/45">Illustrative · fictional player</p>
-          </div>
-
-          {/* Floating window chip */}
-          <div className="absolute right-0 top-[52%] rounded-full bg-route px-4 py-2 text-[0.8rem] font-bold text-ink shadow-xl lg:right-[-2%]" style={{ transform: "translate3d(calc(var(--px) * -30px), calc(var(--py) * -22px), 0)" }} aria-hidden>
-            Next window → planned
+            <p className="mt-2 text-[0.62rem] text-white/45">Illustrative · fictional player</p>
           </div>
         </div>
       </div>

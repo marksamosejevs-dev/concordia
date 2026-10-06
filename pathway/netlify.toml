@@ -19,3 +19,9 @@
     X-Robots-Tag = "noindex, nofollow"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Round 3: no separate biography pages — the former Marks profile points to the team.
+[[redirects]]
+  from = "/about/marks-amosejevs/*"
+  to = "/about/#team"
+  status = 301

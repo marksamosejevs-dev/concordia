@@ -87,7 +87,7 @@ const PAGES = [
             <ul className="space-y-1">{p.actions.map((a) => <li key={a} className="flex gap-2"><span className="mt-[0.45em] inline-block h-[6px] w-[6px] shrink-0 bg-route-deep" />{a}</li>)}</ul>
           </div>
         ))}
-        <p className="border-t border-ink/15 pt-[4%] text-ink/75">Review call: we go through every page with you — and your parent or guardian, if you’d like.</p>
+        <p className="border-t border-ink/15 pt-[4%] text-ink/75">60-minute call: we go through the assessment with you — and your parent or guardian, if you’d like.</p>
       </div>
     ),
   },

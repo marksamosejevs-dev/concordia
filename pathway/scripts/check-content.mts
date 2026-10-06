@@ -29,7 +29,7 @@ for (const [id, price] of [["assessment", 249], ["pathway", 399], ["cohort", 150
 }
 
 // 2. Forbidden public phrases (implying endorsement, guarantees, or agency licensing).
-const FORBIDDEN = [/FIFA[- ]approved/i, /FIFA[- ]endorsed/i, /FIFA[- ]licensed (agency|team)/i, /guaranteed (trial|contract|placement)/i, /partner clubs/i, /unlock your potential/i, /chase your dreams/i, /\bdelusion\b/i, /\d+\s?% (off|discount)/i, /only \d+ (spots|places) left/i, /cancel any ?time/i, /\$2,?39\d/];
+const FORBIDDEN = [/FIFA[- ]approved/i, /FIFA[- ]endorsed/i, /FIFA[- ]licensed (agency|team)/i, /guaranteed (trial|contract|placement)/i, /partner clubs/i, /unlock your potential/i, /chase your dreams/i, /\bdelusion\b/i, /\d+\s?% (off|discount)/i, /only \d+ (spots|places) left/i, /cancel any ?time/i, /\$2,?39\d/, /7 business days/i, /30-minute (review|career|strategy)? ?call/i];
 for (const { f, s } of all) {
   for (const rx of FORBIDDEN) {
     for (const m of s.matchAll(new RegExp(rx, "gi"))) {

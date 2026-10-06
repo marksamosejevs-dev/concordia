@@ -10,12 +10,13 @@ export function ageFrom(dob: string, now = new Date()): number | null {
   return a;
 }
 
-/** Rules-based instant triage (Phase 1 §12). Human review can override later. */
+/** Rules-based triage SUGGESTION for the internal reviewer. Never shown to the applicant as a decision (Round 3). */
 export function triage(data: ApplicationData): TriageResult {
   const age = ageFrom(data.dateOfBirth);
   const reasons: string[] = [];
   if (age !== null && age < 16) return { route: "under_16", age, reasons: ["Under 16: education route only."] };
-  if (!data.fullMatchUrl) return { route: "needs_full_match", age, reasons: ["A full match is required for an assessment."] };
+  // Round 3: a full match is no longer required to apply — video is collected after acceptance.
+  if (!data.fullMatchUrl) reasons.push("No full-match link yet — request footage at onboarding.");
   if (data.level === "Not currently playing" && data.objective === "Not sure") {
     return { route: "not_now", age, reasons: ["Not currently playing and no objective yet."] };
   }

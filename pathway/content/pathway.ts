@@ -18,7 +18,7 @@ export const PATHWAY_TERMS = {
   evidence: pending("LEGAL", "Final subscription terms: minimum term, early exit, renewal") as Evidence,
 };
 
-export const ASSESSMENT_POINTS = ["Full-match review", "Level band", "Three market directions", "90-day action plan", "Review call"];
+export const ASSESSMENT_POINTS = ["Profile, CV + video review", "Transfermarkt + eligibility check", "Realistic European markets", "Individual pathway assessment", "60-minute call"];
 
 /** The eight things the career team does — homepage shows name + one line; product page shows detail. */
 export interface Pillar { key: string; n: string; name: string; line: string; detail: string[] }

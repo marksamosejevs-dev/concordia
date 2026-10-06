@@ -13,6 +13,8 @@ export interface TeamMember {
   secondaryRole?: Field;
   shortBio?: Field;
   longBio?: Field<string[]>;
+  /** Short pending line shown only in review until the founder supplies it. */
+  extendedBio?: Field;
   photo: { desktopPortrait?: string; mobilePortrait?: string; gridCrop?: string; aboutCrop?: string; avatar?: string; evidence: Evidence };
   credentialIds: string[];      // → content/credentials.ts (Verify system)
   specialisms?: Field<string[]>;
@@ -33,17 +35,18 @@ export const team: TeamMember[] = [
     id: "marks-amosejevs",
     slug: "marks-amosejevs",
     name: "Marks Amosejevs",
-    role: { value: "Co-Founder & CEO", evidence: confirmed },
+    role: { value: "Co-Founder", evidence: confirmed },
     secondaryRole: { value: "FIFA Licensed Football Agent", evidence: { state: "document", ref: "D1" } },
     shortBio: {
-      value: "Built and leads European Pathway, and provides senior professional oversight of its assessment framework. Works on real player moves, has supported players when contracts and clubs went wrong, and continues FIFA’s professional education for agents.",
-      evidence: confirmed,
+      // Founder-supplied wording (Round 3).
+      value: "FIFA Licensed Football Agent working with professional and emerging players across European football. Co-Founder of the Latvian Professional Footballers Association and a sports lawyer with experience across player representation, contracts and football regulation.",
+      evidence: { state: "confirmed", ref: "FS-R3", note: "Founder-supplied team description, Round 3" },
     },
     photo: { evidence: photoPending },
     credentialIds: ["fifa-licence", "minors", "lawyer", "llm", "players-association", "fifa-education", "agency"],
     displayOrder: 1,
     featured: true,
-    profilePage: true,
+    profilePage: false, // Round 3: no separate biography pages
     assessmentRoles: ["seniorReview", "escalation"],
   },
   {
@@ -52,7 +55,9 @@ export const team: TeamMember[] = [
     name: "Filipp Sviridenko",
     role: { value: "Co-Founder", evidence: confirmed },
     secondaryRole: { value: "Additional role to be confirmed", evidence: pending("E30") },
-    shortBio: { value: "Biography to be supplied.", evidence: pending("E31") },
+    // Approved facts only (F13): Co-Founder. Personal background pending founder wording (E31).
+    shortBio: { value: "Co-founder of Concordia Soccer · European Pathway — building the service that brings professional football career thinking to players beyond an agency roster.", evidence: confirmed },
+    extendedBio: { value: "[Background, responsibilities and languages — founder to confirm]", evidence: pending("E31") },
     photo: { evidence: photoPending },
     credentialIds: [],
     displayOrder: 2,
@@ -64,8 +69,9 @@ export const team: TeamMember[] = [
     id: "valerija-sevcenko",
     slug: "valerija-sevcenko",
     name: "Valerija Sevcenko",
-    role: { value: "Role to be confirmed", evidence: pending("E32") },
-    shortBio: { value: "Biography to be supplied.", evidence: pending("E32") },
+    role: { value: "Concordia Team", evidence: { state: "confirmed", ref: "FS-R3", note: "Founder-approved label, Round 3; formal title still E32" } },
+    shortBio: { value: "Part of the Concordia team behind European Pathway.", evidence: confirmed },
+    extendedBio: { value: "[Role and responsibilities — founder to confirm]", evidence: pending("E32") },
     photo: { evidence: photoPending },
     credentialIds: [],
     displayOrder: 3,

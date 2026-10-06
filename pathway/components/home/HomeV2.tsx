@@ -2,12 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { ParentsPlayers } from "./ParentsPlayers";
 import { VideoTestimonials } from "./VideoTestimonials";
-import { Parallax } from "@/components/ui/Parallax";
+import { FlowLine } from "@/components/funnel/FlowLine";
+import { ACCEPTED_MEANING } from "@/content/assessment";
 import { photos } from "@/content/photos";
 import { testimonials } from "@/content/testimonials";
 import { activeSample } from "@/content/sample-report";
 import { product } from "@/content/products";
-import { PATHWAY_TERMS, ASSESSMENT_POINTS, JOURNEY, SERVICES_TICKER } from "@/content/pathway";
+import { PATHWAY_TERMS, ASSESSMENT_POINTS, SERVICES_TICKER } from "@/content/pathway";
 import { CTA } from "@/content/site";
 import { usd } from "@/lib/format";
 import { isPublic } from "@/lib/evidence";
@@ -83,7 +84,7 @@ export function StartHere() {
           <h2 id="start-title" className="display text-[clamp(2.4rem,4.6vw,4.4rem)] leading-[0.92]">Start with the truth about your level.</h2>
           <div className="mt-7 flex flex-wrap items-end gap-x-5 gap-y-2">
             <p className="display text-[clamp(4.5rem,10vw,7.5rem)] leading-[0.8]">{usd(A().price)}</p>
-            <p className="pb-1 text-[1rem] font-semibold leading-snug">Player Pathway Assessment<br /><span className="font-normal text-ink/65">one time · written report in 7 business days</span></p>
+            <p className="pb-1 text-[1rem] font-semibold leading-snug">Player Pathway Assessment<br /><span className="font-normal text-ink/65">one time · ready within 7 days of your materials</span></p>
           </div>
           <ul className="mt-8 flex max-w-xl flex-wrap gap-2">
             {ASSESSMENT_POINTS.map((p) => <li key={p} className="rounded-full border border-ink/15 bg-white px-3.5 py-2 text-[0.9rem] font-semibold transition-colors hover:border-ink hover:bg-route">{p}</li>)}
@@ -122,32 +123,19 @@ export function TestimonialsCarousel() {
   );
 }
 
-/** How it works — the route draws itself as you scroll through it. */
+/** How it works — the whole assessment journey on one line (readable in ~5 seconds). */
 export function HowItWorksStrip() {
   return (
-    <Parallax as="section" className="on-blue relative overflow-hidden py-[clamp(4rem,9vw,7rem)]">
+    <section className="on-blue relative overflow-hidden py-[clamp(4rem,9vw,7rem)]" aria-labelledby="flow-title">
       <div className="wrap">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
-          <h2 className="display text-[clamp(2.6rem,5.4vw,5.2rem)] leading-[0.9]">Four steps to your next move.</h2>
+          <h2 id="flow-title" className="display max-w-[16ch] text-[clamp(2.6rem,5.4vw,5.2rem)] leading-[0.9]">From application to your next move.</h2>
           <Link href="/how-it-works" className="inline-flex items-center gap-2 font-semibold underline decoration-white/40 underline-offset-[6px] hover:decoration-white">The full process <span aria-hidden>→</span></Link>
         </div>
-        <div className="relative">
-          <svg viewBox="0 0 1000 40" preserveAspectRatio="none" className="absolute left-0 right-0 top-[18px] hidden h-10 w-full lg:block" aria-hidden>
-            <path d="M0 6 C 250 6, 250 30, 500 30 S 750 6, 1000 6" pathLength={1} fill="none" stroke="#FFD23F" strokeWidth="3" strokeDasharray="1" style={{ strokeDashoffset: "max(0, calc(1 - var(--sp) * 1.9))" }} />
-          </svg>
-          <ol className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            {JOURNEY.map((j, n) => (
-              <li key={j.k} className="relative" style={{ transform: `translate3d(0, calc((1 - min(1, var(--sp) * 2.2)) * ${24 + n * 18}px), 0)` }}>
-                <span className={`relative z-[1] block h-11 w-11 rounded-full border-4 border-blue ${n === 3 ? "bg-white" : "bg-route"}`} aria-hidden />
-                <p className="display mt-5 text-[clamp(2rem,3.2vw,2.8rem)] leading-none">{j.k}</p>
-                {j.price && <p className="mt-2 text-[1.05rem] font-bold text-route">{j.price}</p>}
-                <p className="mt-2 max-w-[26ch] text-white/85">{j.b}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <FlowLine tone="blue" />
+        <p className="mt-10 max-w-2xl text-[0.95rem] text-white/80">{ACCEPTED_MEANING}</p>
       </div>
-    </Parallax>
+    </section>
   );
 }
 
