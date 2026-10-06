@@ -11,8 +11,6 @@ export interface VerifyEntry {
   href?: string;
   external?: boolean;
   documentImage?: string;
-  /** Sensitive identifiers blurred by default in the document viewer (E5). */
-  redact?: { label: string; top: string; left: string; width: string; height: string }[];
   howToCheck?: string;
   soWhatPlayer: string;
   soWhatParent: string;
@@ -29,7 +27,6 @@ export const verifyEntries: VerifyEntry[] = [
     action: "VERIFY",
     // Exact public-register URL is confirmed at E19; the document viewer + “how to check” cover it meanwhile.
     documentImage: "/assets/pathway/credentials/fifa-licence-card.png",
-    redact: [{ label: "Connect ID", top: "49%", left: "5%", width: "34%", height: "8%" }, { label: "QR", top: "10%", left: "67%", width: "28%", height: "44%" }],
     howToCheck: "Search “Amosejevs” on FIFA’s public football agent register.",
     soWhatPlayer: "You can check who leads the team assessing you.",
     soWhatParent: "A licence you can check yourself, in about a minute.",
@@ -79,13 +76,14 @@ export const verifyEntries: VerifyEntry[] = [
   },
   {
     id: "fifa-education",
-    claim: "FIFA professional education for football agents",
+    claim: "FIFA Executive Programme in Football Agency",
+    detail: "2nd edition · graduation 13 June 2025",
     evidenceLabel: "Certificate",
     action: "VIEW CREDENTIAL",
-    documentImage: "/assets/pathway/photos/fifa/fifa-education-certificate.jpg",
+    documentImage: "/assets/pathway/credentials/fifa-executive-programme-certificate.jpg",
     soWhatPlayer: "Current knowledge — not a licence from years ago.",
     soWhatParent: "Evidence of a professional standard.",
-    evidence: pending("E3", "Programme name, edition, year; certificate scan"),
+    evidence: { state: "document", ref: "E3", note: "Certificate scan supplied by founder" },
     compact: false,
   },
   {

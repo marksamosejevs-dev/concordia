@@ -49,7 +49,6 @@ export function VerifyLedger({ mode = "compact", audience = "player", exclude = 
 }
 
 function DocViewer({ e, onClose }: { e: VerifyEntry; onClose: () => void }) {
-  const [revealed, setRevealed] = useState(false);
   return (
     <div role="dialog" aria-modal="true" aria-label={e.claim} className="fixed inset-0 z-[80] flex items-end justify-center bg-black/70 p-0 backdrop-blur-sm sm:items-center sm:p-6" onClick={onClose}>
       <div className="on-ink max-h-[92dvh] w-full max-w-3xl overflow-y-auto border border-white/15 p-6 sm:p-8" onClick={(ev) => ev.stopPropagation()}>
@@ -60,14 +59,10 @@ function DocViewer({ e, onClose }: { e: VerifyEntry; onClose: () => void }) {
         {e.documentImage ? (
           <div className="relative mt-6 overflow-hidden bg-ink-deep">
             <Image src={e.documentImage} alt={`${e.evidenceLabel} — ${e.claim}`} width={1200} height={772} className="h-auto w-full" />
-            {!revealed && e.redact?.map((r) => (
-              <span key={r.label} className="absolute backdrop-blur-xl bg-ink/40" style={{ top: r.top, left: r.left, width: r.width, height: r.height }} aria-label={`${r.label} redacted`} />
-            ))}
           </div>
         ) : (
           <div className="mt-6 border border-dashed border-white/20 p-8 text-center text-slate-light">Evidence document will appear here once cleared ({e.evidence.ref}).</div>
         )}
-        {e.redact && IS_REVIEW && <button className="mono mt-3 text-[0.68rem] uppercase tracking-[0.1em] text-slate-light underline" onClick={() => setRevealed((v) => !v)}>Review only: {revealed ? "re-apply" : "show"} redaction (E5)</button>}
         {e.howToCheck && <p className="mt-6 text-[0.95rem] text-white/85"><span className="mono mr-2 text-[0.62rem] uppercase tracking-[0.12em] text-slate">How to check</span>{e.howToCheck}</p>}
       </div>
     </div>

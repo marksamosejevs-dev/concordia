@@ -28,6 +28,7 @@ export default function Home() {
       <HeroV3 pricePair={<PricePair />} secondary={secondary} />
       <ServicesTicker />
       <PlayersRail />
+      <TestimonialsCarousel />
       <DecisionSet />
       <StartHere />
       <PathwayScroller price={product("pathway").price} />
@@ -36,7 +37,6 @@ export default function Home() {
       <CredentialSection />
       <PhotoMarquee />
       <ParentsSection />
-      <TestimonialsCarousel />
       <HowItWorksStrip />
       <FinalOffer />
     </>

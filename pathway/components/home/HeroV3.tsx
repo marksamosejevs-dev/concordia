@@ -28,7 +28,7 @@ export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; seconda
   // Campaign-specific landing variant (utm_campaign → lib/campaigns.ts); same page, same funnel.
   const mounted = useMounted();
   const camp = mounted ? campaignFor(readAttribution().last?.utm_campaign ?? readAttribution().first?.utm_campaign) : undefined;
-  const lede = camp?.heroLede ?? "An honest assessment of where you stand — in women’s or men’s football. Then a career team that manages your pathway into Europe, month by month.";
+  const lede = camp?.heroLede ?? "An honest assessment of where you stand — in women’s or men’s football. Then a FIFA Licensed Football Agent and our team guide your pathway into Europe, month by month.";
 
   return (
     <Parallax as="section" className="on-ink relative isolate overflow-hidden pt-[var(--header-h)]">
@@ -44,7 +44,7 @@ export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; seconda
       <div className="wrap relative grid gap-10 pb-14 pt-8 lg:min-h-[calc(100svh-var(--header-h))] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:pb-20 lg:pt-0">
         <div className="relative z-10">
           <h1 className="display max-w-[15ch] text-[clamp(2.8rem,5.8vw,6.3rem)] leading-[0.9]">Think you can play in Europe? <span className="text-route">Ask people who work in it.</span></h1>
-          <p className="lede mt-6 max-w-lg text-white/85">{lede}</p>
+          <p className="lede mt-6 max-w-lg text-white/85">{emphasise(lede)}</p>
           <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-start">
             <div className="flex flex-col items-start gap-2">
               <Link href="/apply" className="btn btn-route" data-magnetic data-cta="apply">{CTA.apply} <span className="arrow" aria-hidden>→</span></Link>
@@ -94,8 +94,15 @@ export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; seconda
         </div>
       </div>
       {secondary && (secondary.src || IS_REVIEW) && (
-        /* Secondary editorial image — lower and smaller than the primary frame, leading the eye into the page. */
-        <div className="wrap relative -mt-4 flex justify-end pb-14 lg:-mt-28 lg:pb-20">
+        /* Secondary editorial image (Emīlija) — lower and smaller than the primary frame; the supporting image
+           (Filipp, MetLife) sits to its left, smaller and staggered lower. Below 640px only Emīlija is shown. */
+        <div className="wrap relative -mt-4 flex items-end justify-end gap-6 pb-14 lg:-mt-28 lg:gap-10 lg:pb-20">
+          <figure className="relative mb-[-1.5rem] hidden w-[30%] max-w-[300px] sm:block lg:mb-[-3.5rem] lg:w-[19%]" style={{ transform: "translate3d(calc(var(--px) * -6px), calc(var(--sp) * -18px), 0)" }}>
+            <div style={{ aspectRatio: `${HERO.supporting.w}/${HERO.supporting.h}` }} className="relative overflow-hidden rounded-[12px] shadow-[0_30px_60px_-28px_rgba(0,0,0,0.85)] ring-1 ring-white/10">
+              <Image src={HERO.supporting.src} alt={HERO.supporting.alt} fill sizes="(min-width:1024px) 19vw, 30vw" className="photo-grade object-cover" style={{ objectPosition: HERO.supporting.position }} />
+            </div>
+            <figcaption className="mt-2.5 text-[0.7rem] uppercase leading-tight tracking-[0.08em]"><span className="block font-bold text-white">{HERO.supporting.caption[0]}</span><span className="block text-white/60">{HERO.supporting.caption[1]}</span></figcaption>
+          </figure>
           <figure className="relative w-[88%] max-w-[560px] sm:w-[64%] lg:mr-[2%] lg:w-[40%]" style={{ transform: "translate3d(calc(var(--px) * 8px), calc(var(--sp) * -30px), 0)" }}>
             <span className="absolute -left-6 top-1/2 hidden h-[2px] w-6 bg-route lg:block" aria-hidden />
             <div style={{ aspectRatio: secondary.ratio }} className="relative overflow-hidden rounded-[14px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.85)] ring-1 ring-white/10">
@@ -115,4 +122,12 @@ export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; seconda
       )}
     </Parallax>
   );
+}
+
+/** Subtle emphasis on the individual credential wherever it appears in the hero lede. */
+const CREDENTIAL = "FIFA Licensed Football Agent";
+function emphasise(text: string) {
+  const at = text.indexOf(CREDENTIAL);
+  if (at < 0) return text;
+  return <>{text.slice(0, at)}<strong className="font-semibold text-white underline decoration-route decoration-2 underline-offset-[5px]">{CREDENTIAL}</strong>{text.slice(at + CREDENTIAL.length)}</>;
 }

@@ -35,7 +35,7 @@ export function PlayersRail() {
             return (
               <li key={`${p.slug}-${n}`} aria-hidden={n >= shown.length} className="group relative w-[58vw] max-w-[260px] shrink-0 sm:w-[240px]">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-[10px] bg-paper">
-                  <Image src={p.photo} alt={n < shown.length ? p.name : ""} fill sizes="260px" className="object-cover grayscale transition-[filter,transform] duration-700 group-hover:scale-[1.05] group-hover:grayscale-0" />
+                  <Image src={p.photo} alt={n < shown.length ? p.name : ""} fill sizes="260px" className="object-cover transition-transform duration-700 group-hover:scale-[1.05]" />
                   <div className="absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-ink/90 to-transparent p-3 pt-10 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                     <p className="text-[0.8rem] font-semibold text-white">{p.position}</p>
                     {p.club && <p className="text-[0.75rem] text-white/75">{p.club}</p>}

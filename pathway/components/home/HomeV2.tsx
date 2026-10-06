@@ -114,7 +114,7 @@ export function TestimonialsCarousel() {
   const slots = IS_REVIEW ? Array.from({ length: Math.max(0, 5 - cards.length) }, (_, n) => ({ slot: cards.length + n + 1 })) : [];
   if (!cards.length && !slots.length) return null;
   return (
-    <section className="on-ink relative overflow-hidden py-[clamp(4.5rem,10vw,7.5rem)]" aria-labelledby="voices-title">
+    <section className="on-ink relative z-[1] -mt-10 overflow-hidden rounded-t-[clamp(24px,4vw,48px)] pb-[clamp(4.5rem,10vw,7.5rem)] pt-[clamp(3.5rem,7vw,5.5rem)]" aria-labelledby="voices-title">
       <div className="wrap">
         <h2 id="voices-title" className="display mb-10 max-w-[14ch] text-[clamp(2.6rem,5.4vw,5.2rem)] leading-[0.9]">Hear it from the players.</h2>
         <VideoTestimonials cards={cards} slots={slots} />
