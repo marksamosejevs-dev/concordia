@@ -3,6 +3,7 @@ import Link from "next/link";
 import { isAdmin } from "@/lib/server/admin";
 import { listApplications, stateOf, deadlineOf, type ApplicationRecord } from "@/lib/server/records";
 import { configStatus } from "@/lib/server/env";
+import { pendingRules } from "@/content/business-rules";
 import { STATE_LABEL } from "@/lib/assessment-status";
 import { AdminLogin, AdminLogout } from "@/components/admin/AdminLogin";
 
@@ -32,8 +33,9 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div><p className="eyebrow text-route">Concordia admin</p><h1 className="display d-lg mt-2">Applications</h1></div>
-        <div className="flex gap-4"><Link href="/admin/emails" className="text-[0.85rem] underline underline-offset-4">Email templates</Link><AdminLogout /></div>
+        <div className="flex gap-4"><Link href="/admin/emails" className="text-[0.85rem] underline underline-offset-4">Email templates</Link><a href="/api/admin/export" className="text-[0.85rem] underline underline-offset-4">Export all (JSON)</a><AdminLogout /></div>
       </div>
+        {pendingRules().length > 0 && <div className="mt-6 border-l-2 border-[#ff7a66] pl-3 text-[0.85rem]"><p className="font-semibold">Owner decisions pending ({pendingRules().length}) — current behaviour is a proposed default:</p><ul className="mt-1 space-y-0.5 text-white/75">{pendingRules().map((r) => <li key={r.key}>• {r.label}: {r.note}</li>)}</ul></div>}
       <details className="mt-6 border border-white/15 p-4">
         <summary className="cursor-pointer font-semibold">System configuration {Object.values(cfg).every((x) => x.ok) ? "· all set" : `· ${Object.values(cfg).filter((x) => !x.ok).length} item(s) need setup`}</summary>
         <ul className="mt-3 grid gap-1 text-[0.85rem] sm:grid-cols-2">{Object.entries(cfg).map(([k, v]) => <li key={k}><span className={v.ok ? "text-route" : "text-[#ff7a66]"}>{v.ok ? "✓" : "✗"}</span> {k}: {v.detail}</li>)}</ul>

@@ -17,7 +17,7 @@ export async function sendEmail(m: Message): Promise<SendResult> {
       const r = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { Authorization: `Bearer ${env.resendKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from: env.emailFrom, to, subject: m.subject, html: m.html, text: m.text, reply_to: m.replyTo ?? env.emailReplyTo, tags: m.tag ? [{ name: "type", value: m.tag.replace(/[^a-z0-9_-]/gi, "_") }] : undefined }),
+        body: JSON.stringify({ from: env.emailFrom, to, subject: m.subject, html: m.html, text: m.text, ...((m.replyTo ?? env.emailReplyTo) ? { reply_to: m.replyTo ?? env.emailReplyTo } : {}), tags: m.tag ? [{ name: "type", value: m.tag.replace(/[^a-z0-9_-]/gi, "_") }] : undefined }),
         signal: AbortSignal.timeout(10_000),
       });
       const j = (await r.json().catch(() => ({}))) as { id?: string; message?: string; name?: string };

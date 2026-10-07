@@ -58,6 +58,9 @@ if (pub.some((p) => /minor|nazar/i.test(p))) errors.push("A photo of a minor wit
 
 // 5. Production-only gates.
 if (production) {
+  // Owner decisions: a launch build may not ship a rule that is only a proposed default.
+  const rules = fs.readFileSync(path.join(root, "content/business-rules.ts"), "utf8");
+  for (const m of rules.matchAll(/^ {2}(\w+): \{([^]*?)\} as Rule/gm)) if (/status: "proposed"/.test(m[2])) errors.push(`Owner decision still pending: ${m[2].match(/label: "([^"]+)"/)?.[1]} (content/business-rules.ts → ${m[1]})`);
   const photosTs = fs.readFileSync(path.join(root, "content/photos.ts"), "utf8");
   for (const m of photosTs.matchAll(/src: B \+ "([^"]+)"[^}]*evidence: hold\(/g)) {
     if (fs.existsSync(path.join(root, "public/assets/pathway/photos", m[1]))) errors.push(`HOLD photo still in /public: ${m[1]} — clear consent or remove before public launch`);

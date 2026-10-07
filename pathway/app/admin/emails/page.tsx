@@ -17,7 +17,7 @@ export default async function EmailsPage() {
     id: "CS-1001", createdAt: now, updatedAt: now, isMinor: false, campaign: undefined,
     data: { applicant: "player", fullName: "Sample Player", footballCategory: "Men’s football", dateOfBirth: "2004-05-01", nationality: "United States", residence: "United States", email: "player@example.com", positions: ["Central midfield"], level: "College", contractStatus: "Amateur / college registration", hasAgent: "No", passports: ["United States"], objective: "Europe specifically", targetCountries: ["Poland"], consents: { terms: true, assessmentData: true, agencyView: false, marketing: false } },
     triage: { route: "accepted", age: 22, reasons: [] }, attribution: {}, contact: { name: "Sample Player", firstName: "Sample", emails: ["player@example.com"] },
-    consents: [], materials: [], notes: [], emails: [], timeline: [], credit: { amountCents: 15000, expiresAt: later }, reportUrl: "https://example.com/assessment",
+    consents: [], materials: [], notes: [], emails: [], timeline: [], credit: { amountCents: 15000 }, reportUrl: "https://example.com/assessment",
     payment: { status: "paid", earlyStartRequested: true },
   } as unknown as ApplicationRecord;
   const link = "https://example.com/status?t=…";
@@ -25,7 +25,7 @@ export default async function EmailsPage() {
     ["Application received", T.applicantReceived(r, link)], ["Accepted", T.applicantAccepted(r, link)], ["Not accepted", T.applicantNotAccepted(r)],
     ["Payment received + materials request", T.applicantPaymentReceived(r, link)], ["Materials received", T.applicantMaterialsReceived(r, link)],
     ["Additional information required", T.applicantAdditionalInfo(r, ["Recent playing history (last two seasons)"], link)], ["Assessment started", T.applicantStarted(r, now, later)],
-    ["Assessment ready + booking", T.applicantReady(r, link, "https://example.com/book")], ["European Pathway offer", T.applicantPathwayOffer(r, link, later)],
+    ["Assessment ready + booking", T.applicantReady(r, link, "https://example.com/book")], ["European Pathway offer", T.applicantPathwayOffer(r, link, {})],
     ["Subscription started", T.applicantSubscriptionStarted(r, link)], ["Renewal failed", T.applicantRenewalFailed(r, link)], ["Subscription ended", T.applicantSubscriptionEnded(r)],
     ["INTERNAL · new application", T.internalApplication(r, link, ["team@example.com"])],
   ] as const;

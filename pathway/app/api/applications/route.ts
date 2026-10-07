@@ -1,4 +1,4 @@
-import { validateApplication } from "@/lib/applications/validate";
+import { validateApplication, GUARDIAN_UNDER } from "@/lib/applications/validate";
 import { triage, ageFrom } from "@/lib/applications/triage";
 import { campaignFor } from "@/lib/campaigns";
 import { createApplication, LEGAL_VERSION } from "@/lib/server/records";
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   const data = v.data;
   const attribution = sanitizeAttribution(body.attribution);
   const age = ageFrom(data.dateOfBirth);
-  const isMinor = age !== null && age < 18;
+  const isMinor = age !== null && age < GUARDIAN_UNDER;
   const playerFirst = data.fullName.split(/\s+/)[0];
   const contact = isMinor && data.guardian
     ? { name: data.guardian.name, firstName: data.guardian.name.split(/\s+/)[0], emails: [data.guardian.email, data.email] }

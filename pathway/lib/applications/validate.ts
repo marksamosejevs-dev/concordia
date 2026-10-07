@@ -5,7 +5,11 @@
 import type { ApplicationData } from "./schema";
 import { ageFrom } from "./triage";
 
-export const MIN_AGE = 16;
+import { RULES } from "../../content/business-rules.ts";
+
+/** Minimum age (owner decision — see content/business-rules.ts) and the guardian age (age of majority). */
+export const MIN_AGE = RULES.minimumAge.value;
+export const GUARDIAN_UNDER = RULES.guardianUnder.value;
 const s = (v: unknown, max = 300) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 const arr = (v: unknown, max = 20) => (Array.isArray(v) ? v.map((x) => s(x, 80)).filter(Boolean).slice(0, max) : []);
 const email = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -37,7 +41,7 @@ export function validateApplication(input: unknown): { ok: true; data: Applicati
   const age = ageFrom(data.dateOfBirth);
   if (data.dateOfBirth && (age === null || age > 60)) e.dateOfBirth = "Invalid date of birth";
   if (age !== null && age < MIN_AGE) e.dateOfBirth = `We offer Pathway Assessments from age ${MIN_AGE}`;
-  if (age !== null && age < 18) {
+  if (age !== null && age < GUARDIAN_UNDER) {
     if (!data.guardian?.name) e.guardianName = "Required";
     if (!data.guardian?.relationship) e.guardianRelationship = "Required";
     if (!data.guardian?.email || !email(data.guardian.email)) e.guardianEmail = "Required";

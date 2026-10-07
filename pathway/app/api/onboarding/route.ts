@@ -1,5 +1,4 @@
-import { verifyPlayerToken } from "@/lib/server/tokens";
-import { getApplication, updateApplication, type FileRef, type MaterialsSubmission } from "@/lib/server/records";
+import { recordFromToken, updateApplication, type FileRef, type MaterialsSubmission } from "@/lib/server/records";
 import { afterMaterials } from "@/lib/server/workflow";
 import { store } from "@/lib/server/store";
 import { siteOrigin } from "@/lib/server/env";
@@ -18,10 +17,9 @@ export async function POST(req: Request) {
   let fd: FormData;
   try { fd = await req.formData(); } catch { return json({ ok: false, error: "invalid_form" }, 400); }
   try {
-    const id = verifyPlayerToken(String(fd.get("t") ?? ""));
-    if (!id) return json({ ok: false, error: "invalid_link" }, 404);
-    const r = await getApplication(id);
-    if (!r) return json({ ok: false, error: "not_found" }, 404);
+    const r = await recordFromToken(String(fd.get("t") ?? ""));
+    if (!r) return json({ ok: false, error: "invalid_link" }, 404);
+    const id = r.id;
     if (!(r.paymentReceivedAt && r.payment?.status === "paid")) return json({ ok: false, error: "payment_not_confirmed", message: "Onboarding opens once your payment is confirmed." }, 403);
 
     const values: Record<string, string> = {};

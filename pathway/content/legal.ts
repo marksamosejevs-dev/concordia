@@ -7,10 +7,24 @@
 import { LEGAL_ENTITY, LICENCE, CONTACT } from "./site";
 import { ACCEPTED_MEANING, ASSESSMENT_INCLUDES, CALL_COVERS, DELIVERY_FULL } from "./assessment";
 import { REFUND_LINE, REFUND_WHY, CREDIT_LINE, CREDIT_MATH, CREDIT_WINDOW, CONTRACT_REVIEW_LINE } from "./commerce";
-import { ASSESSMENT_CREDIT } from "./products";
+import { RULES } from "./business-rules";
 
 export interface LegalSection { id: string; title: string; paras?: string[]; list?: string[]; after?: string[] }
-export interface LegalDoc { slug: string; title: string; summary: string; updated: string; sections: LegalSection[] }
+export interface LegalDoc { slug: string; title: string; summary: string; updated: string; sections: LegalSection[]; /** business rules used here that are not yet owner-confirmed */ pending?: (keyof typeof RULES)[] }
+
+/* Cancellation / renewal wording is generated from the business rule (owner decision pending — see RULES.cancellation). */
+const CXL = RULES.cancellation.value;
+const PRICE_TERMS = RULES.priceModel.value === "final_price_everywhere"
+  ? "Prices are in US dollars. Where Latvian VAT applies (consumers in the European Union, and businesses in Latvia), it is included in the price shown; no Latvian VAT arises for customers outside the EU, and EU businesses with a valid VAT number are invoiced under the reverse charge."
+  : "Prices are in US dollars and are shown before VAT. Where Latvian VAT applies (consumers in the European Union, and businesses in Latvia), it is added at checkout; no Latvian VAT arises for customers outside the EU, and EU businesses with a valid VAT number are invoiced under the reverse charge.";
+const PRICE_TERMS_FULL = PRICE_TERMS + " The exact total is shown before you pay.";
+const RENEWAL_TEXT = CXL.mode === "minimum_term"
+  ? `Your subscription renews automatically every month at USD 399. It has a minimum term of ${CXL.minimumMonths} monthly payments; after that it continues monthly on the same terms until cancelled. Before your first payment you confirm the recurring charge and the minimum term at checkout; we email a confirmation of the subscription and its terms.`
+  : "Your subscription renews automatically every month at USD 399 until you cancel. The 6-month shape is a recommended pathway, not a minimum term: you are not required to stay for six months. After six months it continues monthly on the same terms until cancelled. Before your first payment you confirm this recurring charge at checkout; we email a confirmation of the subscription and its terms.";
+const CANCELLATION_TEXT = (CXL.mode === "minimum_term"
+  ? `After the minimum term of ${CXL.minimumMonths} monthly payments, you can cancel online from your status page (“Manage subscription”) or by emailing us; cancellation takes effect at the end of the billing month already paid. `
+  : "You can cancel online from your status page (“Manage subscription”) or by emailing us. Cancellation takes effect at the end of the billing month already paid; you keep the service until then and no further payments are taken. ")
+  + "Except where mandatory law requires otherwise, payments for a month that has started are not refunded. Your statutory right of withdrawal (section 6) is not affected.";
 
 export const LEGAL_UPDATED = "7 October 2026";
 const E = LEGAL_ENTITY;
@@ -20,7 +34,7 @@ const contact = `${CONTACT.email}`;
 const NO_GUARANTEE = ["representation by Concordia Sports Agency or anyone else", "a club introduction, club interest or acceptance by a club", "a trial", "a contract, transfer or professional career", "a scholarship", "a visa or work permit"];
 
 const terms: LegalDoc = {
-  slug: "terms", title: "Terms of Service", updated: LEGAL_UPDATED,
+  slug: "terms", title: "Terms of Service", updated: LEGAL_UPDATED, pending: ["priceModel"],
   summary: "The general terms for using this website and the Concordia Soccer · European Pathway services. The Pathway Assessment Terms and the European Pathway Subscription Terms add the specific rules for each paid service.",
   sections: [
     { id: "who", title: "1. Who we are", paras: [`Concordia Soccer · European Pathway is a brand and service of ${who}. Concordia Soccer is a project of Concordia Sports Agency. Contact: ${contact}.`] },
@@ -41,7 +55,7 @@ const terms: LegalDoc = {
       "You confirm that the information you give us is accurate to the best of your knowledge and that you are entitled to share the materials you send (for example match footage, documents and links).",
       "You keep all rights in your materials. You allow us to use them only to provide the services you asked for. We do not publish your materials or share them with clubs. How we handle personal data is explained in our Privacy Policy.",
     ] },
-    { id: "payment", title: "9. Prices and payment", paras: ["Prices are in US dollars and are final prices: where Latvian VAT applies (customers in the European Union), it is included; no VAT is added for customers outside the EU. Payments are processed by Stripe; we never receive or store your full card details. Specific payment, refund and cancellation rules are in the Pathway Assessment Terms, the European Pathway Subscription Terms and the Refund & Withdrawal Policy."] },
+    { id: "payment", title: "9. Prices and payment", paras: [PRICE_TERMS_FULL + " Payments are processed by Stripe; we never receive or store your full card details. Specific payment, refund and cancellation rules are in the Pathway Assessment Terms, the European Pathway Subscription Terms and the Refund & Withdrawal Policy."] },
     { id: "consumers", title: "10. Consumer rights", paras: ["If you are a consumer, you have the rights given to you by mandatory consumer law — including, where applicable, a 14-day right of withdrawal for contracts concluded online (see the Refund & Withdrawal Policy). Nothing in our terms limits rights that cannot legally be limited."] },
     { id: "liability", title: "11. Liability", paras: [
       "We provide our services with reasonable care and skill. We are not liable for decisions you or others take, for the acts of clubs, agents, academies or authorities, or for losses that were not reasonably foreseeable.",
@@ -58,13 +72,13 @@ const terms: LegalDoc = {
 };
 
 const assessment: LegalDoc = {
-  slug: "assessment-terms", title: "Pathway Assessment Terms", updated: LEGAL_UPDATED,
+  slug: "assessment-terms", title: "Pathway Assessment Terms", updated: LEGAL_UPDATED, pending: ["priceModel"],
   summary: "The rules for the USD 249 Pathway Assessment: who can buy it, what it includes, when it starts, the 7-day target, the consultation call, refunds and the USD 150 credit.",
   sections: [
     { id: "application", title: "1. Free application and review", paras: ["Applying is free and does not oblige you to buy anything. We review each application and tell you by email whether we can offer a Pathway Assessment. Only an accepted applicant can buy it. Where the player is under 18, a parent or legal guardian applies with the player, buys the assessment and is our main contact."] },
     { id: "acceptance", title: "2. Acceptance", paras: [ACCEPTED_MEANING, "Acceptance does not mean that Concordia Sports Agency or anyone else has agreed to represent the player, that a club is interested, or that a trial, contract or transfer is available."] },
     { id: "includes", title: "3. What the Pathway Assessment includes", paras: ["Depending on the player’s profile and the materials available, the Pathway Assessment includes:"], list: ASSESSMENT_INCLUDES },
-    { id: "price", title: "4. Price and payment", paras: ["The Pathway Assessment costs USD 249, paid once, online, through Stripe’s secure checkout. It is a final price (see Prices in the Terms of Service). The contract is concluded when the payment is confirmed. A failed or incomplete payment does not open onboarding."] },
+    { id: "price", title: "4. Price and payment", paras: ["The Pathway Assessment costs USD 249, paid once, online, through Stripe’s secure checkout. Taxes are as set out under Prices in the Terms of Service. The contract is concluded when the payment is confirmed. A failed or incomplete payment does not open onboarding."] },
     { id: "materials", title: "5. Onboarding and materials", paras: ["After payment is confirmed we ask for the player’s football profile and materials. Video should be shared as links. Some items may not exist — for example no Transfermarkt profile, no highlight video or no current club; telling us an item is not available is not, in itself, a reason we cannot proceed.", "We review whether we have received the information and materials reasonably required to conduct the assessment. This is a professional judgement for each player; no single item decides it. If more is reasonably required, we tell you what is missing."] },
     { id: "start", title: "6. When the assessment starts — the 7-day target", paras: [DELIVERY_FULL, "The assessment starts on the date we confirm the materials are sufficient, provided payment has been received. We confirm the start date and the target completion date by email. The 7-day period does not begin merely because payment was made or the onboarding form was submitted."] },
     { id: "early-start", title: "7. Starting within the withdrawal period", paras: ["If you are a consumer you may ask us at checkout to start straight away, within your 14-day withdrawal period. If you don’t, we begin after that period ends. See the Refund & Withdrawal Policy for what happens if you withdraw after asking us to start."] },
@@ -77,14 +91,14 @@ const assessment: LegalDoc = {
 };
 
 const pathway: LegalDoc = {
-  slug: "pathway-terms", title: "European Pathway Subscription Terms", updated: LEGAL_UPDATED,
+  slug: "pathway-terms", title: "European Pathway Subscription Terms", updated: LEGAL_UPDATED, pending: ["cancellation", "priceModel"],
   summary: "The rules for European Pathway (USD 399 per month): what it is, monthly billing, the first-payment credit, renewal, cancellation and failed payments.",
   sections: [
     { id: "service", title: "1. The service", paras: ["European Pathway is an ongoing, advisory football career-management service, offered after a Pathway Assessment. It is designed as a 6-month European career pathway and is paid monthly. The monthly plan follows the player’s assessment and may include career strategy, match analysis, profile positioning, European market guidance, transfer-window planning, opportunity vetting and:", CONTRACT_REVIEW_LINE], after: ["European Pathway is not football-agent representation and does not involve contacting clubs on the player’s behalf (see Terms of Service, section 4)."] },
-    { id: "price", title: "2. Price and billing", paras: ["USD 399 per month, charged in advance each month to the payment method you provide, through Stripe. There is no six-month upfront payment. Prices are final prices (see Terms of Service, section 9)."] },
+    { id: "price", title: "2. Price and billing", paras: ["USD 399 per month, charged in advance each month to the payment method you provide, through Stripe. There is no six-month upfront payment. Taxes are as set out in the Terms of Service, section 9."] },
     { id: "credit", title: "3. First payment with the assessment credit", paras: [CREDIT_LINE, CREDIT_MATH, CREDIT_WINDOW] },
-    { id: "renewal", title: "4. Renewal", paras: ["Your subscription renews automatically every month at USD 399 until you cancel. The 6-month shape is a recommended pathway, not a minimum term: you are not required to stay for six months. After six months it continues monthly on the same terms until cancelled. Before your first payment you confirm this recurring charge at checkout; we email a confirmation of the subscription and its terms."] },
-    { id: "cancel", title: "5. Cancellation", paras: ["You can cancel online at any time from your status page (“Manage or cancel subscription”), or by emailing us. Cancellation takes effect at the end of the billing month already paid; you keep the service until then and no further payments are taken. Except where mandatory law requires otherwise, payments for a month that has started are not refunded."] },
+    { id: "renewal", title: "4. Renewal", paras: [RENEWAL_TEXT] },
+    { id: "cancel", title: "5. Cancellation", paras: [CANCELLATION_TEXT] },
     { id: "withdrawal", title: "6. Statutory withdrawal (consumers)", paras: ["Consumers have a 14-day right of withdrawal from the subscription contract. If you asked us to start within that period and then withdraw, you pay a proportionate amount for the service provided until you told us. See the Refund & Withdrawal Policy."] },
     { id: "failed", title: "7. Failed payments", paras: ["If a monthly payment fails, we and Stripe will notify you and retry. If payment is not made within a reasonable time after the reminders, we may pause the service and then end the subscription. Ending the subscription for non-payment does not remove amounts already due."] },
     { id: "ending", title: "8. Ending by us", paras: ["We may end the subscription with 30 days’ notice, or immediately for serious breach (for example abusive behaviour or providing false information). If we end it without fault on your side, we refund any amount paid for the period after the end date.", "If the player enters a football-agent representation agreement with Concordia Sports Agency, European Pathway ends on the date that agreement starts; the subscription is cancelled and any amount paid for the period after that date is refunded."] },
@@ -93,7 +107,7 @@ const pathway: LegalDoc = {
 };
 
 const refunds: LegalDoc = {
-  slug: "refunds", title: "Refund & Withdrawal Policy", updated: LEGAL_UPDATED,
+  slug: "refunds", title: "Refund & Withdrawal Policy", updated: LEGAL_UPDATED, pending: ["cancellation"],
   summary: "When fees are refundable, your statutory 14-day right of withdrawal as a consumer, how to withdraw, and how cancellations work.",
   sections: [
     { id: "assessment", title: "1. Pathway Assessment (USD 249)", paras: [REFUND_LINE, REFUND_WHY] },
@@ -102,13 +116,13 @@ const refunds: LegalDoc = {
       "We apply this right to all consumers, wherever they live.",
     ] },
     { id: "early", title: "3. If you asked us to start within the 14 days", paras: [
-      "At checkout you may expressly ask us to start straight away. If you do, and then withdraw within the 14 days, you pay an amount proportionate to what we provided until you told us you were withdrawing, compared with the full service; we refund the rest within 14 days.",
+      "At checkout — or later from your status page — you may expressly ask us to start straight away. If you do, and then withdraw within the 14 days, you pay an amount proportionate to what we provided until you told us you were withdrawing, compared with the full service; we refund the rest within 14 days.",
       "Once a service has been fully provided at your express request — for the Pathway Assessment, when the assessment has been delivered and the consultation call has taken place — the right of withdrawal no longer applies to it.",
-      "If you did not ask us to start early, we begin only after the 14 days have passed, and a withdrawal within that time is refunded in full.",
+      "If you did not ask us to start early, we may still check your materials, but the assessment itself begins only after the 14 days have passed, and a withdrawal within that time is refunded in full.",
     ] },
-    { id: "how", title: "4. How to withdraw", paras: [`Send us a clear statement — for example by email to ${contact} — or use the model form below. To meet the deadline it is enough to send your message before the 14 days have passed. We refund using the same payment method, without fees for you.`] },
+    { id: "how", title: "4. How to withdraw", paras: [`Use “Withdraw from contract here” on your status page (the link in our emails) — we confirm receipt by email with the date and time. You can also send us a clear statement, for example by email to ${contact}, or use the model form below. To meet the deadline it is enough to send your message before the 14 days have passed. We refund using the same payment method, without fees for you.`] },
     { id: "form", title: "5. Model withdrawal form", paras: [`To: ${E.name}, ${E.address.join(", ")}, ${contact}`, "I/We (*) hereby give notice that I/We (*) withdraw from my/our (*) contract for the provision of the following service (*): …", "Ordered on (*) / received on (*): …", "Name of consumer(s): … · Address of consumer(s): … · Application reference: …", "Signature of consumer(s) (only if this form is notified on paper): … · Date: …", "(*) Delete as appropriate."] },
-    { id: "pathway", title: "6. European Pathway cancellation", paras: ["You can cancel European Pathway online at any time; cancellation takes effect at the end of the billing month already paid and no further payments are taken. Except where mandatory law requires otherwise, a month that has started is not refunded. See the European Pathway Subscription Terms."] },
+    { id: "pathway", title: "6. European Pathway cancellation", paras: [CANCELLATION_TEXT + " See the European Pathway Subscription Terms."] },
     { id: "our-side", title: "7. When we refund regardless", paras: ["If we cannot provide a paid service at all for reasons on our side, or we end a subscription without fault on your side, we refund what you paid for the part not provided."] },
     { id: "credit", title: "8. The USD 150 assessment credit and refunds", paras: ["The credit is not cash and cannot be refunded or paid out. If the assessment payment is refunded or reversed, any unused credit lapses (see Pathway Assessment Terms, section 11)."] },
     { id: "chargebacks", title: "9. Chargebacks", paras: ["Please contact us before disputing a payment with your bank — most questions are resolved quickly. A disputed assessment payment pauses the assessment and voids any unused credit until the dispute is resolved."] },
@@ -174,7 +188,7 @@ const cookies: LegalDoc = {
 };
 
 const minors: LegalDoc = {
-  slug: "minors", title: "How we work with minors", updated: LEGAL_UPDATED,
+  slug: "minors", title: "How we work with minors", updated: LEGAL_UPDATED, pending: ["minimumAge"],
   summary: "Our safeguards for players under 18 and the role of parents and guardians.",
   sections: [
     { id: "age", title: "1. Minimum age", paras: ["We offer Pathway Assessments to players aged 16 and over. At younger ages, development, minutes and enjoyment matter most."] },
@@ -206,4 +220,3 @@ const company: LegalDoc = {
 
 export const LEGAL_DOCS: LegalDoc[] = [terms, assessment, pathway, refunds, privacy, cookies, minors, complaints, company];
 export const legalDoc = (slug: string) => LEGAL_DOCS.find((d) => d.slug === slug);
-export const CREDIT_DAYS = ASSESSMENT_CREDIT.days;

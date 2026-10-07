@@ -3,12 +3,11 @@ import Image from "next/image";
 import { ParentsPlayers } from "./ParentsPlayers";
 import { VideoTestimonials } from "./VideoTestimonials";
 import { FlowLine } from "@/components/funnel/FlowLine";
-import { ACCEPTED_MEANING } from "@/content/assessment";
+import { ACCEPTED_MEANING, RECEIVE_SHORT } from "@/content/assessment";
 import { PARENTS_SECTION_PHOTO } from "@/content/people-assets";
 import { testimonials } from "@/content/testimonials";
-import { activeSample } from "@/content/sample-report";
 import { product } from "@/content/products";
-import { PATHWAY_TERMS, ASSESSMENT_POINTS, SERVICES_TICKER } from "@/content/pathway";
+import { SERVICES_TICKER } from "@/content/pathway";
 import { CTA } from "@/content/site";
 import { usd } from "@/lib/format";
 import { isPublic } from "@/lib/evidence";
@@ -49,32 +48,6 @@ export function ServicesTicker() {
   );
 }
 
-/** The $249 product as an object you can pick up. */
-export function SampleReportCard({ className = "" }: { className?: string }) {
-  const s = activeSample;
-  return (
-    <Link href="/assessment#sample" className={`group relative block w-full max-w-[380px] ${className}`} aria-label="Open the sample assessment">
-      <div className="absolute inset-0 translate-x-5 translate-y-5 rotate-3 rounded-[4px] bg-white/70 shadow-lg transition-transform duration-700 group-hover:translate-x-9 group-hover:rotate-6" aria-hidden />
-      <div className="relative aspect-[1/1.3] w-full overflow-hidden rounded-[4px] bg-white p-6 text-ink shadow-[0_40px_80px_-25px_rgba(13,27,54,0.45)] transition-transform duration-700 [transform:perspective(1400px)_rotateY(-12deg)_rotateX(4deg)] group-hover:[transform:perspective(1400px)_rotateY(-2deg)_rotateX(1deg)_translateY(-6px)] sm:p-7">
-        <div className="sample-mark">SAMPLE</div>
-        <div className="flex items-center justify-between text-[0.62rem] text-slate"><span>Player Pathway Assessment</span><span>p. 2 of 8</span></div>
-        <p className="display mt-5 text-[2rem] leading-none">Level band</p>
-        <p className="mt-2 text-[0.8rem] font-semibold">{s.levelBand.range}</p>
-        <div className="mt-5 space-y-2">
-          {["Current level evidence", "Technical / tactical", "Athletic profile", "Market access", "Trajectory"].map((k, i) => (
-            <div key={k}><p className="text-[0.62rem] text-ink/70">{k}</p><div className="mt-1 h-1.5 bg-ink/10"><div className="h-full origin-left bg-ink transition-transform duration-700 group-hover:scale-x-110" style={{ width: `${[58, 64, 78, 70, 55][i]}%` }} /></div></div>
-          ))}
-        </div>
-        <p className="mt-5 line-clamp-4 text-[0.66rem] leading-relaxed text-ink/75">{s.levelBand.reasoning[0]} {s.levelBand.reasoning[1]}</p>
-        <div className="absolute inset-x-6 bottom-5 flex items-center justify-between border-t border-ink/15 pt-3 sm:inset-x-7">
-          <span className="text-[0.6rem] text-slate">Illustrative · fictional player</span>
-          <span className="display bg-route px-1.5 text-[0.9rem]">Wait →</span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
 /** Start here — the $249 assessment. */
 export function StartHere() {
   return (
@@ -86,9 +59,6 @@ export function StartHere() {
             <p className="display text-[clamp(4.5rem,10vw,7.5rem)] leading-[0.8]">{usd(A().price)}</p>
             <p className="pb-1 text-[1rem] font-semibold leading-snug">Player Pathway Assessment<br /><span className="font-normal text-ink/65">one time · within 7 days once your materials are confirmed</span></p>
           </div>
-          <ul className="mt-8 flex max-w-xl flex-wrap gap-2">
-            {ASSESSMENT_POINTS.map((p) => <li key={p} className="rounded-full border border-ink/15 bg-white px-3.5 py-2 text-[0.9rem] font-semibold transition-colors hover:border-ink hover:bg-route">{p}</li>)}
-          </ul>
           <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-start">
             <div className="flex flex-col items-start gap-2">
               <Link href="/apply" className="btn btn-ink" data-magnetic data-cta="apply">{CTA.apply} <span className="arrow" aria-hidden>→</span></Link>
@@ -97,7 +67,11 @@ export function StartHere() {
             <Link href="/assessment" className="btn btn-ghost">What you receive <span className="arrow" aria-hidden>→</span></Link>
           </div>
         </div>
-        <div className="flex justify-center lg:justify-end"><SampleReportCard /></div>
+        <div className="border-2 border-ink bg-white p-6 sm:p-8">
+          <p className="text-[0.95rem] font-semibold text-ink/60">What you receive</p>
+          <ul className="mt-4 space-y-2.5">{RECEIVE_SHORT.map((r) => <li key={r} className="flex gap-3 text-[0.98rem]"><span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 bg-ink" aria-hidden />{r}</li>)}</ul>
+          <p className="mt-6 border-t border-ink/10 pt-4 text-[0.88rem] text-ink/65">Prepared by our team after reviewing your football profile and materials, then explained on a call of up to 60 minutes.</p>
+        </div>
       </div>
     </section>
   );
@@ -140,35 +114,20 @@ export function HowItWorksStrip() {
   );
 }
 
-/** Final offer — the two steps, monthly payment front and centre. */
+/** Final CTA — compact: one clear next step, both prices restated in a line. */
 export function FinalOffer() {
   return (
-    <section className="on-white relative overflow-hidden py-[clamp(4.5rem,10vw,7.5rem)]" aria-labelledby="final-title" data-hide-sticky>
-      <div className="wrap">
-        <h2 id="final-title" className="display max-w-[14ch] text-[clamp(3rem,6.4vw,6.9rem)] leading-[0.9]">Big ambition. <span className="bg-route px-2 box-decoration-clone">Honest advice.</span></h2>
-        <div className="mt-12 grid items-stretch gap-4 lg:grid-cols-[1fr_auto_1.15fr]">
-          <div className="flex flex-col rounded-[14px] border-2 border-ink p-6 transition-transform duration-500 hover:-translate-y-1 sm:p-8">
-            <p className="text-[1rem] font-semibold text-ink/60">Start</p>
-            <p className="display mt-1 text-[clamp(1.8rem,3vw,2.6rem)] leading-none">Player Pathway Assessment</p>
-            <p className="display mt-6 text-[clamp(3.5rem,7vw,5.5rem)] leading-[0.85]">{usd(A().price)}</p>
-            <p className="mt-1 text-[0.95rem] text-ink/60">one time</p>
-            <p className="mt-5 text-ink/75">{ASSESSMENT_POINTS.join(" · ")}</p>
-            <div className="mt-auto pt-8">
-              <Link href="/apply" className="btn btn-ink" data-magnetic data-cta="apply">{CTA.apply} <span className="arrow" aria-hidden>→</span></Link>
-              <p className="mt-2 text-[0.78rem] text-ink/60">{CTA.micro}</p>
-            </div>
-          </div>
-          <span className="display grid place-items-center text-[2.5rem] leading-none lg:px-2" aria-hidden><span className="rotate-90 lg:rotate-0">→</span></span>
-          <div className="on-route flex flex-col rounded-[14px] p-6 transition-transform duration-500 hover:-translate-y-1 sm:p-8">
-            <p className="text-[1rem] font-semibold text-ink/70">Continue</p>
-            <p className="display mt-1 text-[clamp(1.8rem,3vw,2.6rem)] leading-none">6-month European Pathway</p>
-            <p className="display mt-6 text-[clamp(3.5rem,7vw,5.5rem)] leading-[0.85]">{usd(P().price)}<span className="text-[0.35em]"> per month</span></p>
-            <ul className="mt-5 flex flex-wrap gap-2">{PATHWAY_TERMS.points.map((p) => <li key={p} className="rounded-full bg-ink px-3 py-1.5 text-[0.85rem] font-semibold text-white">{p}</li>)}</ul>
-            <p className="mt-3 text-[0.82rem] text-ink/70">You start with one month. <Link href={PATHWAY_TERMS.termsHref} className="underline underline-offset-2">{PATHWAY_TERMS.footnote}</Link></p>
-            <div className="mt-auto pt-8"><Link href="/european-pathway" className="btn btn-ink" data-magnetic>{CTA.pathway} <span className="arrow" aria-hidden>→</span></Link></div>
-          </div>
+    <section className="on-white relative overflow-hidden py-[clamp(4rem,9vw,6.5rem)]" aria-labelledby="final-title" data-hide-sticky>
+      <div className="wrap grid items-end gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+        <div>
+          <h2 id="final-title" className="display max-w-[14ch] text-[clamp(3rem,6.4vw,6.4rem)] leading-[0.9]">Big ambition. <span className="bg-route px-2 box-decoration-clone">Honest advice.</span></h2>
+          <p className="lede mt-6 max-w-xl text-ink/75">Apply free. If you’re accepted, start with the {usd(A().price)} Player Pathway Assessment. Continue with European Pathway at {usd(P().price)}/month only if it makes sense for you.</p>
         </div>
-        <p className="mt-8 text-[0.95rem] text-ink/70">Questions first? <Link href="/faq" className="font-semibold underline underline-offset-4">Straight answers</Link> · <Link href="/pricing" className="font-semibold underline underline-offset-4">Pricing details</Link></p>
+        <div className="flex flex-col items-start gap-3 lg:items-end">
+          <Link href="/apply" className="btn btn-ink" data-magnetic data-cta="apply">{CTA.apply} <span className="arrow" aria-hidden>→</span></Link>
+          <p className="text-[0.85rem] text-ink/60">Free application · about 10 minutes</p>
+          <p className="text-[0.9rem] text-ink/70"><Link href="/pricing" className="font-semibold underline underline-offset-4">Pricing details</Link> · <Link href="/faq" className="font-semibold underline underline-offset-4">Straight answers</Link></p>
+        </div>
       </div>
     </section>
   );

@@ -4,6 +4,7 @@
  * are computed from server data only. Payment fields are written ONLY by the verified Stripe webhook.
  */
 import crypto from "node:crypto";
+import { parsePlayerToken } from "./tokens";
 import { store, update } from "./store";
 import type { ApplicationData, TriageResult } from "../applications/schema";
 import type { Attribution } from "../attribution";
@@ -17,6 +18,8 @@ export interface Note { at: string; text: string }
 export interface TimelineEvent { at: string; type: string; detail?: string }
 
 export interface PaymentInfo {
+  /** amount the checkout was created for (cents) — the webhook verifies the paid amount against it */
+  expectedAmount?: number;
   status: "checkout_open" | "paid" | "failed" | "expired" | "refunded" | "disputed";
   checkoutSessionId?: string; paymentIntentId?: string; customerId?: string; invoiceId?: string;
   amount?: number; currency?: string; paidAt?: string;
@@ -36,10 +39,17 @@ export interface SubscriptionInfo {
   consents?: { key: string; at: string; version: string }[];
 }
 
-export interface CreditInfo { amountCents: number; couponId?: string; expiresAt?: string; usedAt?: string; voidedAt?: string; voidReason?: string }
+export interface CreditInfo { amountCents: number; couponId?: string; issuedAt?: string; /** only set if a commercial window is configured */ expiresAt?: string; usedAt?: string; voidedAt?: string; voidReason?: string }
 
 export interface ApplicationRecord extends AssessmentRecord {
   id: string;
+  /** bumped when the admin re-issues the player link (revokes older links) */
+  linkVersion?: number;
+  /** random token written at creation to verify ID ownership */
+  claim?: string;
+  /** set when personal data was erased on request (GDPR Art. 17); only accounting references remain */
+  erasedAt?: string;
+  withdrawals?: { contract: "assessment" | "pathway"; at: string; statement: string }[];
   createdAt: string;
   updatedAt: string;
   data: ApplicationData;
@@ -94,7 +104,11 @@ export async function createApplication(input: Omit<ApplicationRecord, "id" | "c
   for (let i = 0; ; i++, n++) {
     if (i >= 200) throw new Error("Could not allocate an application ID");
     rec.id = `CS-${n}`;
-    if (await kv.setJSON(KEY(rec.id), rec, { onlyIfNew: true })) break;
+    rec.claim = crypto.randomUUID();
+    if (!(await kv.setJSON(KEY(rec.id), rec, { onlyIfNew: true }))) continue;
+    // Defence in depth: confirm the stored record is ours (guards against a store without atomic conditional writes).
+    await new Promise((res) => setTimeout(res, 25));
+    if ((await kv.getJSON<ApplicationRecord>(KEY(rec.id)))?.data.claim === rec.claim) break;
   }
   await bumpCounter(n + 1);
   const ek = emailKey(input.data.email);
@@ -104,6 +118,14 @@ export async function createApplication(input: Omit<ApplicationRecord, "id" | "c
     if (await kv.setJSON(ek, { ids }, cur ? { etag: cur.etag } : { onlyIfNew: true })) break;
   }
   return rec;
+}
+
+/** Loads the application a signed player link points to; null if the signature is wrong OR the link was revoked. */
+export async function recordFromToken(t: string | null | undefined): Promise<ApplicationRecord | null> {
+  const p = parsePlayerToken(t);
+  if (!p) return null;
+  const r = await getApplication(p.id);
+  return r && (r.linkVersion ?? 1) === p.version ? r : null;
 }
 
 export async function getApplication(id: string): Promise<ApplicationRecord | null> {
@@ -117,6 +139,40 @@ export async function updateApplication(id: string, fn: (r: ApplicationRecord) =
     if (event) next.timeline.push({ at: next.updatedAt, ...event });
     return next;
   });
+}
+
+/**
+ * GDPR erasure: removes uploaded files, the duplicate-email index entry and all personal data from the record.
+ * Keeps a tombstone with the reference, timeline and payment/invoice identifiers that accounting law requires.
+ */
+export async function eraseApplication(id: string): Promise<ApplicationRecord> {
+  const kv = store();
+  const r = await getApplication(id);
+  if (!r) throw new Error(`Not found: ${id}`);
+  for (const key of await kv.list(`files/${id}/`)) await kv.delete(key);
+  const ek = emailKey(r.data.email);
+  for (let i = 0; i < 8; i++) {
+    const cur = await kv.getJSON<{ ids: string[] }>(ek);
+    if (!cur) break;
+    if (await kv.setJSON(ek, { ids: cur.data.ids.filter((x) => x !== id) }, { etag: cur.etag })) break;
+  }
+  const at = now();
+  return update<ApplicationRecord>(KEY(id), (x) => {
+    const p = x.payment;
+    return {
+      ...x,
+      data: { ...x.data, fullName: "[erased]", email: "", dateOfBirth: "", nationality: "", residence: "", whatsapp: undefined, guardian: undefined, previousClubs: undefined, offers: undefined, lookingFor: undefined, fullMatchUrl: undefined, highlightsUrl: undefined, transfermarktUrl: undefined, instagram: undefined, ancestry: undefined, currentClub: undefined, passports: [] },
+      contact: { name: "[erased]", firstName: "", emails: [] }, attribution: {}, materials: [], notes: [], emails: [], reportUrl: undefined, bookingUrl: undefined, withdrawals: x.withdrawals?.map((w) => ({ ...w, statement: "" })),
+      payment: p ? { status: p.status, checkoutSessionId: p.checkoutSessionId, paymentIntentId: p.paymentIntentId, invoiceId: p.invoiceId, customerId: p.customerId, amount: p.amount, currency: p.currency, paidAt: p.paidAt, taxCode: p.taxCode, vatAmount: p.vatAmount, declaredCountry: p.declaredCountry } : undefined,
+      erasedAt: at, linkVersion: (x.linkVersion ?? 1) + 1, updatedAt: at, timeline: [...x.timeline, { at, type: "personal_data_erased" }],
+    };
+  });
+}
+
+/** Full JSON export of every application (admin backup / migration / data-subject access). */
+export async function exportAll(): Promise<{ exportedAt: string; count: number; applications: ApplicationRecord[] }> {
+  const applications = await listApplications();
+  return { exportedAt: now(), count: applications.length, applications };
 }
 
 export async function listApplications(): Promise<ApplicationRecord[]> {

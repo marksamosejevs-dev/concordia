@@ -21,7 +21,8 @@ export const env = {
   /** Concordia inbox(es) for internal notifications — comma-separated. */
   internalEmail: v("PATHWAY_INTERNAL_EMAIL"),
   emailFrom: v("EMAIL_FROM"),
-  emailReplyTo: v("EMAIL_REPLY_TO") ?? "mail@concordia.football",
+  /** A real, monitored Concordia mailbox for applicant replies — no default (owner to set). */
+  emailReplyTo: v("EMAIL_REPLY_TO"),
   resendKey: v("RESEND_API_KEY"),
   stripeSecret: v("STRIPE_SECRET_KEY"),
   stripeWebhookSecret: v("STRIPE_WEBHOOK_SECRET"),
@@ -38,7 +39,7 @@ export function siteOrigin(req?: Request): string {
   return "http://localhost:3100";
 }
 
-export type Integration = "storage" | "secret" | "admin" | "internalEmail" | "email" | "stripe" | "stripeWebhook" | "booking";
+export type Integration = "storage" | "secret" | "admin" | "internalEmail" | "email" | "replyTo" | "stripe" | "stripeWebhook" | "booking";
 /** Configuration status — names only, never values. Shown in the admin dashboard. */
 export function configStatus(): Record<Integration, { ok: boolean; detail: string }> {
   return {
@@ -47,6 +48,7 @@ export function configStatus(): Record<Integration, { ok: boolean; detail: strin
     admin: { ok: Boolean(env.adminPassword && env.adminPassword.length >= 12), detail: "PATHWAY_ADMIN_PASSWORD (≥ 12 chars)" },
     internalEmail: { ok: Boolean(env.internalEmail), detail: "PATHWAY_INTERNAL_EMAIL" },
     email: { ok: Boolean(env.resendKey && env.emailFrom) || TEST_TRANSPORTS, detail: env.resendKey ? "Resend" : TEST_TRANSPORTS ? "Outbox (test only)" : "RESEND_API_KEY + EMAIL_FROM" },
+    replyTo: { ok: Boolean(env.emailReplyTo), detail: "EMAIL_REPLY_TO (monitored mailbox for applicant replies)" },
     stripe: { ok: Boolean(env.stripeSecret), detail: env.stripeSecret ? (env.stripeSecret.startsWith("sk_live") || env.stripeSecret.startsWith("rk_live") ? "Stripe LIVE" : "Stripe TEST mode") : "STRIPE_SECRET_KEY" },
     stripeWebhook: { ok: Boolean(env.stripeWebhookSecret), detail: "STRIPE_WEBHOOK_SECRET" },
     booking: { ok: Boolean(env.bookingUrl), detail: "NEXT_PUBLIC_BOOKING_URL (or a per-player link set in admin)" },

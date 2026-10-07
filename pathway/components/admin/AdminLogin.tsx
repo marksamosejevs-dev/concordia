@@ -10,7 +10,7 @@ export function AdminLogin() {
     const r = await fetch("/api/admin/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: pw }) }).catch(() => null);
     const j = await r?.json().catch(() => ({}));
     setBusy(false);
-    if (r?.ok) router.refresh(); else setErr(j?.error === "not_configured" ? "Admin access is not configured (PATHWAY_ADMIN_PASSWORD / PATHWAY_SECRET)." : "Incorrect password.");
+    if (r?.ok) router.refresh(); else setErr(j?.error === "not_configured" ? "Admin access is not configured (PATHWAY_ADMIN_PASSWORD / PATHWAY_SECRET)." : j?.error === "too_many_attempts" ? "Too many failed attempts — try again in 15 minutes." : "Incorrect password.");
   };
   return (
     <form onSubmit={go} className="mx-auto max-w-md border border-white/15 bg-ink-deep p-8">

@@ -1,5 +1,6 @@
-import { verifyPlayerToken, playerToken } from "@/lib/server/tokens";
-import { getApplication, updateApplication, LEGAL_VERSION } from "@/lib/server/records";
+import { creditUsable } from "@/lib/credit";
+import { playerToken } from "@/lib/server/tokens";
+import { recordFromToken, updateApplication, LEGAL_VERSION } from "@/lib/server/records";
 import { createPathwayCheckout, setCustomerInvoiceFooter, stripeConfigured } from "@/lib/server/payments";
 import { taxTreatment, normaliseVatId, isEU } from "@/lib/tax";
 import { checkVies } from "@/lib/server/vies";
@@ -12,10 +13,9 @@ export async function POST(req: Request) {
   let b: Record<string, unknown>;
   try { b = await req.json(); } catch { return json({ ok: false, error: "invalid_json" }, 400); }
   try {
-    const id = verifyPlayerToken(String(b.t ?? ""));
-    if (!id) return json({ ok: false, error: "invalid_link" }, 404);
-    const r = await getApplication(id);
-    if (!r) return json({ ok: false, error: "not_found" }, 404);
+    const r = await recordFromToken(String(b.t ?? ""));
+    if (!r) return json({ ok: false, error: "invalid_link" }, 404);
+    const id = r.id;
     if (!r.pathwayOfferedAt) return json({ ok: false, error: "not_eligible", message: "European Pathway is offered after your Pathway Assessment and call." }, 409);
     if (r.subscription?.subscriptionId && r.subscription.status !== "cancelled") return json({ ok: false, error: "already_subscribed" }, 409);
     const c = (b.consents ?? {}) as Record<string, unknown>;
@@ -33,11 +33,11 @@ export async function POST(req: Request) {
     const vies = vatId && isEU(country) && country !== "LV" ? await checkVies(vatId) : { checked: false, valid: false };
     const tax = taxTreatment({ country, buyerType, vatId, vatIdValid: vies.valid });
     const now = new Date().toISOString();
-    // $150 credit: once, tied to THIS paid assessment, unexpired, not voided by a refund/dispute.
-    const applyCredit = Boolean(r.payment?.status === "paid" && r.credit && !r.credit.usedAt && !r.credit.voidedAt && r.credit.expiresAt && r.credit.expiresAt > now);
+    // $150 credit: once, tied to THIS paid assessment, not voided by a refund/dispute (expiry only if configured).
+    const applyCredit = r.payment?.status === "paid" && creditUsable(r.credit, now);
     const customerId = r.payment?.customerId;
     if (customerId) { try { await setCustomerInvoiceFooter(customerId, tax); } catch { /* non-blocking */ } }
-    const session = await createPathwayCheckout({ appId: id, email: r.payment?.payerEmail ?? r.contact.emails[0], customerId, origin: siteOrigin(req), token: playerToken(id), applyCredit, tax, metadata: { buyer_type: buyerType, declared_country: country } });
+    const session = await createPathwayCheckout({ appId: id, email: r.payment?.payerEmail ?? r.contact.emails[0], customerId, origin: siteOrigin(req), token: playerToken(id, r.linkVersion ?? 1), applyCredit, tax, metadata: { buyer_type: buyerType, declared_country: country } });
     await updateApplication(id, (x) => {
       x.subscription = { ...(x.subscription ?? {}), status: "checkout_open", checkoutSessionId: session.id, consents: [
         { key: "pathway_subscription_terms", at: now, version: LEGAL_VERSION }, { key: "recurring_monthly_charge_authorisation", at: now, version: LEGAL_VERSION }, { key: "not_representation_no_guarantee", at: now, version: LEGAL_VERSION },

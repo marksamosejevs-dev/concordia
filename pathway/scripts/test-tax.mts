@@ -1,5 +1,7 @@
 /** Unit tests for the VAT / tax treatment matrix. Run: npm run test:tax */
-import { taxTreatment, vatBreakdown, normaliseVatId, LV_VAT_RATE, PRICE_TAX_NOTE } from "../lib/tax.ts";
+import { creditUsable, creditExpiry } from "../lib/credit.ts";
+import { ASSESSMENT_CREDIT } from "../content/products.ts";
+import { taxTreatment, vatBreakdown, normaliseVatId, chargeAmount, LV_VAT_RATE, PRICE_TAX_NOTE } from "../lib/tax.ts";
 
 let fail = 0;
 const t = (name: string, ok: boolean, info = "") => { console.log(`${ok ? "PASS" : "FAIL"} — ${name}${info ? `  (${info})` : ""}`); if (!ok) fail++; };
@@ -50,6 +52,18 @@ t("normaliseVatId rejects too-short numbers", normaliseVatId("DE12") === null);
 t("normaliseVatId empty → null", normaliseVatId("") === null && normaliseVatId(undefined) === null);
 
 t("Public tax note never claims \"0% VAT\"", !/0\s*%/.test(PRICE_TAX_NOTE));
+
+// Price model (owner decision) — both supported
+t("Final-price model: EU consumer charged $249", chargeAmount(24900, lv, "final_price_everywhere") === 24900);
+t("Base+VAT model: EU consumer charged $249 + 21% = $301.29", LV_VAT_RATE !== 0.21 || chargeAmount(24900, lv, "base_price_plus_vat") === 30129);
+t("Base+VAT model: US consumer still $249 (no Latvian VAT)", chargeAmount(24900, us, "base_price_plus_vat") === 24900);
+t("Base+VAT model: $399 EU consumer → $482.79", LV_VAT_RATE !== 0.21 || chargeAmount(39900, de, "base_price_plus_vat") === 48279);
+// $150 credit — no expiry (owner), single use, voided by refund/dispute
+t("Credit has no expiry by default", ASSESSMENT_CREDIT.expiryDays === null && creditExpiry("2026-10-01T00:00:00Z") === undefined);
+t("Credit usable years later when no window is configured", creditUsable({}, "2030-01-01T00:00:00Z"));
+t("Credit not usable once used", !creditUsable({ usedAt: "2026-10-10" }, "2026-10-11"));
+t("Credit not usable once voided (refund/dispute)", !creditUsable({ voidedAt: "2026-10-10" }, "2026-10-11"));
+t("Configurable window still works if set later (30 days)", creditExpiry("2026-10-01T00:00:00.000Z", 30) === "2026-10-31T00:00:00.000Z" && !creditUsable({ expiresAt: "2026-10-31T00:00:00.000Z" }, "2026-11-01T00:00:00.000Z"));
 
 console.log(fail ? `\n${fail} FAILED` : "\nAll tax tests passed.");
 process.exit(fail ? 1 : 0);

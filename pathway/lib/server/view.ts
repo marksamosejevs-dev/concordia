@@ -1,19 +1,26 @@
+import { creditUsable } from "@/lib/credit";
 /** What a player/parent may see through their signed link — never internal notes, triage or other applicants. */
 import type { ApplicationRecord } from "./records";
 import { currentState, assessmentDeadline, STATE_LABEL } from "../assessment-status";
 import { env } from "./env";
+import { withdrawalOpen } from "./withdrawal";
 
 export function playerView(r: ApplicationRecord) {
-  const state = currentState(r);
-  const d = assessmentDeadline(r);
   const now = new Date().toISOString();
-  const credit = r.credit && !r.credit.usedAt && !r.credit.voidedAt && r.credit.expiresAt && r.credit.expiresAt > now ? { amount: r.credit.amountCents / 100, expiresAt: r.credit.expiresAt } : null;
+  const state = currentState(r, now);
+  const d = assessmentDeadline(r, now);
+  const credit = creditUsable(r.credit, now) ? { amount: r.credit!.amountCents / 100, expiresAt: r.credit!.expiresAt ?? null } : null;
   return {
     id: r.id, state, label: STATE_LABEL[state], firstName: r.contact.firstName, playerName: r.data.fullName, isMinor: r.isMinor,
     guardianName: r.data.guardian?.name, payerEmail: r.contact.emails[0], residence: r.data.residence,
     accepted: Boolean(r.acceptedAt), notAccepted: Boolean(r.notAcceptedAt),
     paymentStatus: r.payment?.status ?? null, paid: r.payment?.status === "paid" && Boolean(r.paymentReceivedAt),
     earlyStartRequested: r.payment?.earlyStartRequested, withdrawalEndsAt: r.payment?.withdrawalEndsAt,
+    /** performance not yet permitted → the customer may ask us to start now */
+    canRequestEarlyStart: Boolean(r.paymentReceivedAt && !r.withdrawnAt && r.performancePermittedAt && r.performancePermittedAt > now),
+    performancePermittedAt: r.performancePermittedAt,
+    withdraw: { assessment: withdrawalOpen(r, "assessment", now), pathway: withdrawalOpen(r, "pathway", now) },
+    withdrawals: (r.withdrawals ?? []).map((w) => ({ contract: w.contract, at: w.at })),
     materialsCount: r.materials.length, lastMaterialsAt: r.materialsSubmittedAt,
     additionalInfoItems: state === "additional_information_required" ? r.additionalInfoItems ?? [] : [],
     deadline: d.started ? { startDate: d.startDate, targetDate: d.targetDate } : null,

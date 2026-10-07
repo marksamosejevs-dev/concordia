@@ -6,7 +6,7 @@ import { ACCEPTED_MEANING, ASSESSMENT_INCLUDES, DELIVERY } from "@/content/asses
 import { REFUND_LINE, CREDIT_LINE } from "@/content/commerce";
 import { track } from "@/lib/analytics";
 import { Loading, InvalidLink, LoadError } from "@/components/funnel/LinkStates";
-import { CountrySelect, Check, L, SellerNote, BuyerType, inputCls, guessCountry } from "./CheckoutParts";
+import { CountrySelect, Check, L, SellerNote, BuyerType, inputCls, guessCountry, TaxLine } from "./CheckoutParts";
 
 /** $249 Pathway Assessment checkout — accepted applicants only; payment happens on Stripe’s hosted page. */
 export function CheckoutForm() {
@@ -66,6 +66,7 @@ export function CheckoutForm() {
           <label className="text-[0.92rem] font-semibold">Email for receipt <span className="text-route" aria-hidden>*</span><input className={inputCls} type="email" inputMode="email" autoComplete="email" value={payerEmail} onChange={(e) => setPayerEmail(e.target.value)} aria-invalid={Boolean(errors.payerEmail)} /></label>
           <div className="sm:col-span-2"><CountrySelect value={country} onChange={setCountry} error={errors.country} /></div>
           <div className="sm:col-span-2"><BuyerType value={buyerType} onChange={setBuyerType} businessName={businessName} vatId={vatId} setBusinessName={setBusinessName} setVatId={setVatId} errors={errors} /></div>
+          <div className="sm:col-span-2"><TaxLine baseCents={24900} country={country} buyerType={buyerType} vatId={vatId} /></div>
           {view.isMinor && <div className="sm:col-span-2"><Check checked={guardian} onChange={setGuardian} error={errors.isGuardianPayer} required>I am {view.playerName}’s parent or legal guardian and I am buying the Pathway Assessment for them.</Check></div>}
         </fieldset>
 
@@ -79,7 +80,7 @@ export function CheckoutForm() {
           <Check checked={c.terms} onChange={(v) => set("terms", v)} error={errors.terms} required>I agree to the <L href="/legal/assessment-terms">Pathway Assessment Terms</L> and the <L href="/legal/terms">Terms of Service</L>, and I have read the <L href="/legal/refunds">Refund &amp; Withdrawal Policy</L> and the <L href="/legal/privacy">Privacy Policy</L>.</Check>
           <Check checked={c.notRepresentation} onChange={(v) => set("notRepresentation", v)} error={errors.notRepresentation} required>I understand this is a Pathway Assessment — not football-agent representation — and that no club, trial, contract, transfer or other outcome is promised or guaranteed.</Check>
           <Check checked={c.residenceDeclaration} onChange={(v) => set("residenceDeclaration", v)} error={errors.residenceDeclaration} required>I confirm that the country of residence above is correct (it determines how VAT applies).</Check>
-          <Check checked={c.earlyStart} onChange={(v) => set("earlyStart", v)}>Optional — start now: I ask Concordia to begin the Pathway Assessment straight away, within my 14-day withdrawal period. I understand that if I withdraw during that period I pay for the work already done, and that I lose the right to withdraw once the assessment has been fully provided. <span className="text-white/60">(If you leave this unticked, we begin once the 14 days have passed.)</span></Check>
+          <Check checked={c.earlyStart} onChange={(v) => set("earlyStart", v)}>Optional — start now: I ask Concordia to begin the Pathway Assessment straight away, within my 14-day withdrawal period. I understand that if I withdraw during that period I pay for the work already done, and that I lose the right to withdraw once the assessment has been fully provided. <span className="text-white/60">(Recommended if you want your assessment without delay. If you leave it unticked, we still check your materials, but the assessment itself starts only when the 14 days have passed — you can ask us to start sooner from your status page.)</span></Check>
         </fieldset>
 
         {msg && <p role="alert" className="mt-5 border-l-2 border-alert pl-4 text-white">{msg}</p>}

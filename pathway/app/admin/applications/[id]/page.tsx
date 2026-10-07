@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { isAdmin } from "@/lib/server/admin";
 import { getApplication, stateOf, deadlineOf } from "@/lib/server/records";
 import { playerToken } from "@/lib/server/tokens";
-import { siteOrigin } from "@/lib/server/env";
+import { siteOrigin, env } from "@/lib/server/env";
 import { STATE_LABEL } from "@/lib/assessment-status";
 import { ONBOARDING } from "@/content/onboarding";
 import { AdminActions } from "@/components/admin/AdminActions";
@@ -26,19 +26,21 @@ export default async function AdminApplication({ params }: { params: Promise<{ i
   const r = await getApplication(id);
   if (!r) notFound();
   const s = stateOf(r), d = deadlineOf(r), a = r.data, p = r.payment;
-  const playerLink = `${siteOrigin()}/status?t=${encodeURIComponent(playerToken(r.id))}`;
+  const playerLink = `${siteOrigin()}/status?t=${encodeURIComponent(playerToken(r.id, r.linkVersion ?? 1))}`;
   const actions = [
     ...(s === "application_received" ? [{ action: "accept", label: "Accept for Pathway Assessment", tone: "route" as const, confirm: "Accept and email the $249 payment invitation?" }, { action: "not_accept", label: "Not accepted at this stage", tone: "danger" as const, confirm: "Record 'not accepted' and email the applicant?" }] : []),
     ...(s === "accepted_for_assessment" ? [{ action: "resend_acceptance", label: "Resend acceptance email" }] : []),
     ...(r.paymentReceivedAt && !r.sufficientConfirmedAt && r.materials.length ? [
       { action: "start_materials_review", label: "Start materials review" },
       { action: "request_info", label: "Request additional information", fields: [{ key: "items", label: "What is missing (one item per line)", type: "textarea" as const, placeholder: "Recent playing history (last two seasons)\nOne full-match link, or tell us none exists" }] },
-      { action: "confirm_sufficient", label: "Confirm materials sufficient", tone: "route" as const, confirm: "This starts the 7-day assessment period today and emails the start date. Confirm?" },
+      { action: "confirm_sufficient", label: "Confirm materials sufficient", tone: "route" as const, confirm: "Confirm the materials are sufficient? The 7-day period starts today — or, if the customer did not ask for an early start, when their withdrawal period ends. The customer is emailed." },
     ] : []),
     ...(s === "assessment_in_progress" ? [{ action: "assessment_ready", label: "Mark assessment ready", tone: "route" as const, fields: [{ key: "reportUrl", label: "Link to the assessment document (https, optional)", type: "url" as const }, { key: "bookingUrl", label: "Personal booking link (https, optional — otherwise NEXT_PUBLIC_BOOKING_URL)", type: "url" as const }] }] : []),
     ...(["assessment_ready", "call_to_be_scheduled"].includes(s) ? [{ action: "call_completed", label: "Mark call completed", tone: "route" as const }] : []),
     ...(r.callCompletedAt && !r.pathwayOfferedAt ? [{ action: "offer_pathway", label: "Offer European Pathway (email)", tone: "route" as const }] : []),
     { action: "note", label: "Add internal note", fields: [{ key: "text", label: "Note", type: "textarea" as const }] },
+    { action: "reissue_link", label: "Re-issue player link", confirm: "Revoke every previous status/payment/onboarding link for this application and email a new one?" },
+    { action: "erase", label: "Erase personal data (GDPR)", tone: "danger" as const, confirm: "Permanently erase this application's personal data and uploaded files? Payment/invoice references required by accounting law are kept. This cannot be undone." },
   ];
   return wrap(
     <div className="space-y-6">
@@ -49,7 +51,7 @@ export default async function AdminApplication({ params }: { params: Promise<{ i
       </div>
       {r.duplicateOf?.length ? <p className="border-l-2 border-route pl-3 text-[0.9rem]">⚠ Same email as {r.duplicateOf.map((x) => <Link key={x} href={`/admin/applications/${x}`} className="mr-2 underline">{x}</Link>)}</p> : null}
       {p?.countryMismatch && <p className="border-l-2 border-alert pl-3 text-[0.9rem]">⚠ Declared country ({p.declaredCountry}) differs from billing country ({p.billingCountry}). Review the VAT treatment before invoicing.</p>}
-      <Box title="Actions"><AdminActions id={r.id} actions={actions} /><p className="mt-4 text-[0.78rem] text-white/50">Payment status changes only through the verified Stripe webhook — never manually. Player’s private link (do not share publicly): <span className="break-all">{playerLink}</span></p></Box>
+      <Box title="Actions"><AdminActions id={r.id} actions={actions} />{!(r.bookingUrl || env.bookingUrl) && <p className="mt-4 border-l-2 border-[#ff7a66] pl-3 text-[0.85rem]">No booking link configured: set NEXT_PUBLIC_BOOKING_URL in Netlify or add one when marking the assessment ready. Until then the player is told you will email to arrange the call.</p>}<p className="mt-4 text-[0.78rem] text-white/50">Payment status changes only through the verified Stripe webhook — never manually. Player’s private link (do not share publicly): <span className="break-all">{playerLink}</span></p></Box>
       <div className="grid gap-6 lg:grid-cols-2">
         <Box title="Player"><DL rows={[["Applicant", a.applicant], ["Date of birth", a.dateOfBirth], ["Nationality", a.nationality], ["Passports", a.passports], ["EU ancestry", a.ancestry], ["Residence", a.residence], ["Email", a.email], ["Phone / WhatsApp", a.whatsapp]]} />
           {a.guardian && <div className="mt-5 border-t border-white/10 pt-4"><DL rows={[["Guardian", a.guardian.name], ["Relationship", a.guardian.relationship], ["Guardian email", a.guardian.email], ["Guardian phone", a.guardian.phone], ["Guardian consent", a.guardian.consent]]} /></div>}</Box>

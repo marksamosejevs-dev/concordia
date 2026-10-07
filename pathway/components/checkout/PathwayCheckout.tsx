@@ -4,7 +4,7 @@ import { useState } from "react";
 import { usePlayerView, fmtDate } from "@/lib/client/player";
 import { SUBSCRIPTION_LINES, CONTRACT_REVIEW_LINE } from "@/content/commerce";
 import { Loading, InvalidLink, LoadError } from "@/components/funnel/LinkStates";
-import { CountrySelect, Check, L, SellerNote, BuyerType, guessCountry } from "./CheckoutParts";
+import { CountrySelect, Check, L, SellerNote, BuyerType, guessCountry, TaxLine } from "./CheckoutParts";
 
 /** European Pathway — $399/month subscription, offered after the assessment call. Hosted Stripe Checkout. */
 export function PathwayCheckout() {
@@ -51,6 +51,7 @@ export function PathwayCheckout() {
         <ul className="mt-4 space-y-1 text-white/80">{SUBSCRIPTION_LINES.map((l) => <li key={l}>{l}</li>)}</ul>
         <p className="mt-4 text-[0.9rem] text-white/70">Includes: {CONTRACT_REVIEW_LINE.charAt(0).toLowerCase() + CONTRACT_REVIEW_LINE.slice(1)}</p>
         <div className="mt-8 grid gap-5"><CountrySelect value={country} onChange={setCountry} error={errors.country} /><BuyerType value={buyerType} onChange={setBuyerType} businessName={businessName} vatId={vatId} setBusinessName={setBusinessName} setVatId={setVatId} errors={errors} />
+        <TaxLine baseCents={39900} country={country} buyerType={buyerType} vatId={vatId} suffix=" per month, before any assessment credit" />
           {view.isMinor && <Check checked={guardian} onChange={setGuardian} error={errors.isGuardianPayer} required>I am {view.playerName}’s parent or legal guardian and I am subscribing for them.</Check>}</div>
         <fieldset className="mt-8 space-y-3">
           <legend className="eyebrow mb-4 text-slate-light">Before you subscribe</legend>
@@ -71,7 +72,7 @@ export function PathwayCheckout() {
           <div className="flex justify-between border-t border-white/10 pt-2"><dt className="font-semibold">Today</dt><dd className="display text-[2rem] leading-none text-route">${first}</dd></div>
           <div className="flex justify-between text-white/70"><dt>Then</dt><dd>$399/month</dd></div>
         </dl>
-        {view.credit && <p className="mt-3 text-[0.78rem] text-slate-light">Credit available until {fmtDate(view.credit.expiresAt)}. One use only; not cash.</p>}
+        {view.credit && <p className="mt-3 text-[0.78rem] text-slate-light">{view.credit.expiresAt ? `Credit available until ${fmtDate(view.credit.expiresAt)}. ` : ""}One use only; not cash.</p>}
         <SellerNote />
       </aside>
     </div>

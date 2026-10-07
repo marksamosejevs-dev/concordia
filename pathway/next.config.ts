@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // This app is isolated from the Agency app at the repository root.
   turbopack: { root: path.join(__dirname) },
+  // Signed player links live in the URL: never send them onward as a Referer, never cache these pages or the API.
+  async headers() {
+    const priv = [{ key: "Referrer-Policy", value: "no-referrer" }, { key: "Cache-Control", value: "private, no-store" }, { key: "X-Robots-Tag", value: "noindex, nofollow" }];
+    return ["/status", "/checkout/:path*", "/onboarding", "/admin/:path*", "/admin", "/api/:path*"].map((source) => ({ source, headers: priv }));
+  },
   async redirects() {
     return [
       // Retired pages — permanent redirects so old links and indexed URLs never 404.

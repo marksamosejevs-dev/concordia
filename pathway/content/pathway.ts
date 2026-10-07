@@ -92,12 +92,13 @@ export const SERVICES_TICKER = ["Career management", "Player assessment", "Match
  * "Your career, month by month" — states for the scroll-driven pathway board. Fictional, illustrative player.
  * Shows the profile becoming more complete, targeted and market-ready across the six months.
  */
-export interface MonthState { m: number; t: string; done: number; focus: string[]; level: string; markets: { c: string; fit: number }[]; ready: string[]; note: string }
+/** Typical month-by-month plan (homepage tabs). Plan content only — no scores; the real plan follows the assessment. */
+export interface MonthState { m: number; t: string; focus: string[]; ready: string[]; note: string }
 export const MONTH_STATES: MonthState[] = [
-  { m: 1, t: "Foundation", done: 22, focus: ["strategy", "analysis"], level: "Tier 3–5 (baseline)", markets: [{ c: "Poland", fit: 70 }, { c: "Czechia", fit: 66 }, { c: "Sweden", fit: 64 }, { c: "Portugal", fit: 60 }, { c: "Denmark", fit: 55 }, { c: "Latvia", fit: 58 }], ready: ["Assessment debrief", "Written roadmap"], note: "Baseline set from your assessment." },
-  { m: 2, t: "Positioning", done: 41, focus: ["positioning", "mentorship"], level: "Tier 3–5", markets: [{ c: "Poland", fit: 72 }, { c: "Czechia", fit: 67 }, { c: "Sweden", fit: 65 }, { c: "Portugal", fit: 60 }], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction"], note: "Profile and footage rebuilt for scouts." },
-  { m: 3, t: "Market fit", done: 58, focus: ["markets", "opportunity"], level: "Tier 3–4", markets: [{ c: "Poland", fit: 78 }, { c: "Czechia", fit: 71 }, { c: "Sweden", fit: 66 }], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction", "Market briefings"], note: "Shortlist narrowed to three markets." },
-  { m: 4, t: "Progress review", done: 72, focus: ["analysis", "strategy"], level: "Tier 3–4 ↑", markets: [{ c: "Poland", fit: 81 }, { c: "Czechia", fit: 73 }, { c: "Sweden", fit: 66 }], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction", "Market briefings", "New match analysis"], note: "New match analysed against the baseline." },
-  { m: 5, t: "Window prep", done: 87, focus: ["window", "opportunity"], level: "Tier 3–4 ↑", markets: [{ c: "Poland", fit: 83 }, { c: "Czechia", fit: 74 }], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction", "Market briefings", "New match analysis", "Window plan"], note: "Window plan and trial budget agreed." },
-  { m: 6, t: "Decision", done: 100, focus: ["contract", "window"], level: "Tier 3 target", markets: [{ c: "Poland", fit: 84 }], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction", "Market briefings", "New match analysis", "Window plan", "Offer reviewed"], note: "Next move decided with evidence." },
+  { m: 1, t: "Foundation", focus: ["strategy", "analysis"], ready: ["Assessment debrief", "Written roadmap"], note: "Baseline set from your assessment." },
+  { m: 2, t: "Positioning", focus: ["positioning", "mentorship"], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction"], note: "Profile and footage rebuilt for scouts." },
+  { m: 3, t: "Market fit", focus: ["markets", "opportunity"], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction", "Market briefings"], note: "Shortlist narrowed to three markets." },
+  { m: 4, t: "Progress review", focus: ["analysis", "strategy"], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction", "Market briefings", "New match analysis"], note: "New match analysed against the baseline." },
+  { m: 5, t: "Window prep", focus: ["window", "opportunity"], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction", "Market briefings", "New match analysis", "Window plan"], note: "Window plan and trial budget agreed." },
+  { m: 6, t: "Decision", focus: ["contract", "window"], ready: ["Assessment debrief", "Written roadmap", "Football CV", "Reel direction", "Market briefings", "New match analysis", "Window plan", "Offer reviewed"], note: "Next move decided with evidence." },
 ];

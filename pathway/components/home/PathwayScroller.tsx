@@ -59,63 +59,25 @@ export function PathwayScroller({ price }: { price: number }) {
               </div>
             </div>
 
-            {/* Player board */}
-            <div className="on-ink relative overflow-hidden rounded-[16px] border border-ink/20 shadow-[0_50px_100px_-30px_rgba(8,17,39,0.6)]" role="tabpanel" id="pathway-panel" aria-labelledby={`pathway-tab-${m}`}>
+            {/* Typical plan for the selected month — plan content only, no scores */}
+            <div className="on-ink relative overflow-hidden rounded-[16px] border border-ink/20" role="tabpanel" id="pathway-panel" aria-labelledby={`pathway-tab-${m}`}>
               <div className="flex items-center justify-between border-b border-white/10 bg-ink-deep px-5 py-3">
-                <p className="text-[0.8rem] text-white/60">Your pathway · sample player</p>
+                <p className="text-[0.8rem] text-white/60">A typical European Pathway</p>
                 <p className="text-[0.8rem] font-semibold">Month <span className="text-route">{s.m}</span> of 6</p>
               </div>
-              <div className="grid gap-px bg-white/10 sm:grid-cols-[0.9fr_1.1fr]">
-                <div className="flex flex-col items-center justify-center bg-ink p-6">
-                  <Ring value={s.done} />
-                  <p key={s.t} className="display word-in mt-4 text-[2rem] leading-none">{s.t}</p>
-                  <p key={s.note} className="word-in mt-2 max-w-[22ch] text-center text-[0.85rem] text-white/70">{s.note}</p>
-                </div>
-                <div className="bg-ink p-5">
-                  <p className="text-[0.72rem] text-white/50">Current level</p>
-                  <p key={s.level} className="display word-in mt-1 text-[1.6rem] leading-none">{s.level}</p>
-                  <p className="mt-5 text-[0.72rem] text-white/50">Market shortlist</p>
-                  <ul className="mt-2 space-y-1.5">
-                    {s.markets.map((x) => (
-                      <li key={x.c} className="grid grid-cols-[5rem_1fr_2rem] items-center gap-2 text-[0.82rem]">
-                        <span className="font-semibold">{x.c}</span>
-                        <span className="h-1.5 rounded-full bg-white/10"><span className="block h-full rounded-full bg-route transition-[width] duration-700" style={{ width: `${x.fit}%` }} /></span>
-                        <span className="text-right text-[0.7rem] text-white/60">{x.fit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="bg-ink p-6 sm:p-7">
+                <p key={s.t} className="display word-in text-[clamp(2rem,3.4vw,2.6rem)] leading-none">{s.t}</p>
+                <p key={s.note} className="word-in mt-2 text-white/75">{s.note}</p>
+                <p className="mt-6 text-[0.72rem] text-white/50">Focus this month</p>
+                <div className="mt-2 flex flex-wrap gap-1.5">{s.focus.map((f) => <span key={f} className="word-in rounded-full bg-route px-3 py-1 text-[0.78rem] font-semibold text-ink">{pillar(f)}</span>)}</div>
+                <p className="mt-6 text-[0.72rem] text-white/50">Delivered by the end of this month</p>
+                <div className="mt-2 flex flex-wrap gap-1.5">{s.ready.map((r, n) => <span key={r} className={`rounded-full border px-2.5 py-0.5 text-[0.75rem] ${n === s.ready.length - 1 ? "border-route text-route" : "border-white/20 text-white/75"}`}>✓ {r}</span>)}</div>
               </div>
-              <div className="grid gap-px bg-white/10 sm:grid-cols-2">
-                <div className="bg-ink p-5">
-                  <p className="text-[0.72rem] text-white/50">Your career team this month</p>
-                  <div className="mt-2 flex flex-wrap gap-1.5">{s.focus.map((f) => <span key={f} className="word-in rounded-full bg-route px-3 py-1 text-[0.78rem] font-semibold text-ink">{pillar(f)}</span>)}</div>
-                </div>
-                <div className="bg-ink p-5">
-                  <p className="text-[0.72rem] text-white/50">Ready</p>
-                  <div className="mt-2 flex flex-wrap gap-1.5">{s.ready.map((r, n) => <span key={r} className={`rounded-full border px-2.5 py-0.5 text-[0.72rem] ${n === s.ready.length - 1 ? "border-route text-route" : "border-white/20 text-white/75"}`}>✓ {r}</span>)}</div>
-                </div>
-              </div>
-              <p className="bg-ink-deep px-5 py-2.5 text-[0.65rem] text-white/45">Illustrative · fictional player · your plan follows your assessment</p>
+              <p className="bg-ink-deep px-5 py-2.5 text-[0.7rem] text-white/50">Your own plan follows your assessment.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function Ring({ value }: { value: number }) {
-  const C = 2 * Math.PI * 52;
-  return (
-    <div className="relative h-36 w-36">
-      <svg viewBox="0 0 120 120" className="h-full w-full -rotate-90" aria-hidden>
-        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
-        <circle cx="60" cy="60" r="52" fill="none" stroke="#FFD23F" strokeWidth="8" strokeLinecap="round" strokeDasharray={C} strokeDashoffset={C * (1 - value / 100)} style={{ transition: "stroke-dashoffset 0.8s cubic-bezier(.22,.7,.2,1)" }} />
-      </svg>
-      <div className="absolute inset-0 grid place-items-center text-center">
-        <div><p className="display text-[2.6rem] leading-none">{value}%</p><p className="text-[0.62rem] text-white/55">market-ready profile</p></div>
-      </div>
-    </div>
   );
 }

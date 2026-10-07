@@ -44,7 +44,7 @@ export function AssessmentProduct() {
         </div>
         <div className="mt-14 flex flex-col gap-4 sm:flex-row sm:items-center">
           <ApplyCta />
-          <p className="mono text-[0.72rem] text-slate-light sm:ml-6">Within 7 days once payment is received and your materials are confirmed · ${ASSESSMENT_CREDIT.amount} credited toward European Pathway if you continue within {ASSESSMENT_CREDIT.days} days</p>
+          <p className="mono text-[0.72rem] text-slate-light sm:ml-6">Within 7 days once payment is received and your materials are confirmed · ${ASSESSMENT_CREDIT.amount} credited toward your first European Pathway payment if you continue</p>
         </div>
       </div>
     </Section>

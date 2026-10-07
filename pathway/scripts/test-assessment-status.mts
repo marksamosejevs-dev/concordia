@@ -31,5 +31,16 @@ t("Onboarding submission alone never starts the clock", !assessmentDeadline({ pa
 const resub: AssessmentRecord = { ...D, materialsSubmittedAt: "2026-10-05T08:00:00.000Z" };
 t("Resubmission after info request → back under review, still no deadline", currentState(resub) === "materials_under_review" && !assessmentDeadline(resub).started);
 t("Ready → call → next steps", currentState({ ...F, assessmentReadyAt: "2026-10-09T00:00:00Z" }) === "assessment_ready" && currentState({ ...F, assessmentReadyAt: "x", callCompletedAt: "y" }) === "next_steps");
+// G–J: third condition — performance legally permitted (withdrawal period / express early-start request)
+const NOW = "2026-10-06T00:00:00.000Z", LATER = "2026-10-15T10:00:00.000Z";
+const G: AssessmentRecord = { ...F, performancePermittedAt: LATER };
+t("G: paid + sufficient, no early start, withdrawal period running → NOT started, awaiting start", !assessmentDeadline(G, NOW).started && currentState(G, NOW) === "awaiting_start");
+t("G: once the withdrawal period ends → starts on that date, target +7 days", assessmentDeadline(G, "2026-10-16T00:00:00.000Z").startDate === LATER && currentState(G, "2026-10-16T00:00:00.000Z") === "assessment_in_progress");
+const H: AssessmentRecord = { ...F, performancePermittedAt: P };
+t("H: early start requested at payment → starts at sufficiency confirmation (no 14-day wait)", assessmentDeadline(H, NOW).started && assessmentDeadline(H, NOW).startDate === S);
+const I: AssessmentRecord = { ...F, withdrawnAt: "2026-10-05T00:00:00.000Z" };
+t("I: customer withdrew → no deadline, state withdrawn", !assessmentDeadline(I, NOW).started && currentState(I, NOW) === "withdrawn");
+const J: AssessmentRecord = { paymentReceivedAt: P, materialsSubmittedAt: M, performancePermittedAt: P };
+t("J: permitted + paid but sufficiency not confirmed → NO deadline", !assessmentDeadline(J, NOW).started);
 if (fail) { console.error(`✖ ${fail} status test(s) failed`); process.exit(1); }
 console.log("✓ Assessment status rules passed");

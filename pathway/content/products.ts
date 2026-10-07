@@ -1,3 +1,4 @@
+import { RULES } from "./business-rules.ts";
 import type { Product } from "@/lib/commerce/types";
 
 /**
@@ -11,5 +12,9 @@ export const products: Product[] = [
 
 export const product = (id: string) => products.find((p) => p.id === id)!;
 
-/** $150 of the $249 assessment fee is credited toward the FIRST European Pathway payment — once, within `days` days after the consultation call. ⚑ window: owner confirmation. */
-export const ASSESSMENT_CREDIT = { amount: 150, days: 14 };
+/**
+ * $150 of the $249 assessment fee is credited toward the FIRST European Pathway payment — once, tied to the paid
+ * assessment, the same player and application. OWNER-APPROVED: no expiry. `expiryDays` exists so a commercial
+ * eligibility window can be configured later (e.g. 30); null = no expiry. Not a legal requirement either way.
+ */
+export const ASSESSMENT_CREDIT: { amount: number; expiryDays: number | null } = { amount: 150, expiryDays: RULES.creditExpiryDays.value };

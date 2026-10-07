@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ApplicationData } from "@/lib/applications/schema";
 import { ageFrom } from "@/lib/applications/triage";
-import { MIN_AGE } from "@/lib/applications/validate";
+import { MIN_AGE, GUARDIAN_UNDER } from "@/lib/applications/validate";
 import { readAttribution } from "@/lib/attribution";
 import { track } from "@/lib/analytics";
 import { useMounted } from "@/lib/hooks";
@@ -20,7 +20,7 @@ type Values = Record<string, string | string[] | boolean>;
 
 const POSITIONS = ["Goalkeeper", "Centre-back", "Full-back / wing-back", "Defensive midfield", "Central midfield", "Attacking midfield", "Winger", "Forward"];
 const COUNTRIES = ["Spain", "France", "Italy", "Germany", "Belgium", "Netherlands", "Portugal", "Poland", "Czechia", "Sweden", "Norway", "Denmark", "Finland", "Switzerland", "Austria", "Latvia", "Lithuania", "Estonia", "Ireland", "United Kingdom", "Not sure"];
-const minor = (v: Values) => { const a = ageFrom(String(v.dateOfBirth || "")); return a !== null && a < 18; };
+const minor = (v: Values) => { const a = ageFrom(String(v.dateOfBirth || "")); return a !== null && a < GUARDIAN_UNDER; };
 
 const STEPS: Step[] = [
   { id: "about", title: "About the player", intro: "The basics, so we know who we’re assessing.", fields: [

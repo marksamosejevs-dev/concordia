@@ -11,15 +11,22 @@ const key = () => { if (!env.secret || env.secret.length < 32) throw new NotConf
 const mac = (msg: string) => crypto.createHmac("sha256", key()).update(msg).digest("base64url").slice(0, 32);
 const same = (a: string, b: string) => a.length === b.length && crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b));
 
-export const playerToken = (appId: string) => `${appId}.${mac(`player:${appId}`)}`;
-export function verifyPlayerToken(t: string | null | undefined): string | null {
+/**
+ * Player link token: `<display ref>.<sig>` (version 1) or `<display ref>.<version>.<sig>` after the admin re-issues a
+ * link. The signature (HMAC-SHA256, 192 bits) — not the sequential reference — is the access boundary: changing
+ * CS-1042 to CS-1043 invalidates it. Re-issuing bumps the record's linkVersion, which revokes every older link.
+ */
+export const playerToken = (appId: string, version = 1) => version <= 1 ? `${appId}.${mac(`player:${appId}`)}` : `${appId}.${version}.${mac(`player:${appId}:${version}`)}`;
+export function parsePlayerToken(t: string | null | undefined): { id: string; version: number } | null {
   if (!t) return null;
-  const i = t.lastIndexOf(".");
-  if (i < 1) return null;
-  const id = t.slice(0, i), sig = t.slice(i + 1);
-  if (!/^CS-\d{4,}$/.test(id)) return null;
-  try { return same(sig, mac(`player:${id}`)) ? id : null; } catch { return null; }
+  const parts = t.split(".");
+  if (parts.length < 2 || parts.length > 3) return null;
+  const id = parts[0], sig = parts[parts.length - 1], version = parts.length === 3 ? Number(parts[1]) : 1;
+  if (!/^CS-\d{4,}$/.test(id) || !Number.isInteger(version) || version < 1 || (parts.length === 3 && version < 2)) return null;
+  try { return same(sig, mac(version === 1 ? `player:${id}` : `player:${id}:${version}`)) ? { id, version } : null; } catch { return null; }
 }
+/** Signature check only — use recordFromToken() in routes so revoked links are refused too. */
+export const verifyPlayerToken = (t: string | null | undefined): string | null => parsePlayerToken(t)?.id ?? null;
 
 export const ADMIN_COOKIE = "cs_admin";
 const ADMIN_HOURS = 12;

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { countryOptions } from "@/lib/countries";
-import { PRICE_TAX_NOTE } from "@/lib/tax";
+import { PRICE_TAX_NOTE, taxTreatment, chargeAmount, vatBreakdown, isEU } from "@/lib/tax";
 import { LEGAL_ENTITY } from "@/content/site";
 
 export const inputCls = "mt-2 block w-full border border-white/20 bg-ink px-4 py-3.5 text-white focus:border-route focus:outline-none focus-visible:ring-2 focus-visible:ring-route/50 aria-[invalid=true]:border-alert [color-scheme:dark]";
@@ -64,5 +64,23 @@ export function BuyerType({ value, onChange, businessName, vatId, setBusinessNam
         </div>
       )}
     </fieldset>
+  );
+}
+
+/** Exact total for the chosen country / buyer type, under the configured price model. Final check happens server-side. */
+export function TaxLine({ baseCents, country, buyerType, vatId, suffix = "" }: { baseCents: number; country: string; buyerType: "consumer" | "business"; vatId?: string; suffix?: string }) {
+  if (!country) return null;
+  const claimsReverse = buyerType === "business" && Boolean(vatId?.trim()) && isEU(country) && country !== "LV";
+  const t = taxTreatment({ country, buyerType, vatId, vatIdValid: claimsReverse });
+  const total = chargeAmount(baseCents, t);
+  const { vat } = vatBreakdown(total, t);
+  const $ = (c: number) => `$${(c / 100).toFixed(2)}`;
+  return (
+    <p className="mt-2 border-l-2 border-route pl-3 text-[0.85rem] text-white/85" aria-live="polite">
+      Total {$(total)}{suffix}.{" "}
+      {t.chargesLatvianVat ? (total === baseCents ? `Includes Latvian VAT ${Math.round(t.rate * 100)}% (${$(vat)}).` : `${$(baseCents)} + Latvian VAT ${Math.round(t.rate * 100)}% (${$(vat)}).`)
+        : claimsReverse ? "No Latvian VAT if your VAT number is confirmed in the EU VIES system (reverse charge); otherwise Latvian VAT applies."
+        : "No Latvian VAT applies for customers outside the EU."}
+    </p>
   );
 }

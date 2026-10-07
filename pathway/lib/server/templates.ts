@@ -96,6 +96,30 @@ export const applicantStarted = (r: ApplicationRecord, start: string, target: st
   { p: `Assessment start date: ${fmt(start)}\nTarget completion: within 7 days — by ${fmt(target)}.` },
 ], { tag: "assessment_started", to: r.contact.emails });
 
+export const applicantScheduled = (r: ApplicationRecord, start: string, statusLink: string) => render("Your materials are confirmed", [
+  hi(r),
+  { p: "Thank you — we have the information required for your Pathway Assessment." },
+  { p: `You did not ask us to begin during your 14-day withdrawal period, so the assessment starts on ${fmt(start)}, when that period ends. Target completion: within 7 days of that date.` },
+  { p: "If you would like us to start now instead, you can ask from your status page. If you do, and then withdraw within the 14 days, you pay a proportionate amount for the work already done." },
+  { cta: { label: "Open your status page", href: statusLink } },
+], { tag: "assessment_scheduled", to: r.contact.emails });
+
+export const applicantWithdrawalReceived = (r: ApplicationRecord, contract: "assessment" | "pathway", at: string) => render("We received your withdrawal", [
+  hi(r),
+  { p: `We confirm that we received your withdrawal from the ${contract === "assessment" ? "Pathway Assessment" : "European Pathway subscription"} contract on ${fmt(at)} (${at.slice(11, 16)} UTC).` },
+  { p: contract === "assessment"
+    ? (r.payment?.earlyStartRequested ? "Because you asked us to start within the withdrawal period, we will refund the amount you paid minus a proportionate amount for the work already done, within 14 days, to the same payment method." : "We will refund the full amount within 14 days, to the same payment method.")
+    : "We will cancel the subscription and refund in line with the Refund & Withdrawal Policy within 14 days, to the same payment method." },
+  { small: `Reference: ${r.id}. Seller: Concordia Sports Agency SIA.` },
+], { tag: "withdrawal_acknowledgement", to: [...new Set([...(r.payment?.payerEmail ? [r.payment.payerEmail] : []), ...r.contact.emails])] });
+
+export const applicantNewLink = (r: ApplicationRecord, statusLink: string) => render("Your new European Pathway link", [
+  hi(r),
+  { p: "Here is your new personal link to your application status, payment and onboarding. Earlier links no longer work." },
+  { cta: { label: "Open your status page", href: statusLink } },
+  { small: "Please don’t forward this email — the link gives access to your application." },
+], { tag: "link_reissued", to: r.contact.emails });
+
 export const applicantReady = (r: ApplicationRecord, statusLink: string, bookingLink?: string) => render("Your Pathway Assessment is ready", [
   hi(r),
   { p: "Your Pathway Assessment is ready." },
@@ -106,11 +130,11 @@ export const applicantReady = (r: ApplicationRecord, statusLink: string, booking
   { small: `Status: ${statusLink}` },
 ], { tag: "assessment_ready", to: r.contact.emails });
 
-export const applicantPathwayOffer = (r: ApplicationRecord, link: string, creditUntil?: string) => render("Your next steps — European Pathway", [
+export const applicantPathwayOffer = (r: ApplicationRecord, link: string, credit?: { until?: string }) => render("Your next steps — European Pathway", [
   hi(r),
   { p: "Thank you for your time on the call. The decision is yours." },
   { p: "If it makes sense to continue, European Pathway is $399 per month — designed as a 6-month European career pathway, paid monthly, with no six-month upfront payment. Cancellation options are available; subscription terms apply." },
-  ...(creditUntil ? [{ p: `Because you completed a Pathway Assessment, $150 of your assessment fee is credited toward your first monthly Pathway payment: your first payment is $249, then $399/month. The credit can be used once, until ${fmt(creditUntil)}.` }] : []),
+  ...(credit ? [{ p: `Because you completed a Pathway Assessment, $150 of your assessment fee is credited toward your first monthly Pathway payment: your first payment is $249, then $399/month. The credit can be used once${credit.until ? `, until ${fmt(credit.until)}` : ""}.` }] : []),
   { cta: { label: "Review European Pathway and subscribe", href: link } },
   { small: "European Pathway is advisory career management. Any football-agent representation by Concordia Sports Agency would be a separate written agreement under the applicable FIFA rules." },
 ], { tag: "pathway_offer", to: r.contact.emails });

@@ -43,6 +43,8 @@ export const FLOW = [
 export const ASSESSMENT_STEPS = FLOW.map((f, i) => ({ n: String(i + 1).padStart(2, "0"), title: f.k, body: f.body }));
 
 export const RECEIVE = ASSESSMENT_INCLUDES;
+/** Homepage summary of RECEIVE (same scope, shorter). */
+export const RECEIVE_SHORT = ["Review of your football profile, footage and materials", "A realistic European market assessment", "Your individual written Pathway Assessment", "A consultation call of up to 60 minutes"];
 
 export const NOT_RECEIVE = [
   { t: "No trials.", b: "We don’t sell or arrange them. That’s why we can tell you honestly whether one is worth it." },

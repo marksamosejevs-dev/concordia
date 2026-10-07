@@ -20,13 +20,18 @@
  *  - B2C, customer resides IN the EU (incl. Latvia) → general rule, supplier's establishment (Art. 45) → Latvian VAT 21%.
  *    (Not an OSS case: OSS covers B2C supplies taxable in the customer's Member State; these are taxable in Latvia.)
  *
- * Pricing: public prices ($249, $399/month) are FINAL prices for consumers. Where Latvian VAT applies, it is
- * INCLUDED in that price (EU consumer price rules require tax-inclusive prices); elsewhere no VAT is added.
- * The VAT component is computed for invoices/accounting — the amount charged never changes by location.
+ * STATUS: TECHNICAL TAX MODEL — not a final accounting/VAT position. Primary sources (EUR-Lex, likumi.lv, VID) could
+ * not be consulted from the build environment; every ⚑ point must be confirmed by Concordia's accountant.
+ *
+ * Pricing: the price/VAT model is an OWNER DECISION (content/business-rules.ts → priceModel). Both are supported:
+ *  - final_price_everywhere: $249 / $399 charged everywhere; where Latvian VAT applies it is contained in that amount.
+ *  - base_price_plus_vat:    $249 / $399 is the base; where Latvian VAT applies it is added on top.
  * ACCOUNTANT CONFIRMATION points are marked ⚑ (see docs/PRODUCTION_SETUP.md → "Accountant").
  */
 /** Latvian standard VAT rate. Not hardcoded into logic: override with PATHWAY_LV_VAT_RATE (e.g. "0.21") if the rate changes. */
 const envRate = typeof process !== "undefined" ? Number(process.env?.PATHWAY_LV_VAT_RATE) : NaN;
+import { RULES, type PriceModel } from "../content/business-rules.ts";
+
 export const LV_VAT_RATE = Number.isFinite(envRate) && envRate > 0 && envRate < 1 ? envRate : 0.21;
 const PCT = `${Math.round(LV_VAT_RATE * 1000) / 10}%`;
 
@@ -76,4 +81,17 @@ export function normaliseVatId(raw?: string): string | null {
 }
 
 /** Customer-facing price note — accurate for every market (no false universal "VAT included/excluded"). */
-export const PRICE_TAX_NOTE = "Prices in USD. Where Latvian VAT applies (customers in the EU), it is included in the price. No VAT is added for customers outside the EU.";
+/** Amount actually charged (cents) for a base price under the configured price model. */
+export function chargeAmount(baseCents: number, t: TaxResult, model: PriceModel = RULES.priceModel.value): number {
+  return t.chargesLatvianVat && model === "base_price_plus_vat" ? Math.round(baseCents * (1 + t.rate)) : baseCents;
+}
+
+/**
+ * Customer-facing price note. Neutral while the price model is not owner-confirmed; never a false universal
+ * "VAT included" / "VAT excluded", never "0% VAT" for out-of-scope supplies.
+ */
+export const PRICE_TAX_NOTE = RULES.priceModel.status !== "confirmed"
+  ? "Prices in USD. Whether Latvian VAT applies depends on where you live and whether you buy as a business; checkout shows the exact total before you pay."
+  : RULES.priceModel.value === "final_price_everywhere"
+    ? "Prices in USD. For customers in the EU the price includes Latvian VAT; customers outside the EU pay no Latvian VAT. Checkout shows the exact total before you pay."
+    : "Prices in USD. For customers in the EU, Latvian VAT is added to the price; customers outside the EU pay no Latvian VAT. Checkout shows the exact total before you pay.";

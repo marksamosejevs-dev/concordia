@@ -11,7 +11,7 @@ import Stripe from "stripe";
 import { env } from "./env";
 import { NotConfigured } from "./tokens";
 import { products, ASSESSMENT_CREDIT } from "../../content/products";
-import type { TaxResult } from "../tax";
+import { chargeAmount, type TaxResult } from "../tax";
 
 let client: Stripe | null = null;
 export function stripe(): Stripe {
@@ -27,7 +27,7 @@ export const CREDIT_CENTS = ASSESSMENT_CREDIT.amount * 100;
 
 const SELLER = [{ name: "Seller", value: "Concordia Sports Agency SIA" }, { name: "Seller VAT No.", value: "LV40203574668" }];
 
-export async function createAssessmentCheckout(o: { appId: string; playerName: string; email: string; origin: string; token: string; tax: TaxResult; metadata: Record<string, string> }) {
+export async function createAssessmentCheckout(o: { appId: string; playerName: string; email: string; origin: string; token: string; tax: TaxResult; amountCents: number; metadata: Record<string, string> }) {
   const s = await stripe().checkout.sessions.create({
     mode: "payment",
     client_reference_id: o.appId,
@@ -35,7 +35,7 @@ export async function createAssessmentCheckout(o: { appId: string; playerName: s
     customer_creation: "always",
     billing_address_collection: "required",          // tax evidence: billing country
     tax_id_collection: { enabled: true },             // business customers can add a VAT number
-    line_items: [{ quantity: 1, price_data: { currency: "usd", unit_amount: ASSESSMENT_CENTS, product_data: { name: "Pathway Assessment", description: `Concordia Soccer · European Pathway — player: ${o.playerName} (${o.appId})` } } }],
+    line_items: [{ quantity: 1, price_data: { currency: "usd", unit_amount: o.amountCents, product_data: { name: "Pathway Assessment", description: `Concordia Soccer · European Pathway — player: ${o.playerName} (${o.appId})` } } }],
     payment_intent_data: { description: `Pathway Assessment ${o.appId}`, metadata: { app_id: o.appId, product: "assessment" } },
     ...(env.stripeInvoices ? { invoice_creation: { enabled: true, invoice_data: { description: `Pathway Assessment — ${o.appId}`, footer: o.tax.invoiceNote, custom_fields: SELLER, metadata: { app_id: o.appId, tax_code: o.tax.code } } } } : {}),
     metadata: { ...o.metadata, app_id: o.appId, product: "assessment", tax_code: o.tax.code },
@@ -62,7 +62,7 @@ export async function createPathwayCheckout(o: { appId: string; email: string; c
     ...(o.customerId ? { customer: o.customerId, customer_update: { address: "auto", name: "auto" } } : { customer_email: o.email }),
     billing_address_collection: "required",
     tax_id_collection: { enabled: true },
-    line_items: [{ quantity: 1, price_data: { currency: "usd", unit_amount: PATHWAY_CENTS, recurring: { interval: "month" }, product_data: { name: "European Pathway", description: "Designed as a 6-month European career pathway. Paid monthly." } } }],
+    line_items: [{ quantity: 1, price_data: { currency: "usd", unit_amount: chargeAmount(PATHWAY_CENTS, o.tax), recurring: { interval: "month" }, product_data: { name: "European Pathway", description: "Designed as a 6-month European career pathway. Paid monthly." } } }],
     ...(coupon ? { discounts: [{ coupon }] } : {}),
     subscription_data: { description: `European Pathway — ${o.appId}`, metadata: { app_id: o.appId, product: "pathway", tax_code: o.tax.code, credit: coupon ? "applied" : "none" } },
     metadata: { ...o.metadata, app_id: o.appId, product: "pathway", tax_code: o.tax.code, credit: coupon ? "applied" : "none" },

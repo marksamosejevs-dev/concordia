@@ -1,3 +1,5 @@
+import { IS_REVIEW } from "@/lib/site-mode";
+import { RULES } from "@/content/business-rules";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -21,6 +23,7 @@ export default async function LegalPage({ params }: { params: Promise<{ slug: st
         <h1 className="display d-lg mt-4">{d.title}</h1>
         <p className="mt-3 text-[0.9rem] text-ink/60">Last updated {d.updated} · {LEGAL_ENTITY.name}</p>
         <p className="lede mt-6 text-ink/80">{d.summary}</p>
+        {IS_REVIEW && d.pending?.length ? <p className="mt-4 border-l-2 border-dashed border-ink/40 pl-3 text-[0.85rem] text-ink/70">Pre-launch preview: this document uses proposed defaults still awaiting owner confirmation — {d.pending.map((k) => RULES[k].label).join("; ")}.</p> : null}
         <nav aria-label="Contents" className="mt-8 border-y border-ink/10 py-4 text-[0.88rem]"><ol className="grid gap-1 sm:grid-cols-2">{d.sections.map((s) => <li key={s.id}><a href={`#${s.id}`} className="underline decoration-ink/20 underline-offset-4 hover:decoration-ink">{s.title}</a></li>)}</ol></nav>
         <div className="mt-10 space-y-9">
           {d.sections.map((s) => (

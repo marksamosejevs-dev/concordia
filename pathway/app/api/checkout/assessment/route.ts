@@ -1,7 +1,7 @@
-import { verifyPlayerToken, playerToken } from "@/lib/server/tokens";
-import { getApplication, updateApplication, LEGAL_VERSION } from "@/lib/server/records";
-import { createAssessmentCheckout, stripeConfigured } from "@/lib/server/payments";
-import { taxTreatment, normaliseVatId, isEU, vatBreakdown } from "@/lib/tax";
+import { playerToken } from "@/lib/server/tokens";
+import { recordFromToken, updateApplication, LEGAL_VERSION } from "@/lib/server/records";
+import { createAssessmentCheckout, stripeConfigured, ASSESSMENT_CENTS } from "@/lib/server/payments";
+import { taxTreatment, normaliseVatId, isEU, vatBreakdown, chargeAmount } from "@/lib/tax";
 import { checkVies } from "@/lib/server/vies";
 import { isCountryCode } from "@/lib/countries";
 import { siteOrigin } from "@/lib/server/env";
@@ -15,10 +15,9 @@ export async function POST(req: Request) {
   let b: Record<string, unknown>;
   try { b = await req.json(); } catch { return json({ ok: false, error: "invalid_json" }, 400); }
   try {
-    const id = verifyPlayerToken(String(b.t ?? ""));
-    if (!id) return json({ ok: false, error: "invalid_link" }, 404);
-    const r = await getApplication(id);
-    if (!r) return json({ ok: false, error: "not_found" }, 404);
+    const r = await recordFromToken(String(b.t ?? ""));
+    if (!r) return json({ ok: false, error: "invalid_link" }, 404);
+    const id = r.id;
     if (!r.acceptedAt || r.notAcceptedAt) return json({ ok: false, error: "not_eligible", message: "This application hasn’t been accepted for a Pathway Assessment." }, 409);
     if (r.payment?.status === "paid") return json({ ok: false, error: "already_paid" }, 409);
 
@@ -54,11 +53,12 @@ export async function POST(req: Request) {
       ...(earlyStart ? [{ key: "early_performance_request_and_withdrawal_acknowledgement", at: now.toISOString(), version: LEGAL_VERSION }] : []),
     ];
     const origin = siteOrigin(req);
-    const token = playerToken(id);
-    const session = await createAssessmentCheckout({ appId: id, playerName: r.data.fullName, email: payerEmail, origin, token, tax, metadata: { buyer_type: buyerType, declared_country: country } });
-    const breakdown = vatBreakdown(24900, tax);
+    const token = playerToken(id, r.linkVersion ?? 1);
+    const amountCents = chargeAmount(ASSESSMENT_CENTS, tax);
+    const session = await createAssessmentCheckout({ appId: id, playerName: r.data.fullName, email: payerEmail, origin, token, tax, amountCents, metadata: { buyer_type: buyerType, declared_country: country } });
+    const breakdown = vatBreakdown(amountCents, tax);
     await updateApplication(id, (x) => {
-      x.payment = { status: "checkout_open", checkoutSessionId: session.id, declaredCountry: country, requestCountry: requestCountry(req), buyerType, businessName, vatId, vatIdChecked: vies.checked, vatIdValid: vies.valid, taxCode: tax.code, vatRate: tax.rate, vatAmount: breakdown.vat, payerName, payerEmail, isGuardianPayer: b.isGuardianPayer === true, earlyStartRequested: earlyStart, withdrawalEndsAt, consents };
+      x.payment = { status: "checkout_open", checkoutSessionId: session.id, declaredCountry: country, requestCountry: requestCountry(req), buyerType, businessName, vatId, vatIdChecked: vies.checked, vatIdValid: vies.valid, taxCode: tax.code, vatRate: tax.rate, vatAmount: breakdown.vat, expectedAmount: amountCents, payerName, payerEmail, isGuardianPayer: b.isGuardianPayer === true, earlyStartRequested: earlyStart, withdrawalEndsAt, consents };
     }, { type: "checkout_started", detail: `${tax.code}${vatId ? ` VAT ${vatId} ${vies.checked ? (vies.valid ? "valid" : "invalid") : "unchecked"}` : ""}` });
     return json({ ok: true, url: session.url });
   } catch (e) { return failure(e, "checkout-assessment"); }
