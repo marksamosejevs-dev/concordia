@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { agencyPlayers, intlStatus, professionalClubCount } from "@/content/agency-players";
+import { agencyPlayers, intlStatus, playerMeta, AGENCY_STATS } from "@/content/agency-players";
 import { isPublic } from "@/lib/evidence";
 import { IS_REVIEW } from "@/lib/site-mode";
 
@@ -23,7 +23,7 @@ export function PlayersRail() {
         <dl className="flex gap-8 lg:gap-12">
           <div><dd className="display text-[clamp(3rem,6vw,5rem)] leading-none">{senior}</dd><dt className="mt-1 text-[0.85rem] font-semibold text-ink/65">Senior<br />internationals</dt></div>
           <div><dd className="display text-[clamp(3rem,6vw,5rem)] leading-none">{youth}</dd><dt className="mt-1 text-[0.85rem] font-semibold text-ink/65">Youth<br />internationals</dt></div>
-          <div><dd className="display text-[clamp(3rem,6vw,5rem)] leading-none">{professionalClubCount()}</dd><dt className="mt-1 text-[0.85rem] font-semibold text-ink/65">Professional<br />clubs</dt></div>
+          <div><dd className="display text-[clamp(3rem,6vw,5rem)] leading-none">{AGENCY_STATS.professionalClubs}</dd><dt className="mt-1 text-[0.85rem] font-semibold text-ink/65">Professional<br />clubs</dt></div>
         </dl>
       </div>
 
@@ -34,15 +34,15 @@ export function PlayersRail() {
             return (
               <li key={`${p.slug}-${n}`} aria-hidden={n >= shown.length} className="group relative w-[58vw] max-w-[260px] shrink-0 sm:w-[240px]">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-[10px] bg-paper">
-                  <Image src={p.photo} alt={n < shown.length ? p.name : ""} fill sizes="260px" className="object-cover transition-transform duration-700 group-hover:scale-[1.05]" />
+                  <Image src={p.photo} alt={n < shown.length ? p.name : ""} fill sizes="260px" className="object-cover transition-transform duration-700 group-hover:scale-[1.05]" style={p.photoPosition ? { objectPosition: p.photoPosition } : undefined} />
                   <div className="absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-ink/90 to-transparent p-3 pt-10 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                    <p className="text-[0.8rem] font-semibold text-white">{p.position}</p>
+                    {p.position && <p className="text-[0.8rem] font-semibold text-white">{p.position}</p>}
                     {p.club && <p className="text-[0.75rem] text-white/75">{p.club}</p>}
                   </div>
                   {st && <span className={`absolute left-2 top-2 rounded-full px-2.5 py-1 text-[0.66rem] font-bold ${st.level === "senior" ? "bg-route text-ink" : "bg-white text-ink"}`}>{st.label}</span>}
                 </div>
                 <p className="display mt-3 text-[1.35rem] leading-none">{p.name}</p>
-                <p className="mt-1 text-[0.82rem] text-ink/60">{p.position}{p.club ? ` · ${p.club}` : ""}</p>
+                <p className="mt-1 text-[0.82rem] text-ink/60">{playerMeta(p)}</p>
               </li>
             );
           })}

@@ -40,14 +40,14 @@ export function TeamSection() {
         </div>
         <ul className="mt-10 grid gap-x-6 gap-y-7 sm:mt-12 sm:grid-cols-3 sm:gap-y-10">
           {team.map((m) => (
-            <li key={m.id} className="group grid grid-cols-[minmax(96px,32%)_1fr] items-start gap-x-4 gap-y-4 sm:block">
+            <li key={m.id} className="group grid grid-cols-[minmax(96px,32%)_1fr] items-start gap-x-4 gap-y-4 sm:row-span-3 sm:grid-cols-1 sm:grid-rows-subgrid sm:gap-y-0">
               <PortraitFrame a={TEAM_PORTRAITS[m.id]} name={m.name} sizes="(min-width:1360px) 400px, (min-width:640px) 31vw, 32vw" />
               <div className="self-center sm:self-auto">
                 <h3 className="display text-[clamp(1.6rem,2.6vw,2.4rem)] leading-none sm:mt-5">{m.name}</h3>
                 <p className="mt-1.5 font-semibold text-ink">{m.role.value}</p>
                 {m.secondaryRole && <p className="text-[0.9rem] font-semibold text-ink/60">{m.secondaryRole.value}</p>}
               </div>
-              <div className="col-span-2 max-w-[40ch] sm:mt-4">
+              <div className="col-span-2 max-w-[40ch] sm:col-span-1 sm:mt-4">
                 {m.teamBio?.value ? m.teamBio.value.map((para, n) => (
                   <p key={n} className={`text-[0.95rem] leading-relaxed text-ink/80 ${n > 0 ? "mt-3" : ""}`}>{para}</p>
                 )) : <p className="text-[0.95rem] leading-relaxed text-ink/80">{(m.teamLine ?? m.shortBio)?.value}</p>}

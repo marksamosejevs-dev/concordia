@@ -11,6 +11,7 @@ export function Footer() {
             <BrandLogo className="h-auto w-[280px] max-w-full" />
             <p className="display d-sm mt-10 text-route">{BRAND.signature}</p>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-light">{BRAND.supporting}</p>
+            <p className="mt-6 text-[0.8rem] text-slate-light">A project by <a href="https://concordia.football/" target="_blank" rel="noopener noreferrer" className="font-semibold tracking-[0.06em] text-white underline decoration-white/30 underline-offset-4 transition-colors hover:decoration-route">CONCORDIA SPORTS AGENCY</a></p>
           </div>
           <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
             {FOOTER_GROUPS.map((g) => (

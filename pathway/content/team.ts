@@ -49,8 +49,8 @@ export const team: TeamMember[] = [
     // Team card (approved earlier wording, condensed). The full founder description is used in the credential section.
     teamLine: { value: "FIFA Licensed Football Agent. Leads European Pathway and oversees its football assessment framework.", evidence: confirmed },
     teamBio: { value: [
-      "Leads European Pathway and oversees its football assessment framework.",
-      "Marks works with players across senior and youth international football, bringing direct European football-market experience into each player’s career strategy.",
+      "Leads European Pathway and oversees its football assessment framework, bringing direct experience from the European football market into the career strategy of each player.",
+      "Marks works with players across senior and youth international football, helping them assess their level, understand realistic markets and make better career decisions. His work combines player representation, career planning and first-hand knowledge of how clubs and football markets operate across Europe.",
     ], evidence: { state: "confirmed", ref: "FS-R6", note: "Founder-supplied team copy, Round 6" } },
     photo: { evidence: photoPending },
     credentialIds: ["fifa-licence", "minors", "lawyer", "llm", "players-association", "fifa-education", "agency"],
@@ -87,8 +87,8 @@ export const team: TeamMember[] = [
     shortBio: { value: "Part of the Concordia team behind European Pathway.", evidence: confirmed },
     // Founder-supplied team copy, Round 6. No details beyond the supplied wording.
     teamBio: { value: [
-      "Valerija is part of the Concordia team behind European Pathway, supporting players and families with the day-to-day side of their journey.",
-      "As the wife of a former national-team hockey player, she has experienced professional sport from the family side as well — helping the team understand the practical needs and concerns of players and their families.",
+      "Valerija supports the Concordia team and European Pathway with day-to-day client coordination, helping players and families navigate the practical side of their journey and ensuring they receive attentive, personal support throughout the process.",
+      "With experience in client and concierge service, she brings a strong understanding of individual client needs. As the wife of a former national-team hockey player, Valerija also knows professional sport from the family side and understands the practical concerns players and their families can face.",
     ], evidence: { state: "confirmed", ref: "FS-R6", note: "Founder-supplied team copy, Round 6" } },
     photo: { evidence: photoPending },
     credentialIds: [],
