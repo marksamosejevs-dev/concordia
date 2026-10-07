@@ -1,27 +1,32 @@
-# Concordia Soccer · European Pathway — Netlify project #2 ONLY.
-# This file is read only when the Netlify project's Base directory is "pathway".
-# The Concordia Sports Agency project (base directory = repository root) never reads it.
+# Concordia Soccer · European Pathway — Netlify project "concordia-soccer" ONLY.
+# Read only when the Netlify project's Base directory is "pathway".
+# The Concordia Sports Agency project (base directory = repository root) never reads this file.
+#
+# Server deployment: Netlify detects Next.js and uses its Next.js runtime (OpenNext adapter) automatically —
+# pages are prerendered, /api/* route handlers run as Netlify Functions, data lives in Netlify Blobs.
 [build]
-  command = "npm run build:export"
-  publish = "out"
+  command = "npm run build"
+  publish = ".next"
   # Skip builds when nothing inside pathway/ changed.
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ."
 
 [build.environment]
   NODE_VERSION = "22"
-  NEXT_PUBLIC_SITE_MODE = "review"
   NEXT_TELEMETRY_DISABLED = "1"
+  # Pre-launch: pending content renders with review tags. Set to "production" (Netlify UI) for launch.
+  NEXT_PUBLIC_SITE_MODE = "review"
 
-# Review deployment: keep it out of search engines until launch.
+# Pre-launch deployment: keep every deploy out of search engines until launch (remove at launch).
 [[headers]]
   for = "/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
-# Round 3: no separate biography pages — the former Marks profile points to the team.
-[[redirects]]
-  from = "/about/marks-amosejevs/*"
-  to = "/about/#team"
-  status = 301
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    Cache-Control = "no-store"

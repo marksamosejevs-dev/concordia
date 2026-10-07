@@ -22,9 +22,10 @@ const walk = (dir: string, ext: RegExp): string[] =>
 const sources = [...walk(path.join(root, "app"), /\.(tsx?)$/), ...walk(path.join(root, "components"), /\.(tsx?)$/), ...walk(path.join(root, "content"), /\.(ts)$/)];
 const all = sources.map((f) => ({ f: path.relative(root, f), s: fs.readFileSync(f, "utf8") }));
 
-// 1. Locked prices.
+// 1. Locked prices — only the two current products may exist.
+if (/id: "(cohort|window|two-window|elite|club)"/.test(fs.readFileSync(path.join(root, "content/products.ts"), "utf8"))) errors.push("A retired package has been reintroduced in content/products.ts");
 const products = fs.readFileSync(path.join(root, "content/products.ts"), "utf8");
-for (const [id, price] of [["assessment", 249], ["pathway", 399], ["cohort", 1500], ["window", 2400], ["two-window", 4200], ["elite", 7500], ["club", 149]] as const) {
+for (const [id, price] of [["assessment", 249], ["pathway", 399]] as const) {
   if (!new RegExp(`id: "${id}"[^}]*price: ${price}[,\\s]`).test(products)) errors.push(`Locked price changed or missing: ${id} must be $${price}`);
 }
 

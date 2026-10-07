@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CookieSettingsLink } from "./ConsentBanner";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { BRAND, FOOTER_GROUPS, LEGAL_ENTITY, LICENCE } from "@/content/site";
 
@@ -34,7 +35,7 @@ export function Footer() {
           <div>
             <p className="font-semibold text-white">Led by FIFA Licensed Football Agent {LICENCE.holder}</p>
             <p>Licence No. {LICENCE.number}</p>
-            <p className="mt-2"><Link href="/legal/terms#notices" className="underline">Legal notices</Link></p>
+            <p className="mt-2"><Link href="/legal/terms#not-representation" className="underline">Legal notices</Link> · <CookieSettingsLink /></p>
           </div>
         </div>
         <p className="mono mt-10 text-[0.68rem] text-slate">© {new Date().getFullYear()} {LEGAL_ENTITY.name}. All rights reserved.</p>

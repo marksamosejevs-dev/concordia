@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ApplyCta } from "@/components/ui/Cta";
-import { Gate } from "@/components/ui/Gate";
-import { product, ASSESSMENT_CREDIT } from "@/content/products";
+import { product } from "@/content/products";
 import { PATHWAY_TERMS, ASSESSMENT_POINTS, PILLARS } from "@/content/pathway";
 import { LEGAL_ENTITY, CTA } from "@/content/site";
+import { CREDIT_LINE, CREDIT_MATH, REFUND_LINE } from "@/content/commerce";
+import { PRICE_TAX_NOTE } from "@/lib/tax";
 import { usd } from "@/lib/format";
-import { pending } from "@/lib/evidence";
 
-export const metadata: Metadata = { alternates: { canonical: "/pricing/" }, title: "Pricing — $249 assessment, then $399/month",
+export const metadata: Metadata = { alternates: { canonical: "/pricing" }, title: "Pricing — $249 assessment, then $399/month",
   description: "Two steps, clear prices. Player Pathway Assessment $249 one time. European Pathway career management $399 per month, designed as a 6-month pathway.",
 };
 
@@ -55,14 +55,16 @@ export default function PricingPage() {
           </div>
           <div>
             <h2 className="display d-md">Assessment credit</h2>
-            <Gate evidence={pending("Founder Q3", "Credit toward the first Pathway month(s)?")} label="credit decision"><p className="mt-4 text-ink/80">${ASSESSMENT_CREDIT.amount} of your assessment credited toward European Pathway if you start within {ASSESSMENT_CREDIT.days} days.</p></Gate>
+            <p className="mt-4 text-ink/80">{CREDIT_LINE}</p>
+            <p className="mt-2 text-[0.9rem] text-ink/60">{CREDIT_MATH}</p>
             <h2 className="display d-md mt-8">Refunds</h2>
-            <Gate evidence={pending("E24")} label="approved refund text"><p className="mt-4 text-ink/80">Assessment: full refund until we begin reviewing your materials. European Pathway: terms set out in the Refund &amp; Cancellation Policy.</p></Gate>
+            <p className="mt-4 text-ink/80">{REFUND_LINE}</p>
+            <p className="mt-2 text-[0.9rem] text-ink/60">Consumers also have a statutory 14-day right of withdrawal — see the Refund &amp; Withdrawal Policy.</p>
           </div>
           <div>
             <h2 className="display d-md">Who you contract with</h2>
-            <p className="mt-4 text-ink/80">{LEGAL_ENTITY.name} · Reg. No. {LEGAL_ENTITY.registrationNo} · VAT {LEGAL_ENTITY.vatNo}. Prices in USD; any applicable taxes are shown at payment.</p>
-            <p className="mt-4 text-[0.9rem] text-ink/60"><Link href="/legal/terms#notices" className="underline underline-offset-4">Terms &amp; key notices</Link> · <Link href="/legal/refunds" className="underline underline-offset-4">Refunds &amp; cancellations</Link></p>
+            <p className="mt-4 text-ink/80">{LEGAL_ENTITY.name} · Reg. No. {LEGAL_ENTITY.registrationNo} · VAT {LEGAL_ENTITY.vatNo}. {PRICE_TAX_NOTE}</p>
+            <p className="mt-4 text-[0.9rem] text-ink/60"><Link href="/legal/assessment-terms" className="underline underline-offset-4">Pathway Assessment Terms</Link> · <Link href="/legal/pathway-terms" className="underline underline-offset-4">European Pathway Terms</Link> · <Link href="/legal/refunds" className="underline underline-offset-4">Refunds &amp; withdrawal</Link></p>
           </div>
         </div>
       </section>

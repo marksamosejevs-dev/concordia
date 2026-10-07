@@ -5,7 +5,7 @@ import { ApplyCta } from "@/components/ui/Cta";
 import { AgencyPlayersRail, NotRepresentation, FinalCta } from "@/components/sections/HomeSections";
 import { LEGAL_ENTITY } from "@/content/site";
 
-export const metadata: Metadata = { alternates: { canonical: "/agency/" }, title: "Concordia Sports Agency — the relationship", description: "How Concordia Sports Agency and Concordia Soccer · European Pathway relate — and why they stay separate." };
+export const metadata: Metadata = { alternates: { canonical: "/agency" }, title: "Concordia Sports Agency — the relationship", description: "How Concordia Sports Agency and Concordia Soccer · European Pathway relate — and why they stay separate." };
 
 export default function AgencyPage() {
   return (

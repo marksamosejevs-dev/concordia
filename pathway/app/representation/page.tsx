@@ -4,7 +4,7 @@ import { Section, Kicker } from "@/components/ui/Section";
 import { ApplyCta } from "@/components/ui/Cta";
 import { NotRepresentation, FinalCta } from "@/components/sections/HomeSections";
 
-export const metadata: Metadata = { alternates: { canonical: "/representation/" }, description: "How representation by Concordia Sports Agency works: separate from European Pathway, selective, and never for sale.", title: "European Pathway is not representation" };
+export const metadata: Metadata = { alternates: { canonical: "/representation" }, description: "How representation by Concordia Sports Agency works: separate from European Pathway, selective, and never for sale.", title: "European Pathway is not representation" };
 
 const BLOCKS = [
   ["What representation is", "Football Agent Services: communicating with clubs on a specific player’s behalf, negotiating, and concluding transfers and employment contracts. Provided only by Concordia Sports Agency, under a separate representation agreement."],
@@ -12,7 +12,7 @@ const BLOCKS = [
   ["Why we keep them apart", "Independence. Because we’re paid for advice — not for placing you — we can tell you not to go. Keeping advisory and representation separate also keeps us on the right side of the rules that govern agents."],
   ["How the Agency selects", "Realistic level for paid football in a market the Agency knows, availability, professionalism and capacity. Nothing you buy changes that."],
   ["Agency players on this site", "Players presented as represented by Concordia Sports Agency are shown as Agency credibility. They did not necessarily take part in European Pathway, and buying a Pathway service does not make a player a represented player."],
-  ["If a player is selected", "A separate representation agreement is required. European Pathway ends and any unused prepaid time is refunded or credited."],
+  ["If a player is selected", "A separate representation agreement is required. European Pathway ends and the subscription is cancelled; any amount already paid for the period after it ends is refunded."],
 ];
 
 export default function RepresentationPage() {

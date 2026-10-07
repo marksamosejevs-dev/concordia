@@ -41,7 +41,7 @@ export const ONBOARDING: OnbSection[] = [
     { name: "no_full_match", label: "No full-match footage available", type: "checkbox" },
     { name: "additional_footage", label: "Other recent match footage", type: "textarea", help: "One link per line" },
   ] },
-  { key: "documents", title: "Documents", intro: "PDF, Word or image files, up to 3 MB each (8 MB in total). A link works too.", fields: [
+  { key: "documents", title: "Documents", intro: "PDF, Word or image files, up to 2 MB each (4 MB in total). A link works too — and is best for anything larger.", fields: [
     { name: "cv_file", label: "Football CV (file)", type: "file" },
     { name: "cv_url", label: "Football CV (link)", type: "url", skipIf: "no_cv" },
     { name: "no_cv", label: "I don’t have a football CV yet", type: "checkbox" },
@@ -54,7 +54,7 @@ export const ONBOARDING: OnbSection[] = [
     { name: "agreement_file", label: "Existing representation agreement (optional)", type: "file" },
   ] },
   { key: "health", title: "Injuries", fields: [
-    { name: "injuries", label: "Injury information relevant to a sporting assessment", type: "textarea", help: "Optional" },
+    { name: "injuries", label: "Injury information relevant to a sporting assessment (optional)", type: "textarea", help: "Only if it matters for your football assessment — for example a recent long-term injury. This is health information: we use it only for your assessment and only with your explicit consent below." },
   ] },
   { key: "objective", title: "What you’re looking for", fields: [
     { name: "target_countries", label: "Target countries / leagues", type: "text" },
@@ -72,5 +72,5 @@ export const APPLICATION_FIELDS = ["subject", "application_id", "player_name", "
 
 export const FORM_NAMES = { application: "pathway-application", onboarding: "pathway-onboarding" } as const;
 
-/** Upload limits (Netlify Forms: 8 MB per submission). */
-export const UPLOAD = { perFileMB: 3, totalMB: 8, accept: ".pdf,.doc,.docx,.png,.jpg,.jpeg,.heic", blocked: /\.(mp4|mov|avi|mkv|m4v|webm|wmv)$/i };
+/** Upload limits (server functions accept ~6 MB per request; larger files should be shared as links). */
+export const UPLOAD = { perFileMB: 2, totalMB: 4, accept: ".pdf,.doc,.docx,.png,.jpg,.jpeg,.heic", blocked: /\.(mp4|mov|avi|mkv|m4v|webm|wmv)$/i };

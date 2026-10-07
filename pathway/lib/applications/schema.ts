@@ -10,7 +10,7 @@ export interface ApplicationData {
   contractStatus: string; contractEnds?: string; offers?: string; hasAgent: string;
   fullMatchUrl?: string; highlightsUrl?: string; transfermarktUrl?: string; instagram?: string;
   passports: string[]; ancestry?: string;
-  objective: string; targetCountries: string[]; availableFrom?: string; relocation?: string; budget?: string;
+  objective: string; lookingFor?: string; targetCountries: string[]; availableFrom?: string; relocation?: string; budget?: string;
   consents: { terms: boolean; assessmentData: boolean; agencyView: boolean; marketing: boolean };
 }
 

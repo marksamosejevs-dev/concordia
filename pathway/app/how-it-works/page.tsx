@@ -7,7 +7,7 @@ import { FaqSection, FinalCta } from "@/components/sections/HomeSections";
 import { ASSESSMENT_STEPS } from "@/content/assessment";
 import { FlowLine } from "@/components/funnel/FlowLine";
 
-export const metadata: Metadata = { alternates: { canonical: "/how-it-works/" }, title: "How it works", description: "Apply free, get accepted for a Pathway Assessment, pay $249, send your profile and video, and get your assessment and a 60-minute call." };
+export const metadata: Metadata = { alternates: { canonical: "/how-it-works" }, title: "How it works", description: "Apply free, get accepted for a Pathway Assessment, pay $249, send your profile and video, and get your assessment and a 60-minute call." };
 
 const STEPS: { n: string; t: string; b: string; link?: { href: string; label: string } }[] = ASSESSMENT_STEPS.map((x) => ({ n: x.n, t: x.title + ".", b: x.body }));
 const NEVER = ["Promise a trial, a club or a contract", "Contact clubs about you as part of European Pathway", "Sell representation", "Charge for “priority” consideration by the Agency", "Tell everyone to go to Europe"];

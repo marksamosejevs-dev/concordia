@@ -11,8 +11,10 @@ import { product } from "@/content/products";
 import { photos } from "@/content/photos";
 import { LICENCE } from "@/content/site";
 import { usd } from "@/lib/format";
+import { CREDIT_LINE } from "@/content/commerce";
+import { PRICE_TAX_NOTE } from "@/lib/tax";
 
-export const metadata: Metadata = { alternates: { canonical: "/european-pathway/" }, title: "European Pathway — $399/month career management",
+export const metadata: Metadata = { alternates: { canonical: "/european-pathway" }, title: "European Pathway — $399/month career management",
   description: "Monthly football career management for players targeting Europe: strategy, match analysis, market matching, contract and offer review, and transfer-window planning. Designed as a 6-month pathway, paid monthly.",
 };
 
@@ -20,7 +22,7 @@ const FAQ: [string, string][] = [
   ["Do I need the assessment first?", "Yes. The pathway is built on your Player Pathway Assessment — your level, your markets and your next move. It starts after your assessment, when it makes sense for you."],
   ["Is it really paid monthly?", `Yes. European Pathway is ${usd(product("pathway").price)} per month — you don’t pay the six months upfront. ${PATHWAY_TERMS.cancellation}`],
   ["Why six months?", "Football careers move in transfer windows. Six months gives your career team time to plan, reposition you and prepare properly for a window — not just react to it."],
-  ["Is contract review included?", "Yes. Your career team reviews offers and contracts with you and explains what they commit you to before you sign. Where formal legal advice is needed in a specific country, we’ll tell you."],
+  ["Is contract review included?", "Yes — review of professional football contracts and football-related documents within the scope of the service, focused on European professional football. We explain what an offer commits you to before you sign. Where jurisdiction-specific advice is required, local counsel is involved."],
   ["Does the pathway get me a club?", "No one honest can promise that. The pathway gives you a professional plan, better positioning and better decisions — and it tells you when an opportunity isn’t right."],
   ["Is this representation?", "No. European Pathway is career management and advisory. Representation by Concordia Sports Agency is a separate, selective agreement."],
 ];
@@ -38,6 +40,7 @@ export default function EuropeanPathwayPage() {
             <p className="mt-4 text-[1.2rem] font-bold">6-month European Pathway</p>
             <ul className="mt-3 flex flex-wrap gap-2">{PATHWAY_TERMS.points.map((x) => <li key={x} className="rounded-full border border-white/25 px-3 py-1.5 text-[0.85rem] font-semibold">{x}</li>)}</ul>
             <p className="mt-2 text-[0.8rem] text-white/60"><Link href={PATHWAY_TERMS.termsHref} className="underline underline-offset-2">{PATHWAY_TERMS.footnote}</Link></p>
+            <p className="mt-3 max-w-md text-[0.85rem] text-white/70">{CREDIT_LINE} {PRICE_TAX_NOTE}</p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-start">
               <ApplyCta />
               <Link href="#included" className="btn btn-ghost">What’s included <span className="arrow" aria-hidden>↓</span></Link>

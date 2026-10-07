@@ -29,14 +29,14 @@ export function PortraitFrame({ a, name, sizes, className = "" }: { a?: Portrait
 }
 
 /** TEAM — three people, one organisation. Marks first; equal card system. */
-export function TeamSection() {
+export function TeamSection({ title = "The people in your corner.", intro, sectionId = "team", aboutLink = true }: { title?: string; intro?: string; sectionId?: string; aboutLink?: boolean } = {}) {
   const team = sortedTeam();
   return (
-    <section id="team" className="on-paper relative overflow-hidden py-[clamp(4.5rem,10vw,7.5rem)]" aria-labelledby="team-title">
+    <section id={sectionId} className="on-paper relative overflow-hidden py-[clamp(4.5rem,10vw,7.5rem)]" aria-labelledby={`${sectionId}-title`}>
       <div className="wrap">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <h2 id="team-title" className="display max-w-[14ch] text-[clamp(2.6rem,5.4vw,5.2rem)] leading-[0.9]">The people in your corner.</h2>
-          <Link href="/about" className="inline-flex items-center gap-2 font-semibold underline decoration-ink/30 underline-offset-[6px] hover:decoration-ink">About Concordia <span aria-hidden>→</span></Link>
+          <div><h2 id={`${sectionId}-title`} className="display max-w-[14ch] text-[clamp(2.6rem,5.4vw,5.2rem)] leading-[0.9]">{title}</h2>{intro && <p className="lede mt-5 max-w-2xl text-ink/75">{intro}</p>}</div>
+          {aboutLink && <Link href="/about" className="inline-flex items-center gap-2 font-semibold underline decoration-ink/30 underline-offset-[6px] hover:decoration-ink">About Concordia <span aria-hidden>→</span></Link>}
         </div>
         <ul className="mt-10 grid gap-x-6 gap-y-7 sm:mt-12 sm:grid-cols-3 sm:gap-y-10">
           {team.map((m) => (

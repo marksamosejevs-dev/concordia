@@ -1,5 +1,3 @@
-import { pending, type Evidence } from "@/lib/evidence";
-
 export const BRAND = {
   name: "Concordia Soccer",
   product: "European Pathway",
@@ -19,6 +17,9 @@ export const LEGAL_ENTITY = {
   address: ["Krišjāņa Valdemāra iela 33A–4A", "Rīga, LV-1010", "Latvia"],
   note: "Concordia Soccer · European Pathway is a brand and service of Concordia Sports Agency SIA.",
 };
+
+/** Public contact (the Concordia Sports Agency address already published on concordia.football). ⚑ owner to confirm a dedicated Pathway inbox. */
+export const CONTACT = { email: "mail@concordia.football" };
 
 export const LICENCE = { holder: "Marks Amosejevs", number: "202406-7079", registerUrl: undefined as string | undefined /* exact FIFA register URL confirmed at E19 */ };
 
@@ -40,13 +41,8 @@ export const NAV = [
 export const FOOTER_GROUPS = [
   { title: "European Pathway", links: [["/assessment", "Player Pathway Assessment · $249"], ["/european-pathway", "European Pathway · $399/mo"], ["/pricing", "Pricing"], ["/how-it-works", "How it works"], ["/find-your-path", "Find your path"], ["/markets", "European markets"]] },
   { title: "Who it’s for", links: [["/for/players", "Players"], ["/for/parents", "Parents & guardians"], ["/careers", "Real careers"], ["/faq", "Questions"]] },
-  { title: "Concordia", links: [["/about", "About Concordia Soccer"], ["/agency", "Concordia Sports Agency"], ["/players", "Agency players"], ["/representation", "Representation"], ["/football-law", "Football law"]] },
-  { title: "Legal", links: [["/legal/terms", "Terms"], ["/legal/privacy", "Privacy"], ["/legal/refunds", "Refunds & cancellations"], ["/legal/cookies", "Cookies"], ["/legal/safeguarding", "Safeguarding"], ["/legal/complaints", "Complaints"], ["/legal/company", "Company information"]] },
+  { title: "Concordia", links: [["/about", "About Concordia Soccer"], ["/agency", "Concordia Sports Agency"], ["/players", "Agency players"], ["/representation", "Representation"]] },
+  { title: "Legal", links: [["/legal/terms", "Terms of Service"], ["/legal/assessment-terms", "Pathway Assessment Terms"], ["/legal/pathway-terms", "European Pathway Terms"], ["/legal/refunds", "Refunds & withdrawal"], ["/legal/privacy", "Privacy"], ["/legal/cookies", "Cookies"], ["/legal/minors", "Minors & parents"], ["/legal/complaints", "Complaints"], ["/legal/company", "Company information"]] },
 ] as const;
 
-/** Items still pending that affect sitewide copy. */
-export const SITE_PENDING: Record<string, Evidence> = {
-  contactChannel: pending("E27", "“Talk to us first” channel"),
-  refundPolicy: pending("E24", "Approved refund policy text"),
-  legalWording: pending("E35", "Final legal / consent wording"),
-};
+

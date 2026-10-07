@@ -4,14 +4,13 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Section, Kicker } from "@/components/ui/Section";
 import { ApplyCta, TextLink } from "@/components/ui/Cta";
 import { ReportViewer } from "@/components/report/ReportViewer";
-import { Pending } from "@/components/ui/Gate";
 import { ACCEPTED_MEANING, DELIVERY_FULL, ASSESSMENT_STEPS, RECEIVE, NOT_RECEIVE } from "@/content/assessment";
 import { decisions } from "@/content/decisions";
-import { ASSESSMENT_CREDIT } from "@/content/products";
+import Link from "next/link";
+import { CREDIT_LINE, REFUND_LINE } from "@/content/commerce";
 import { FaqSection, FinalCta } from "@/components/sections/HomeSections";
-import { pending } from "@/lib/evidence";
 
-export const metadata: Metadata = { alternates: { canonical: "/assessment/" }, title: "Player Pathway Assessment — $249", description: "A professional assessment of your level, your realistic markets and your next 90 days. Apply free · Assessment $249 if accepted." };
+export const metadata: Metadata = { alternates: { canonical: "/assessment" }, title: "Player Pathway Assessment — $249", description: "A professional assessment of your level, your realistic markets and your next 90 days. Apply free · Assessment $249 if accepted." };
 
 export default function AssessmentPage() {
   return (
@@ -82,9 +81,9 @@ export default function AssessmentPage() {
 
       <Section tone="paper" label="Who it is for">
         <div className="wrap grid gap-12 lg:grid-cols-3">
-          <div><p className="display d-md">Who it’s for</p><p className="mt-4 text-ink/80">Players aged 18 and over who are serious about professional football — college players nearing the end of eligibility, semi-professional players, players with a second passport, and families of 16–17-year-olds (a parent or guardian applies). You’ll need at least one full match on video.</p></div>
+          <div><p className="display d-md">Who it’s for</p><p className="mt-4 text-ink/80">Players aged 16 and over who are serious about professional football — college players nearing the end of eligibility, semi-professional players and players with a second passport. Under 18, a parent or guardian applies with the player. A full match helps, but isn’t required to apply.</p></div>
           <div><p className="display d-md">Who it isn’t for</p><p className="mt-4 text-ink/80">Anyone looking for a guaranteed trial or contract. Players under 16 receive guidance only — we don’t sell them an assessment.</p></div>
-          <div><p className="display d-md">Timing &amp; refunds</p><ul className="mt-4 space-y-2 text-ink/80"><li>{DELIVERY_FULL}</li><li>${ASSESSMENT_CREDIT.amount} credited toward European Pathway if you continue within {ASSESSMENT_CREDIT.days} days.</li><li><Pending evidence={pending("E24", "Approved refund wording")}>Full refund until we begin reviewing your materials.</Pending></li></ul></div>
+          <div><p className="display d-md">Timing &amp; refunds</p><ul className="mt-4 space-y-2 text-ink/80"><li>{DELIVERY_FULL}</li><li>{CREDIT_LINE}</li><li>{REFUND_LINE} <Link href="/legal/refunds" className="underline underline-offset-4">Refund &amp; Withdrawal Policy</Link></li></ul></div>
         </div>
       </Section>
       <FaqSection />

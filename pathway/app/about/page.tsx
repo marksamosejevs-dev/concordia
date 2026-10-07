@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/sections/PageHero";
 import { Section, Kicker } from "@/components/ui/Section";
-import { TeamGrid } from "@/components/team/TeamGrid";
+import { TeamSection } from "@/components/home/TeamSection";
 import { InsideFootballStrip, FinalCta } from "@/components/sections/HomeSections";
 import { LEGAL_ENTITY } from "@/content/site";
 
-export const metadata: Metadata = { alternates: { canonical: "/about/" }, title: "About Concordia Soccer", description: "A professional team, led by a FIFA Licensed Football Agent, working inside European football." };
+export const metadata: Metadata = { alternates: { canonical: "/about" }, title: "About Concordia Soccer", description: "A professional team, led by a FIFA Licensed Football Agent, working inside European football." };
 
 export default function AboutPage() {
   return (
@@ -26,15 +26,7 @@ export default function AboutPage() {
           <p className="lede text-white/80">Every assessment follows Concordia’s professional assessment framework and receives senior review, led by FIFA Licensed Football Agent Marks Amosejevs. The service is built by a team so that the standard doesn’t depend on one person’s calendar.</p>
         </div>
       </Section>
-      <Section id="team" tone="paper" label="The team" className="!pt-10">
-        <div className="wrap">
-          <Kicker>The team</Kicker>
-          <h2 className="display d-xl">The people behind the assessment.</h2>
-          <p className="lede mt-5 max-w-2xl text-ink/75">A professional team, led by a FIFA Licensed Football Agent, working inside European football.</p>
-          <div className="mt-14"><TeamGrid variant="full" tone="paper" /></div>
-          <p className="mono mt-10 text-[0.72rem] text-ink/55">Further analysts and advisers will be introduced here as the team grows.</p>
-        </div>
-      </Section>
+      <TeamSection title="The people behind the assessment." intro="A professional team, led by a FIFA Licensed Football Agent, working inside European football." aboutLink={false} />
       <Section tone="ink" label="Inside European football">
         <div className="wrap">
           <Kicker>Inside European football</Kicker>

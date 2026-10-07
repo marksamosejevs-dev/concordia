@@ -6,7 +6,7 @@ import { VerifyLedger } from "@/components/verify/VerifyLedger";
 import { FinalCta } from "@/components/sections/HomeSections";
 
 // Not part of the customer journey (no marketing-site links); kept technically, excluded from indexing and the sitemap.
-export const metadata: Metadata = { robots: { index: false, follow: false }, alternates: { canonical: "/verify/" }, title: "Verify us", description: "Every claim, with a way to check it." };
+export const metadata: Metadata = { robots: { index: false, follow: false }, alternates: { canonical: "/verify" }, title: "Verify us", description: "Every claim, with a way to check it." };
 
 export default function VerifyPage() {
   return (
@@ -19,7 +19,7 @@ export default function VerifyPage() {
             <span className="flex items-center gap-2"><span className="inline-block h-3 w-3 rounded-full border-2 border-route" />Document viewable</span>
           </div>
           <VerifyLedger mode="full" />
-          <p className="mt-10 max-w-3xl text-[0.9rem] text-slate-light"><Link href="/legal/terms#notices" className="underline underline-offset-2">Key notices</Link></p>
+          <p className="mt-10 max-w-3xl text-[0.9rem] text-slate-light"><Link href="/legal/terms#not-representation" className="underline underline-offset-2">Key notices</Link></p>
         </div>
       </Section>
       <FinalCta />

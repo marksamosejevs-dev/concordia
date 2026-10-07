@@ -18,7 +18,7 @@ export function StickyCta() {
     targets.forEach((t) => io.observe(t));
     return () => { window.removeEventListener("scroll", on); io.disconnect(); };
   }, [pathname]);
-  if (pathname.startsWith("/apply") || pathname.startsWith("/checkout")) return null;
+  if (["/apply", "/checkout", "/admin", "/onboarding", "/status"].some((p) => pathname.startsWith(p))) return null;
   const visible = show && !blocked;
   return (
     <div aria-hidden={!visible} className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink/95 p-3 backdrop-blur-md transition-transform duration-300 lg:hidden ${visible ? "translate-y-0" : "translate-y-full"}`}>

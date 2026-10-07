@@ -13,6 +13,7 @@ import { StickyCta } from "@/components/layout/StickyCta";
 import { ReviewBar } from "@/components/layout/ReviewBar";
 import { AudienceProvider } from "@/components/layout/Audience";
 import { AttributionCapture } from "@/components/layout/AttributionCapture";
+import { ConsentBanner } from "@/components/layout/ConsentBanner";
 import { MagneticLayer } from "@/components/ui/MagneticLayer";
 import { SITE_URL, INDEXABLE } from "@/lib/seo";
 
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
           <StickyCta />
           <ReviewBar />
+          <ConsentBanner />
         </AudienceProvider>
       </body>
     </html>

@@ -9,7 +9,7 @@ import { DecisionSet } from "@/components/sections/DecisionSet";
 import { FinalCta } from "@/components/sections/HomeSections";
 import { NineThings } from "./NineThings";
 
-export const metadata: Metadata = { alternates: { canonical: "/for/players/" }, title: "For players", description: "You sent the reel. You sent the DMs. Nobody replied. That doesn’t tell you what to do next." };
+export const metadata: Metadata = { alternates: { canonical: "/for/players" }, title: "For players", description: "You sent the reel. You sent the DMs. Nobody replied. That doesn’t tell you what to do next." };
 
 export default function PlayersPage() {
   return (

@@ -1,7 +1,7 @@
 /**
  * PATHWAY ASSESSMENT — founder definition (Round 3). Single source for every page, form, email and the Terms.
  */
-export const ACCEPTED_MEANING = "Being accepted means accepted for a Pathway Assessment — not for representation, by the Agency or by any club.";
+export const ACCEPTED_MEANING = "Being accepted means accepted for a Pathway Assessment — not for representation, by Concordia Sports Agency or by any club.";
 export const DELIVERY = "We aim to complete the Pathway Assessment within 7 days after payment and receipt of the information and materials reasonably required to conduct the assessment.";
 export const DELIVERY_FULL = DELIVERY + " If additional information or materials are reasonably required, the assessment period will begin once those materials have been received and the submitted materials are sufficient for the assessment to proceed.";
 export const DELIVERY_SHORT = "Within 7 days once payment is received and your materials are confirmed";
@@ -64,4 +64,13 @@ export const WORKFLOW_INTERNAL = [
   { stage: "Final professional review", by: "Senior review (defined sign-off process — E13)" },
   { stage: "Client review call", by: "Appropriate team member by product / case" },
   { stage: "Escalation", by: "Marks, where senior football-agent judgement is required" },
+];
+
+/** Compact public journey — shown at the entrance to the application (the detailed lifecycle stays internal). */
+export const JOURNEY_COMPACT = [
+  { k: "Apply", b: "Free application" },
+  { k: "We review", b: "Whether a Pathway Assessment is appropriate for you" },
+  { k: "If accepted", b: "$249 Pathway Assessment" },
+  { k: "Assessment", b: "Profile review, individual assessment and a consultation of up to 60 minutes" },
+  { k: "Your decision", b: "Decide what to do next" },
 ];

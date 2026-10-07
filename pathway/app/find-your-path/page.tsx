@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Section } from "@/components/ui/Section";
 import { FindYourPath } from "@/components/quiz/FindYourPath";
 
-export const metadata: Metadata = { alternates: { canonical: "/find-your-path/" }, title: "Find your path", description: "Ten quick questions. A recommended next step — not a verdict on your talent." };
+export const metadata: Metadata = { alternates: { canonical: "/find-your-path" }, title: "Find your path", description: "Ten quick questions. A recommended next step — not a verdict on your talent." };
 
 export default function Page() {
   return (

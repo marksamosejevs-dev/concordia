@@ -12,7 +12,7 @@ export const PATHWAY_TERMS = {
   /** Positive, low-risk billing points (founder-confirmed Round 2). */
   points: ["Paid monthly", "No six-month upfront payment", "Cancellation options available*"],
   footnote: "*Subscription terms apply.",
-  termsHref: "/legal/terms#notices",
+  termsHref: "/legal/pathway-terms",
   short: "6-month pathway · paid monthly · no upfront payment",
   /** Shown beside the terms in review mode until the subscription terms are final. */
   evidence: pending("LEGAL", "Final subscription terms: minimum term, early exit, renewal") as Evidence,

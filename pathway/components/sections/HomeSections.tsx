@@ -88,8 +88,8 @@ export function KnowWhatYouGetInto() {
           <h2 className="display d-xl">Know what you’re getting into.</h2>
           <p className="display d-sm mt-6 text-route">We’ve seen the signing photo. We’ve also seen what happens after it.</p>
           <p className="lede mt-6 text-white/80"><Pending evidence={pending("E8")}>Through his work with the Latvian Professional Footballers Association, Marks has supported players with employment rights, contract problems, disputes with clubs and difficult intermediary relationships.</Pending> That’s why every assessment and programme looks beyond the club badge — at the commitment, the environment and the fine print.</p>
-          <p className="mt-6 text-[0.9rem] text-white/60">European Pathway is career advisory and does not create a lawyer–client relationship. Formal legal services are engaged and billed separately. <Pending evidence={pending("E9")}>[Law practice]</Pending></p>
-          <div className="mt-8"><TextLink href="/football-law">Football law</TextLink></div>
+          <p className="mt-6 text-[0.9rem] text-white/60">Included in European Pathway: review of professional football contracts and football-related documents within the scope of the service, with local counsel involved where jurisdiction-specific advice is required.</p>
+          <div className="mt-8"><TextLink href="/european-pathway">European Pathway</TextLink></div>
         </div>
         <div className="on-paper relative p-7 sm:p-10" aria-label="Illustration: annotated contract clauses (fictional text)">
           <p className="mono mb-6 text-[0.62rem] uppercase tracking-[0.14em] text-ink/50">Illustrative clauses — fictional text</p>
@@ -138,7 +138,7 @@ export function NotRepresentation() {
             </div>
           </div>
         </div>
-        <p className="mt-10 max-w-3xl text-[0.95rem] text-ink/70">If a player ever enters formal representation, European Pathway ends and unused prepaid time is refunded or credited. <Link href="/representation" className="underline underline-offset-4">How representation works</Link>.</p>
+        <p className="mt-10 max-w-3xl text-[0.95rem] text-ink/70">If a player ever enters formal representation, European Pathway ends and the subscription is cancelled; any amount already paid for the period after it ends is refunded. <Link href="/representation" className="underline underline-offset-4">How representation works</Link>.</p>
       </div>
     </Section>
   );
