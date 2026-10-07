@@ -2,7 +2,7 @@
 import { useRef, useState } from "react";
 import { activeSample as s } from "@/content/sample-report";
 import { decisions } from "@/content/decisions";
-import { Mark } from "@/components/brand/Logo";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { track } from "@/lib/analytics";
 
 const dec = (k: string) => decisions.find((d) => d.key === k)!.label;
@@ -12,7 +12,7 @@ function PageShell({ n, title, children }: { n: number; title: string; children:
     <div className="on-paper relative flex aspect-[1/1.36] w-full flex-col overflow-hidden p-[6%] text-ink shadow-[0_30px_70px_-25px_rgba(0,0,0,0.65)]">
       <div className="sample-mark">SAMPLE</div>
       <div className="relative flex items-center justify-between border-b border-ink/15 pb-[3%]">
-        <span className="flex items-center gap-2"><Mark className="h-5 w-5" ink="#0D1B36" route="#B98A00" /><span className="mono text-[clamp(0.5rem,0.8vw,0.62rem)] uppercase tracking-[0.12em]">Player Pathway Assessment</span></span>
+        <span className="flex items-center gap-2"><BrandLogo tone="black" className="h-auto w-[clamp(64px,9vw,96px)] mix-blend-multiply" /><span className="mono text-[clamp(0.5rem,0.8vw,0.62rem)] uppercase tracking-[0.12em]">Player Pathway Assessment</span></span>
         <span className="mono text-[clamp(0.5rem,0.8vw,0.62rem)] text-slate">{s.player.code} · p.{n}</span>
       </div>
       <p className="display relative mt-[5%] text-[clamp(1.4rem,3.2vw,2.4rem)] leading-none">{title}</p>

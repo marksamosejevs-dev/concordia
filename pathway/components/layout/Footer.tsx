@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "@/components/brand/Logo";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { BRAND, FOOTER_GROUPS, LEGAL_ENTITY, LICENCE } from "@/content/site";
 
 export function Footer() {
@@ -8,7 +8,7 @@ export function Footer() {
       <div className="wrap">
         <div className="grid gap-14 lg:grid-cols-[1.2fr_2fr]">
           <div>
-            <Logo className="h-12 w-auto" />
+            <BrandLogo className="h-auto w-[280px] max-w-full" />
             <p className="display d-sm mt-10 text-route">{BRAND.signature}</p>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-slate-light">{BRAND.supporting}</p>
           </div>

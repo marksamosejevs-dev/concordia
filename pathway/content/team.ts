@@ -68,8 +68,8 @@ export const team: TeamMember[] = [
     shortBio: { value: "Co-founder of Concordia Soccer · European Pathway — building the service that brings professional football career thinking to players beyond an agency roster.", evidence: confirmed },
     // Founder-supplied team copy, Round 6 (resolves E31). LPFA role stated exactly as supplied.
     teamBio: { value: [
-      "Filipp is building the service behind European Pathway — bringing professional football career thinking to players beyond a traditional agency roster. He is Chairman of the Latvian Professional Footballers Association, which works to protect the rights and interests of football players in Latvia.",
-      "A legal professional with more than 20 years of experience, Filipp also brings experience from banking and finance. As a father of two, with his elder son involved in judo, he also understands first-hand many of the decisions and concerns parents face when supporting a young athlete with international ambitions.",
+      "Filipp is building the service behind European Pathway, bringing professional football career thinking to players beyond a traditional agency roster.",
+      "Chairman of the Latvian Professional Footballers Association and a legal professional with more than 20 years of experience, he also brings a background in banking and finance. As a father of two, with his elder son involved in judo, Filipp understands first-hand the decisions parents face when supporting a young athlete with international ambitions.",
     ], evidence: { state: "confirmed", ref: "FS-R6", note: "Founder-supplied team copy, Round 6" } },
     photo: { evidence: photoPending },
     credentialIds: [],
@@ -88,7 +88,7 @@ export const team: TeamMember[] = [
     // Founder-supplied team copy, Round 6. No details beyond the supplied wording.
     teamBio: { value: [
       "Valerija is part of the Concordia team behind European Pathway, supporting players and families with the day-to-day side of their journey.",
-      "As a mother and the wife of a former national-team hockey player, she also understands professional sport from the family side — helping the team better understand the practical needs and concerns of players and their families.",
+      "As the wife of a former national-team hockey player, she has experienced professional sport from the family side as well — helping the team understand the practical needs and concerns of players and their families.",
     ], evidence: { state: "confirmed", ref: "FS-R6", note: "Founder-supplied team copy, Round 6" } },
     photo: { evidence: photoPending },
     credentialIds: [],

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Logo, Mark } from "@/components/brand/Logo";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 import { NAV, CTA } from "@/content/site";
 
 export function Header() {
@@ -22,8 +22,7 @@ export function Header() {
     <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${scrolled || open ? "bg-ink/92 backdrop-blur-md border-b border-white/10" : "bg-transparent"}`}>
       <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
         <Link href="/" aria-label="Concordia Soccer · European Pathway — home" className="shrink-0">
-          <Logo className="hidden h-9 w-auto sm:block" />
-          <span className="flex items-center gap-2 sm:hidden"><Mark className="h-8 w-8" /><span className="display text-[1.15rem] tracking-[0.06em]">Concordia</span></span>
+          <BrandLogo priority className="h-auto w-[148px] sm:w-[230px]" />
         </Link>
         <nav aria-label="Primary" className="hidden xl:block">
           <ul className="flex items-center gap-7 text-[0.9rem] font-medium">

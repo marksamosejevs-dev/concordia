@@ -49,8 +49,8 @@ export function TeamSection() {
               </div>
               <div className="col-span-2 max-w-[40ch] sm:mt-4">
                 {m.teamBio?.value ? m.teamBio.value.map((para, n) => (
-                  <p key={n} className={n === 0 ? "text-[0.95rem] leading-relaxed text-ink/80" : "mt-2.5 text-[0.88rem] leading-relaxed text-ink/65"}>{para}</p>
-                )) : <p className="text-[0.95rem] leading-relaxed text-ink/75">{(m.teamLine ?? m.shortBio)?.value}</p>}
+                  <p key={n} className={`text-[0.95rem] leading-relaxed text-ink/80 ${n > 0 ? "mt-3" : ""}`}>{para}</p>
+                )) : <p className="text-[0.95rem] leading-relaxed text-ink/80">{(m.teamLine ?? m.shortBio)?.value}</p>}
               </div>
             </li>
           ))}
