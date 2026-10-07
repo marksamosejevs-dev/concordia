@@ -23,7 +23,6 @@ export function StickyCta() {
   return (
     <div aria-hidden={!visible} className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-ink/95 p-3 backdrop-blur-md transition-transform duration-300 lg:hidden ${visible ? "translate-y-0" : "translate-y-full"}`}>
       <Link href="/apply" tabIndex={visible ? 0 : -1} className="btn btn-route w-full !min-h-[50px]">{CTA.apply} <span aria-hidden>→</span></Link>
-      <p className="mono mt-1.5 text-center text-[0.66rem] tracking-[0.08em] text-slate-light">{CTA.micro}</p>
     </div>
   );
 }

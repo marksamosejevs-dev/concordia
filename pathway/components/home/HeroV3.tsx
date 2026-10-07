@@ -96,15 +96,9 @@ export function HeroV3({ pricePair, secondary }: { pricePair: ReactNode; seconda
         /* Secondary editorial image (Emīlija) — lower and smaller than the primary frame; the supporting image
            (Filipp, MetLife) sits to its left, smaller and staggered lower. Below 640px only Emīlija is shown. */
         <div className="wrap relative -mt-4 flex items-end justify-end gap-6 pb-14 lg:-mt-28 lg:gap-10 lg:pb-20">
-          {/* Second supporting image — desktop only, smallest, sits highest of the three (no caption). */}
-          <figure className="relative mb-[4.5rem] hidden w-[15%] max-w-[230px] lg:block" style={{ transform: "translate3d(calc(var(--px) * -10px), calc(var(--sp) * -12px), 0)" }}>
-            <div style={{ aspectRatio: `${HERO.supporting2.w}/${HERO.supporting2.h}` }} className="relative overflow-hidden rounded-[12px] shadow-[0_30px_60px_-28px_rgba(0,0,0,0.85)] ring-1 ring-white/10">
-              <Image src={HERO.supporting2.src} alt={HERO.supporting2.alt} fill sizes="15vw" className="photo-grade object-cover" style={{ objectPosition: HERO.supporting2.position }} />
-            </div>
-          </figure>
-          <figure className="relative mb-[-1.5rem] hidden w-[30%] max-w-[300px] sm:block lg:mb-[-3.5rem] lg:w-[19%]" style={{ transform: "translate3d(calc(var(--px) * -6px), calc(var(--sp) * -18px), 0)" }}>
+          <figure className="relative mb-[-1.5rem] hidden w-[30%] max-w-[300px] sm:block lg:mb-[-5rem] lg:w-[25%] lg:max-w-[340px]" style={{ transform: "translate3d(calc(var(--px) * -6px), calc(var(--sp) * -18px), 0)" }}>
             <div style={{ aspectRatio: `${HERO.supporting.w}/${HERO.supporting.h}` }} className="relative overflow-hidden rounded-[12px] shadow-[0_30px_60px_-28px_rgba(0,0,0,0.85)] ring-1 ring-white/10">
-              <Image src={HERO.supporting.src} alt={HERO.supporting.alt} fill sizes="(min-width:1024px) 19vw, 30vw" className="photo-grade object-cover" style={{ objectPosition: HERO.supporting.position }} />
+              <Image src={HERO.supporting.src} alt={HERO.supporting.alt} fill sizes="(min-width:1024px) 25vw, 30vw" className="photo-grade object-cover" style={{ objectPosition: HERO.supporting.position }} />
             </div>
             <figcaption className="mt-2.5 text-[0.7rem] uppercase leading-tight tracking-[0.08em]"><span className="block font-bold text-white">{HERO.supporting.caption[0]}</span><span className="block text-white/60">{HERO.supporting.caption[1]}</span></figcaption>
           </figure>

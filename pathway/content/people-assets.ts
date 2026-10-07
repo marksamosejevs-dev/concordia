@@ -37,6 +37,7 @@ export const HERO_SUPPORTING = { src: photos.cwcStand.src, w: photos.cwcStand.w,
  * Hero supporting image — the founder-supplied photo "With Nazar Mahina from Leicester youth" (original, unchanged).
  * E12 guardian publication permission confirmed by the founder (6 Oct 2026). No public identity/club caption:
  * the filename is metadata, not an approved public claim. Shown at its own 3:4 ratio (no crop).
+ * Round 6: no longer rendered in the hero (founder decision) — asset and consent record kept.
  */
 export const HERO_SUPPORTING_2 = { src: "/assets/pathway/photos/players/stand-latvia-shirts.jpg", w: 960, h: 1280, alt: "Two people in Latvia shirts in a stadium stand before an international match", position: "50% 40%" };
 

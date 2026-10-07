@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Gate } from "@/components/ui/Gate";
 import { sortedTeam } from "@/content/team";
 import { TEAM_PORTRAITS, type PortraitAsset } from "@/content/people-assets";
 
@@ -41,13 +40,17 @@ export function TeamSection() {
         </div>
         <ul className="mt-10 grid gap-x-6 gap-y-7 sm:mt-12 sm:grid-cols-3 sm:gap-y-10">
           {team.map((m) => (
-            <li key={m.id} className="group grid grid-cols-[minmax(96px,32%)_1fr] items-start gap-4 sm:block">
+            <li key={m.id} className="group grid grid-cols-[minmax(96px,32%)_1fr] items-start gap-x-4 gap-y-4 sm:block">
               <PortraitFrame a={TEAM_PORTRAITS[m.id]} name={m.name} sizes="(min-width:1360px) 400px, (min-width:640px) 31vw, 32vw" />
-              <div>
-              <h3 className="display text-[clamp(1.6rem,2.6vw,2.4rem)] leading-none sm:mt-5">{m.name}</h3>
-              <p className="mt-1.5 font-semibold text-ink/70">{m.role.value}</p>
-              <p className="mt-2 max-w-[36ch] text-[0.9rem] leading-relaxed text-ink/75 sm:mt-3 sm:text-[0.95rem]">{(m.teamLine ?? m.shortBio)?.value}</p>
-              {m.extendedBio && <Gate evidence={m.extendedBio.evidence} label="bio" className="mt-3"><p className="text-[0.85rem] text-ink/55">{m.extendedBio.value}</p></Gate>}
+              <div className="self-center sm:self-auto">
+                <h3 className="display text-[clamp(1.6rem,2.6vw,2.4rem)] leading-none sm:mt-5">{m.name}</h3>
+                <p className="mt-1.5 font-semibold text-ink">{m.role.value}</p>
+                {m.secondaryRole && <p className="text-[0.9rem] font-semibold text-ink/60">{m.secondaryRole.value}</p>}
+              </div>
+              <div className="col-span-2 max-w-[40ch] sm:mt-4">
+                {m.teamBio?.value ? m.teamBio.value.map((para, n) => (
+                  <p key={n} className={n === 0 ? "text-[0.95rem] leading-relaxed text-ink/80" : "mt-2.5 text-[0.88rem] leading-relaxed text-ink/65"}>{para}</p>
+                )) : <p className="text-[0.95rem] leading-relaxed text-ink/75">{(m.teamLine ?? m.shortBio)?.value}</p>}
               </div>
             </li>
           ))}

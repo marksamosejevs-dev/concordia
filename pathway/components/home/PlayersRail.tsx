@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { agencyPlayers, intlStatus } from "@/content/agency-players";
+import { agencyPlayers, intlStatus, PROFESSIONAL_CLUBS } from "@/content/agency-players";
 import { isPublic } from "@/lib/evidence";
 import { IS_REVIEW } from "@/lib/site-mode";
 
@@ -14,7 +14,6 @@ export function PlayersRail() {
   const cleared = agencyPlayers.filter((p) => isPublic(p.evidence));
   const senior = cleared.filter((p) => intlStatus(p)?.level === "senior").length;
   const youth = cleared.filter((p) => intlStatus(p)?.level === "youth").length;
-  const clubs = [...new Set(cleared.map((p) => p.club).filter(Boolean))];
   const loop = [...shown, ...shown];
 
   return (
@@ -24,7 +23,7 @@ export function PlayersRail() {
         <dl className="flex gap-8 lg:gap-12">
           <div><dd className="display text-[clamp(3rem,6vw,5rem)] leading-none">{senior}</dd><dt className="mt-1 text-[0.85rem] font-semibold text-ink/65">Senior<br />internationals</dt></div>
           <div><dd className="display text-[clamp(3rem,6vw,5rem)] leading-none">{youth}</dd><dt className="mt-1 text-[0.85rem] font-semibold text-ink/65">Youth<br />internationals</dt></div>
-          <div><dd className="display text-[clamp(3rem,6vw,5rem)] leading-none">{clubs.length}</dd><dt className="mt-1 text-[0.85rem] font-semibold text-ink/65">Professional<br />clubs</dt></div>
+          <div><dd className="display text-[clamp(3rem,6vw,5rem)] leading-none">{PROFESSIONAL_CLUBS.value}</dd><dt className="mt-1 text-[0.85rem] font-semibold text-ink/65">Professional<br />clubs</dt></div>
         </dl>
       </div>
 

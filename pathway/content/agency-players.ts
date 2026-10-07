@@ -30,3 +30,10 @@ export function intlStatus(p: AgencyPlayer): { level: IntlLevel; label: string }
   if (/\bU\d{2}\b/.test(t)) return { level: "youth", label: `Youth international · ${t.replace(/^Former\s+/i, "")}${/^Former/i.test(t) ? " (former)" : ""}` };
   return { level: "senior", label: `Senior international · ${t}` };
 }
+
+/**
+ * Founder-stated proof figure (Round 6): Concordia Sports Agency players are at 8 professional clubs,
+ * counting Emīlija Ambaine (U.S. Sassuolo). The roster above lists 6 distinct current clubs; the founder figure
+ * covers the full agency roster. Add the remaining clubs to the roster when available so the data matches.
+ */
+export const PROFESSIONAL_CLUBS = { value: 8, evidence: { state: "confirmed", ref: "FS-R6", note: "Founder-stated total incl. Emīlija Ambaine / U.S. Sassuolo" } as Evidence };
